@@ -2,6 +2,7 @@
 # define MINIRT_H
 
 # include "mlx.h"
+# include "libft.h"
 # include <stdlib.h>
 
 
@@ -13,11 +14,15 @@ typedef struct	s_mlxdata {
 	int		endian;
 }				t_mlxdata;
 
-typedef struct s_mlx
+typedef struct s_minirt
 {
-	void		*instance;
+	void		*mlx;
 	void		*window;
 	t_mlxdata	data;
-}	t_mlx;
+}	t_minirt;
+
+t_minirt	*init();
+void		deinit(t_minirt *minirt);
+
 
 #endif

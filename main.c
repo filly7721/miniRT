@@ -10,21 +10,16 @@ void	pixel_put(t_mlxdata *data, int x, int y, int color)
 
 int main()
 {
+	t_minirt	*minirt;
+
+	minirt = init();
+	if (!minirt)
+		return (ft_putstr_fd("init error\n", 2), 1);
 	
-	t_mlx mlx;
+	pixel_put(&minirt->data, 10,10,0x0000ff00);
+	mlx_put_image_to_window(minirt->mlx, minirt->window, minirt->data.img, 0, 0);
 
-	mlx.instance = mlx_init();
-	mlx.window = mlx_new_window(mlx.instance, 1920, 1080, "example");
+	mlx_loop(minirt->mlx);
 
-	mlx.data.img = mlx_new_image(mlx.instance, 1920, 1080);
-	mlx.data.addr = mlx_get_data_addr(mlx.data.img, &mlx.data.bits_per_pixel, &mlx.data.line_length, &mlx.data.endian);
-
-	pixel_put(&mlx.data, 10,10,0x0000ff00);
-	mlx_put_image_to_window(mlx.instance, mlx.window, mlx.data.img, 0, 0);
-
-	mlx_loop(mlx.instance);
-
-	mlx_destroy_image(mlx.instance, mlx.data.img);
-	mlx_destroy_window(mlx.instance, mlx.window);
-	free(mlx.instance);
+	deinit(minirt);
 }
