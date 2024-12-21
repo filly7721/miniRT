@@ -1,6 +1,6 @@
 NAME		=	miniRT
 
-SRCS		=	main.c init.c
+SRCS		=	main.c init.c hook.c
 
 OBJS		=	${SRCS:.c=.o}
 
@@ -8,7 +8,7 @@ CFLAGS		=	-Werror -Wextra -Werror -I ${MLXDIR} -I ${LIBFTDIR}
 CFLAGS		+=	-g3
 
 LIBFTDIR	=	./libft
-LIBFT		=	${LIBFTDIR}/libft
+LIBFT		=	${LIBFTDIR}/libft.a
 LIBFTFLAGS	=	 -L ${LIBFTDIR} -lft
 
 MLXDIR		=	./mlx

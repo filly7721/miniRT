@@ -23,6 +23,8 @@ typedef struct s_minirt
 
 t_minirt	*init();
 void		deinit(t_minirt *minirt);
+int			keyboard_handler(int keycode, t_minirt *miniRT);
+int			free_exit(t_minirt *minirt);
 
 
 #endif

@@ -31,3 +31,10 @@ void	deinit(t_minirt *minirt)
 	free(minirt->mlx);
 	free(minirt);
 }
+
+int	free_exit(t_minirt *minirt)
+{
+	deinit(minirt);
+	exit(0);
+	return (0);
+}

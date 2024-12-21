@@ -19,6 +19,8 @@ int main()
 	pixel_put(&minirt->data, 10,10,0x0000ff00);
 	mlx_put_image_to_window(minirt->mlx, minirt->window, minirt->data.img, 0, 0);
 
+	mlx_key_hook(minirt->window, keyboard_handler, minirt);
+	mlx_hook(minirt->window, 17, 1L << 0, free_exit, minirt);
 	mlx_loop(minirt->mlx);
 
 	deinit(minirt);
