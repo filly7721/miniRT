@@ -1,6 +1,6 @@
 #include "miniRT.h"
 
-t_minirt	*init()
+t_minirt	*init(int width, int height)
 {
 	t_minirt	*minirt;
 
@@ -10,15 +10,17 @@ t_minirt	*init()
 	minirt->mlx = mlx_init();
 	if (!minirt->mlx)
 		return (deinit(minirt), NULL);
-	minirt->window = mlx_new_window(minirt->mlx, 1920, 1080, "example");
+	minirt->window = mlx_new_window(minirt->mlx, width, height, "example");
 	if (!minirt->window)
 		return (deinit(minirt), NULL);
-	minirt->data.img = mlx_new_image(minirt->mlx, 1920, 1080);
+	minirt->data.img = mlx_new_image(minirt->mlx, width, height);
 	if (!minirt->data.img)
 		return (deinit(minirt), NULL);
 	minirt->data.addr = mlx_get_data_addr(minirt->data.img, &minirt->data.bits_per_pixel, &minirt->data.line_length, &minirt->data.endian);
 	if (!minirt->data.addr)
 		return (deinit(minirt), NULL);
+	minirt->width = width;
+	minirt->height = height;
 	return (minirt);
 }
 

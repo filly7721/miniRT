@@ -19,9 +19,11 @@ typedef struct s_minirt
 	void		*mlx;
 	void		*window;
 	t_mlxdata	data;
+	int			width;
+	int			height;
 }	t_minirt;
 
-t_minirt	*init();
+t_minirt	*init(int width, int height);
 void		deinit(t_minirt *minirt);
 int			keyboard_handler(int keycode, t_minirt *miniRT);
 int			free_exit(t_minirt *minirt);
