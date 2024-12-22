@@ -38,4 +38,6 @@ fclean		:	clean
 			rm -f ${LIBFT}
 			make -C ${MLXDIR} clean
 
+re			: fclean all
+
 .PHONY		:	all clean fclean
