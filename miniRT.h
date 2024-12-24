@@ -4,6 +4,9 @@
 # include "mlx.h"
 # include "libft.h"
 # include <stdlib.h>
+# include <stdio.h>
+# include <fcntl.h>   // For open()
+# include <unistd.h>  // For close()
 
 typedef struct s_mlxdata
 {
@@ -31,6 +34,14 @@ typedef struct s_light
 {
 }	t_light;
 
+typedef struct s_ambient
+{
+	double intensity;
+	int	r;
+	int	g;
+	int	b;
+}	t_ambient;
+
 typedef struct s_sphere
 {
 }	t_sphere;
@@ -38,6 +49,10 @@ typedef struct s_sphere
 typedef struct s_plane
 {
 }	t_plane;
+
+typedef struct s_resolution
+{
+}	t_resolution;
 
 typedef struct s_cylinder
 {
@@ -61,16 +76,23 @@ typedef struct s_shape
 	};
 }	t_shape;
 
+
 typedef struct s_environment
 {
 	t_list		*shapes;
 	t_light		light;
+	t_ambient	ambient;
 	t_camera	camera;
+	t_resolution resolution;
 }	t_environment;
 
 t_minirt	*init(int width, int height);
 void		deinit(t_minirt *minirt);
 int			keyboard_handler(int keycode, t_minirt *miniRT);
 int			free_exit(t_minirt *minirt);
+
+// Parsing
+void parsing(t_environment* env, const char* file);
+void parse_ambient(char* line, t_ambient* ambient);
 
 #endif

@@ -1,6 +1,6 @@
 NAME		=	miniRT
 
-SRCS		=	main.c init.c hook.c
+SRCS		=	main.c init.c hook.c parsing.c parse_lights.c
 
 OBJS		=	${SRCS:.c=.o}
 
