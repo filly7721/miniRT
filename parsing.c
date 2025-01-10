@@ -5,12 +5,15 @@ void line_parsing(char* line, t_environment* env)
     if (ft_strncmp(line, "A", 1) == 0)
     {
         parse_ambient(line, &env->ambient);
+    }
+    else if (ft_strncmp(line, "C", 1) == 0)
+    {
+        parse_camera(line, &env->camera);
         printf("line:%s\n", line);
+
     }
     // else if (ft_strncmp(line, "R", 1) == 0)
     //     parse_resolution(line, &env->resolution);
-    // else if (ft_strncmp(line, "C", 1) == 0)
-    //     parse_camera(line, &env->camera);
     // else if (ft_strncmp(line, "L", 1) == 0)
     //     parse_light(line, &env->light);
     // else if (ft_strncmp(line, "pl", 2) == 0)
