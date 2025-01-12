@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 14:45:13 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/10 15:06:49 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/12 16:52:49 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,28 +45,27 @@ void parse_camera(char* line, t_camera* camera)
     char** split;
     char* space_removed;
 
-    (void) camera;
     space_removed  = remove_extra_spaces(line);
     if (!space_removed)
         return ;
-    split = split_by_char(space_removed, ' ', 3);
+    split = split_by_char(space_removed, ' ', 4);
     free(space_removed);
     if (!split)
         return ;
     camera->fov = ft_atoi(split[3]);
-    printf("struct: %d\n", camera->fov);
-    //Valiate camera(check the inputs)
-    if (!split_xyz(split[2], &camera->x, &camera->y, &camera->z))
+    if (!split_xyz(split[1], &camera->x, &camera->y, &camera->z))
     {
-        printf("Error: Invalid camera XYZ values.\n");
+        printf("Camera: Invalid XYZ values.\n");
         free_split(split);
         return;
     }
-    if (!split_dir_xyz(split[3], &camera->dir_x, &camera->dir_y, &camera->dir_z))
+    if (!split_dir_xyz(split[2], &camera->dir_x, &camera->dir_y, &camera->dir_z))
     {
-        printf("Error: Invalid camera XYZ values.\n");
+        printf("Error: Invalid DIR_XYZ values.\n");
         free_split(split);
         return;
     }
-    printf("Camera: x: %f, y: %f, z: %f\n", camera->x, camera->y, camera->z);
+    free_split(split);
+    // printf("Camera: x: %f, y: %f, z: %f\n", camera->x, camera->y, camera->z);
+    // printf("Camera: x: %f, y: %f, z: %f, fov: %i \n", camera->dir_x, camera->dir_y, camera->dir_z, camera->fov);
 }

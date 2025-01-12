@@ -1,7 +1,9 @@
 NAME		=	miniRT
 
 SRCS		=	main.c init.c hook.c \
-				parsing.c parse_lights.c split_by_char.c free_split.c parse_camera.c
+				parsing.c parse_lights.c split_by_char.c free_split.c \
+				parse_camera.c parse_plane.c parse_sphere.c parse_cylinder.c \
+				print_env.c 
 
 OBJS		=	${SRCS:.c=.o}
 

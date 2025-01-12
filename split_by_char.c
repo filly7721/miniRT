@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   remove_space.c                                     :+:      :+:    :+:   */
+/*   split_by_char.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 13:29:53 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/10 14:38:13 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/12 12:31:17 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,6 @@ int split_rgb(char* rgb, int* r, int* g, int* b)
     *r = ft_atoi(split_rgb[0]);
     *g = ft_atoi(split_rgb[1]);
     *b = ft_atoi(split_rgb[2]);
-    free(split_rgb);
+    free_split(split_rgb);
     return (1);
 }
