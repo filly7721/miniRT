@@ -12,21 +12,27 @@
 # include <stdbool.h>
 # include <math.h>
 
+typedef struct s_matrix
+{
+	int size;
+	double** elem;
+} t_matrix;
+
 typedef union	u_tuple
 {
 	struct
 	{
-	double	x;
-	double	y;
-	double	z;
-	double	w;
+		double	x;
+		double	y;
+		double	z;
+		double	w;
 	};
 	struct
 	{
-	double	a;
-	double	r;
-	double	g;
-	double	b;
+		double	a;
+		double	r;
+		double	g;
+		double	b;
 	};
 }	t_tuple;
 
@@ -161,9 +167,9 @@ void		deinit(t_minirt *minirt);
 int			keyboard_handler(int keycode, t_minirt *miniRT);
 int			free_exit(t_minirt *minirt);
 
-// Parsing
+Parsing
 
-// Lights
+Lights
 void parsing(t_environment* env, const char* file);
 void parse_ambient(char* line, t_ambient* ambient);
 char *remove_extra_spaces(const char *line);
