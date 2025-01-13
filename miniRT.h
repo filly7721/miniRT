@@ -5,10 +5,30 @@
 # include "libft.h"
 # include <stdlib.h>
 # include <stdio.h>
-# include <fcntl.h>   // For open()
-# include <unistd.h>  // For close()
+# include <fcntl.h> 
+# include <unistd.h> 
 
-#include <ctype.h>  // delete after adding ft_strtof
+# include <ctype.h>  // !delete after adding ft_strtof
+# include <stdbool.h>
+# include <math.h>
+
+typedef union	u_tuple
+{
+	struct
+	{
+	double	x;
+	double	y;
+	double	z;
+	double	w;
+	};
+	struct
+	{
+	double	a;
+	double	r;
+	double	g;
+	double	b;
+	};
+}	t_tuple;
 
 typedef struct s_mlxdata
 {
@@ -161,5 +181,17 @@ void print_environment(t_environment* env);
 
 // free functions
 void free_split(char **split);
+
+t_tuple	set_tuple(double x, double y, double z, double w);
+t_tuple add_tuples(t_tuple t1, t_tuple t2);
+t_tuple sub_tuples(t_tuple t1, t_tuple t2);
+t_tuple mul_tuple(t_tuple t, double scalar);
+t_tuple negate_tuple(t_tuple t);
+double	dot_tuple(t_tuple t1, t_tuple t2);
+t_tuple	cross_tuple(t_tuple t1, t_tuple t2);
+double	mag_tuple(t_tuple t);
+t_tuple normalize_tuple(t_tuple t);
+
+bool eq(double f1, double f2);
 
 #endif
