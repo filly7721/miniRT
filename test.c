@@ -1,9 +1,17 @@
 
-#include "miniRT.h"
+// #include "miniRT.h"
 
 #include <stdio.h>
 #include <stdlib.h>
+// Define your types here
+typedef struct s_matrix {
+    int size;
+    double **elem;
+} t_matrix;
 
+typedef struct s_tuple {
+    double x, y, z, w;
+} t_tuple;
 t_matrix create_mat(int size)
 {
     t_matrix mat;
@@ -23,7 +31,7 @@ t_matrix create_mat(int size)
         mat.elem[i] = malloc(size * sizeof(double));
         j = 0;
         while (j < size)
-            mat.elem[i][j++] = 0;    
+            mat.elem[i][j++] = 1;    
         i++;
     }
     
@@ -34,82 +42,89 @@ t_matrix identity_matrix(int size)
 {
     t_matrix mat;
     int i;
+    int j;
 
     mat = create_mat(size);
     i = 0;
-    while (i < 2)
+    while (i < size)
     {
-        mat.elem[i][i] = 1;
+        j = 0;
+        while (j < size)
+        {
+            if (i == j)
+                mat.elem[i][j] = 1;  // Set diagonal elements to 1 for identity matrix
+            else
+                mat.elem[i][j] = 0; 
+            j++;
+        }
         i++;
     }
     return (mat);
 }
 
-t_matrix mult_mat(t_matrix* a, t_matrix* b)
+t_matrix transpose_mat(t_matrix* mat)
 {
-    t_matrix result;
+    t_matrix transposed;
     int i;
     int j;
-    int k;
 
-    result = create_mat(a->size);
+    transposed = create_mat(mat->size);
     i = 0;
-    while (i < a->size)
+    while (i < mat->size)
     {
         j = 0;
-        while(j < b->size)
+        while( j < mat->size)
         {
-            k = 0;
-            while(k < a->size)
-            {
-                result.elem[i][j] += a->elem[i][k] * b->elem[k][j];
-                k++;
-            }
+            transposed.elem[i][j] = mat->elem[j][i];
             j++;
         }
         i++;
     }
-    return (result);
-}
-// Function to free the memory of a matrix
-void free_matrix(t_matrix* matrix) {
-    for (int i = 0; i < matrix->size; ++i) {
-        free(matrix->elem[i]);
-    }
-    free(matrix->elem);
+    return (transposed);
 }
 
-int main() {
-    // Initialize matrices A and B
-    t_matrix A = create_mat(3);
-    t_matrix B = create_mat(3);
 
-    // Assign values to matrix A
-    A.elem[0][0] = 1; A.elem[0][1] = 2; A.elem[0][2] = 3;
-    A.elem[1][0] = 4; A.elem[1][1] = 5; A.elem[1][2] = 6;
-    A.elem[2][0] = 7; A.elem[2][1] = 8; A.elem[2][2] = 9;
 
-    // Assign values to matrix B
-    B.elem[0][0] = 9; B.elem[0][1] = 8; B.elem[0][2] = 7;
-    B.elem[1][0] = 6; B.elem[1][1] = 5; B.elem[1][2] = 4;
-    B.elem[2][0] = 3; B.elem[2][1] = 2; B.elem[2][2] = 1;
-
-    // Multiply matrices A and B
-    t_matrix C = mult_mat(&A, &B);
-
-    // Print the resulting matrix
-    printf("Resulting Matrix:\n");
-    for (int i = 0; i < C.size; ++i) {
-        for (int j = 0; j < C.size; ++j) {
-            printf("%.2f ", C.elem[i][j]);
+// Function declarations (as given earlier)
+t_matrix create_mat(int size);
+t_matrix identity_matrix(int size);
+t_tuple mult_mat_tuple(t_tuple* tuple, t_matrix* mat);
+// void free_matrix(t_matrix* matrix);
+void print_matrix(t_matrix* mat)
+{
+    for (int i = 0; i < mat->size; i++) {
+        for (int j = 0; j < mat->size; j++) {
+            printf("%.2f ", mat->elem[i][j]);
         }
         printf("\n");
     }
-
-    // Free the memory of matrices
-    free_matrix(&A);
-    free_matrix(&B);
-    free_matrix(&C);
-
+}
+int main()
+{
+    t_matrix mat, transposed;
+    
+    // Create a 3x3 matrix
+    mat = create_mat(3);
+    
+    // Print original matrix
+    printf("Original matrix:\n");
+    print_matrix(&mat);
+    
+    // Transpose the matrix
+    transposed = transpose_mat(&mat);
+    
+    // Print transposed matrix
+    printf("\nTransposed matrix:\n");
+    print_matrix(&transposed);
+    
+    // Free the allocated memory (not shown in previous steps)
+    for (int i = 0; i < mat.size; i++) {
+        free(mat.elem[i]);
+        free(transposed.elem[i]);
+    }
+    free(mat.elem);
+    free(transposed.elem);
+    
     return 0;
 }
+

@@ -200,4 +200,7 @@ t_tuple normalize_tuple(t_tuple t);
 
 bool eq(double f1, double f2);
 
+//matrix
+void free_matrix(t_matrix* matrix);
+
 #endif
