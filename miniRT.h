@@ -202,5 +202,13 @@ bool eq(double f1, double f2);
 
 //matrix
 void free_matrix(t_matrix* matrix);
+double determinant_2x2(t_matrix* mat);
+t_matrix allocate_submat(int size);
+void fill_submatrix(t_matrix* mat, t_matrix* submat, int row, int col);
+t_matrix submatrix(t_matrix* mat, int row, int col);
+double determinant_3x3(t_matrix* mat);
+double determinant_4x4(t_matrix* mat);
+t_matrix determinant(t_matrix* mat);
+
 
 #endif

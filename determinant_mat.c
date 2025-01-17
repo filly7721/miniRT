@@ -1,21 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   determinant.mat.c                                  :+:      :+:    :+:   */
+/*   determinant_mat.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/14 12:50:50 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/14 13:42:33 by bmakhama         ###   ########.fr       */
+/*   Created: 2025/01/17 11:00:17 by bmakhama          #+#    #+#             */
+/*   Updated: 2025/01/17 11:00:18 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
 
-double determinant_2x2(t_matrix* mat)
-{
-    return ((mat->elem[0][0] * mat->elem[1][1]) - (mat->elem[0][1] * mat->elem[1][0]));
-}
+#include "miniRT.h"
 
 t_matrix allocate_submat(int size)
 {
@@ -43,38 +39,9 @@ t_matrix allocate_submat(int size)
     return (submat);
 }
 
-t_matrix submatrix(t_matrix* mat, int row, int col)
+double determinant_2x2(t_matrix* mat)
 {
-    t_matrix submat;
-    int i;
-    int j;
-    int c;
-    int r;
-    
-    submat.size = mat->size - 1;
-    submat.elem = allocate_submat (mat->size - 1);
-    i = 0;
-    r = 0;
-    while (i < mat->size)
-    {
-        if (i != row)
-        {
-            c = 0;
-            j = 0;
-            while (j < mat->size)
-            {
-                if (j != col)
-                {
-                    submat.elem[r][c] = mat->elem[i][j];
-                    c++;
-                }
-                j++;
-            }
-            r++;
-        }
-        i++;
-    }
-    return (submat);
+    return ((mat->elem[0][0] * mat->elem[1][1]) - (mat->elem[0][1] * mat->elem[1][0]));
 }
 
 double determinant_3x3(t_matrix* mat)
