@@ -201,6 +201,9 @@ t_tuple normalize_tuple(t_tuple t);
 bool eq(double f1, double f2);
 
 //matrix
+t_matrix create_mat(int size);
+t_matrix identity_matrix(int size);
+
 void free_matrix(t_matrix* matrix);
 double determinant_2x2(t_matrix* mat);
 t_matrix allocate_submat(int size);
