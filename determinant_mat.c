@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 11:00:17 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/17 11:00:18 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/19 10:01:42 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ double determinant_4x4(t_matrix* mat)
     return (det);
 }
 
-t_matrix determinant(t_matrix* mat)
+t_matrix* determinant(t_matrix* mat)
 {
     if (mat->size == 2)
         determinant_2x2 (mat);

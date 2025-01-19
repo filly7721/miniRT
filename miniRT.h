@@ -11,6 +11,7 @@
 # include <ctype.h>  // !delete after adding ft_strtof
 # include <stdbool.h>
 # include <math.h>
+# include <stdarg.h> //va_start
 
 typedef struct s_matrix
 {
@@ -36,6 +37,13 @@ typedef union	u_tuple
 	};
 }	t_tuple;
 
+typedef struct s_ray
+{
+	t_tuple origin;
+	t_tuple direction;
+}	t_ray;
+
+
 typedef struct s_mlxdata
 {
 	void	*img;
@@ -44,16 +52,6 @@ typedef struct s_mlxdata
 	int		line_length;
 	int		endian;
 }	t_mlxdata;
-
-typedef struct s_minirt
-{
-	void		*mlx;
-	void		*window;
-	t_mlxdata	data;
-	int			width;
-	int			height;
-}	t_minirt;
-
 typedef struct s_camera
 {
 	float x;
@@ -153,6 +151,17 @@ typedef struct s_shape
 	};
 }	t_shape;
 
+typedef struct s_intersection
+{
+	double	t;
+	t_shape* shape;
+}	t_intersection;
+
+typedef struct s_intersections
+{
+	t_intersection	data;
+	struct s_intersections* next;
+}	t_intersections;
 
 typedef struct s_environment
 {
@@ -162,14 +171,24 @@ typedef struct s_environment
 	t_camera	camera;
 }	t_environment;
 
+typedef struct s_minirt
+{
+	void		*mlx;
+	void		*window;
+	t_mlxdata	data;
+	int			width;
+	int			height;
+	t_environment* env;
+}	t_minirt;
+
 t_minirt	*init(int width, int height);
 void		deinit(t_minirt *minirt);
 int			keyboard_handler(int keycode, t_minirt *miniRT);
 int			free_exit(t_minirt *minirt);
 
-Parsing
+// Parsing
 
-Lights
+// Lights
 void parsing(t_environment* env, const char* file);
 void parse_ambient(char* line, t_ambient* ambient);
 char *remove_extra_spaces(const char *line);
@@ -177,7 +196,8 @@ char** split_by_char(char* space_removed, char delimiter, int expected_count);
 int split_rgb(char* rgb, int* r, int* g, int* b);
 
 void parse_camera(char* line, t_camera* camera);
-void parse_light(char* line, t_light* light);int split_xyz(char* xyz, float* x, float* y, float* z); //this fun was used in the camera and light parsig
+void parse_light(char* line, t_light* light);
+int split_xyz(char* xyz, float* x, float* y, float* z); //this fun was used in the camera and light parsig
 void parse_plane(char* line, t_environment* env);
 void parse_sphere(char* line, t_environment* env);
 void parse_cylinder(char* line, t_environment* env);
@@ -188,6 +208,7 @@ void print_environment(t_environment* env);
 // free functions
 void free_split(char **split);
 
+//tuples
 t_tuple	set_tuple(double x, double y, double z, double w);
 t_tuple add_tuples(t_tuple t1, t_tuple t2);
 t_tuple sub_tuples(t_tuple t1, t_tuple t2);
@@ -203,15 +224,22 @@ bool eq(double f1, double f2);
 //matrix
 t_matrix create_mat(int size);
 t_matrix identity_matrix(int size);
+t_matrix mult_mat(t_matrix* a, t_matrix* b);
+t_tuple mult_mat_tuple(t_tuple* tuple, t_matrix* mat);
 
 void free_matrix(t_matrix* matrix);
+
 double determinant_2x2(t_matrix* mat);
 t_matrix allocate_submat(int size);
 void fill_submatrix(t_matrix* mat, t_matrix* submat, int row, int col);
 t_matrix submatrix(t_matrix* mat, int row, int col);
 double determinant_3x3(t_matrix* mat);
 double determinant_4x4(t_matrix* mat);
-t_matrix determinant(t_matrix* mat);
+t_matrix* determinant(t_matrix* mat);
 
+//Rays
+t_ray create_ray(t_tuple origin, t_tuple direction);
+t_tuple position(t_ray* ray, double t);
+int sphere_equation(t_ray* ray, t_sphere* sphere, double* a, double* b, double* c);
 
 #endif

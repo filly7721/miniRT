@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 12:55:32 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/17 13:26:47 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/19 10:04:12 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ t_matrix chain_transformations(int count, ...)
     for (i = 0; i < count; i++)
     {
         temp = va_arg(args, t_matrix);
-        result = multiply_matrices(&temp, &result);
+        result = mult_mat(&temp, &result);
     }
 
     va_end(args);

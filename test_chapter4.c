@@ -2,6 +2,8 @@
 # include <stdio.h>
 # include <fcntl.h> 
 # include <unistd.h> 
+# include <stdarg.h>
+# include <math.h>
 
 typedef struct s_matrix
 {
@@ -102,32 +104,106 @@ t_matrix translation(t_tuple* trans_tuple)
     mat.elem[2][3] = trans_tuple->z;
     return (mat);
 }
-// Test Translation with a Vector
-// int main()
-// {
-//     t_tuple vector = {1, 2, 3, 0};  // Vector (1, 2, 3) with w = 0
-//     t_tuple translation_vec = {5, -3, 2, 0};  // Translation vector (5, -3, 2)
-    
-//     t_matrix translation_matrix = translation(translation_vec);
-//     t_tuple translated_vector = mult_mat_tuple(&vector, &translation_matrix);
-    
-//     // The vector should remain the same after translation.
-//     printf("Translated Vector: (%f, %f, %f, %f)\n", translated_vector.x, translated_vector.y, translated_vector.z, translated_vector.w);
-    
-//     return 0;
-// }
 
-//  Apply the Translation Matrix to a Point
+
+t_matrix scaling(t_tuple* tuple)
+{
+    t_matrix mat;
+
+    mat = identity_matrix(4);
+    mat.elem[0][0] = tuple->x;
+    mat.elem[1][1] = tuple->y;
+    mat.elem[2][2] = tuple->z;
+    return (mat);
+}
+
+t_matrix shearing(t_tuple* shear)
+{
+    t_matrix mat;
+
+    mat = identity_matrix(4);
+    mat.elem[0][1] = shear->x;
+    mat.elem[0][2] = shear->y;
+    mat.elem[1][0] = shear->z;
+    mat.elem[1][2] = shear->w;
+    mat.elem[2][0] = shear->a;
+    mat.elem[2][1] = shear->r;
+    return (mat);
+}
+t_matrix mult_mat(t_matrix* a, t_matrix* b)
+{
+    t_matrix result;
+    int i;
+    int j;
+    int k;
+
+    result = create_mat(a->size);
+    i = 0;
+    while (i < a->size)
+    {
+        j = 0;
+        while(j < b->size)
+        {
+            k = 0;
+            while(k < a->size)
+            {
+                result.elem[i][j] += a->elem[i][k] * b->elem[k][j];
+                k++;
+            }
+            j++;
+        }
+        i++;
+    }
+    return (result);
+}
+
+t_matrix chain_transformations(int count, ...)
+{
+    va_list args;
+    t_matrix result;
+    t_matrix temp;
+    int i;
+
+    if (count < 1)
+        return identity_matrix(4);
+
+    result = identity_matrix(4);
+    va_start(args, count);
+
+    for (i = 0; i < count; i++)
+    {
+        temp = va_arg(args, t_matrix);
+        result = mult_mat(&temp, &result);
+    }
+
+    va_end(args);
+    return result;
+}
+t_tuple set_tuple(double x, double y, double z, double w)
+{
+    t_tuple t = { .x = x, .y = y, .z = z, .w = w };
+    return t;
+}
+
+t_tuple point(double x, double y, double z)
+{
+    return set_tuple(x, y, z, 1.0);
+}
+
+//  Chained Transformations
 int main()
 {
-    t_tuple point = {1, 2, 3, 1};  // Point (1, 2, 3) with w = 1
-    t_tuple translation_vec = {5, -3, 2, 0};  // Translation vector (5, -3, 2)
-    
-    t_matrix translation_matrix = translation(&translation_vec);
-    t_tuple translated_point = mult_mat_tuple(&point, &translation_matrix);
-    
-    printf("Translated Point: (%f, %f, %f, %f)\n", translated_point.x, translated_point.y, translated_point.z, translated_point.w);
-    
+    t_tuple trans = set_tuple(10, 5, 7, 0);
+    t_tuple scale = set_tuple(5, 5, 5, 0);
+    t_tuple point_tuple = set_tuple(1, 0, 1, 1);
+
+    t_matrix A = translation(&trans);
+    t_matrix B = scaling(&scale);
+
+    t_matrix result_mat = chain_transformations(2, A, B);
+    t_tuple result_point = mult_mat_tuple(&point_tuple, &result_mat);
+
+    printf("Result: (%f, %f, %f, %f)\n", result_point.x, result_point.y, result_point.z, result_point.w);
     return 0;
 }
 

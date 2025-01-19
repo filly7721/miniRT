@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 10:56:18 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/17 10:41:05 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/19 10:03:05 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ t_matrix submatrix(t_matrix* mat, int row, int col)
     t_matrix submat;
     
     submat = allocate_submat (mat->size - 1);
-    fill_submatrix(mat, submat, row, col);
+    fill_submatrix(mat, &submat, row, col);
     return (submat);
 }
 
@@ -72,6 +72,7 @@ int cofactor(t_matrix* mat, int row, int col)
     }
     return (cofactor_val);
 }
+
 double calculate_det(t_matrix* mat)
 {
     double det;
