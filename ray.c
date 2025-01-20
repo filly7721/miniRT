@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 11:27:20 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/19 15:37:23 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/20 09:35:15 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,6 @@ int sphere_equation(t_ray* ray, t_sphere* sphere, double* a, double* b, double* 
     sphere_to_ray = sub_tuples(ray->origin, set_tuple(sphere->x, sphere->y, sphere->z, 0));
     *a = dot_tuple(ray->direction, ray->direction);
     *b = 2 * dot_tuple(ray->direction, sphere_to_ray);
-    *c = dot_tuple(sphere_to_ray, sphere_to_ray) - (sphere->diameter * sphere->diameter) / 4;;
+    *c = dot_tuple(sphere_to_ray, sphere_to_ray) - (sphere->diameter / 2) * (sphere->diameter / 2);
     return (1);
 }

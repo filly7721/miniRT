@@ -4,3 +4,4 @@ miniRT
 *.o
 *.a
 extras
+.a.out

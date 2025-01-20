@@ -155,13 +155,8 @@ typedef struct s_intersection
 {
 	double	t;
 	t_shape* shape;
+	struct s_intersection* next;
 }	t_intersection;
-
-typedef struct s_intersections
-{
-	t_intersection	data;
-	struct s_intersections* next;
-}	t_intersections;
 
 typedef struct s_environment
 {
