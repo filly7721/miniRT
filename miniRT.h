@@ -43,7 +43,6 @@ typedef struct s_ray
 	t_tuple direction;
 }	t_ray;
 
-
 typedef struct s_mlxdata
 {
 	void	*img;
@@ -91,13 +90,11 @@ typedef struct s_sphere
 	float x;
 	float y;
 	float z;
-
 	float diameter;
-
 	int r;
 	int g;
 	int b;
-
+	t_matrix transform;
 }	t_sphere;
 
 typedef struct s_plane
@@ -219,6 +216,7 @@ bool eq(double f1, double f2);
 //matrix
 t_matrix create_mat(int size);
 t_matrix identity_matrix(int size);
+t_matrix* copy_matrix(t_matrix* matrix);
 t_matrix mult_mat(t_matrix* a, t_matrix* b);
 t_tuple mult_mat_tuple(t_tuple* tuple, t_matrix* mat);
 
@@ -231,10 +229,22 @@ t_matrix submatrix(t_matrix* mat, int row, int col);
 double determinant_3x3(t_matrix* mat);
 double determinant_4x4(t_matrix* mat);
 t_matrix* determinant(t_matrix* mat);
+t_matrix inverse(t_matrix* mat);
+t_intersection* create_node(t_shape* shape, double t);
+void add_node(t_intersection** head, t_intersection* new_node);
 
 //Rays
-t_ray create_ray(t_tuple origin, t_tuple direction);
+// t_ray create_ray(t_tuple origin, t_tuple direction);
 t_tuple position(t_ray* ray, double t);
 int sphere_equation(t_ray* ray, t_sphere* sphere, double* a, double* b, double* c);
+int calculate_intersect(t_ray* ray, t_sphere* sphere, double* t1, double* t2);
+//transform ray sphere
+t_ray transform_ray(t_ray ray, t_matrix matrix);
+void set_transform(t_sphere* sphere, t_matrix* transform);
+t_ray transform_ray_object(t_ray* ray, t_matrix* transform);
+t_intersection* perform_intersection(t_ray ray, t_sphere* _sphere);
+t_intersection* intersect(t_sphere* sphere);
+t_intersection* hit(t_intersection* inter);
+
 
 #endif

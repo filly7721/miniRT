@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 15:36:53 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/20 11:14:06 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/21 12:57:58 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,32 +55,32 @@ int calculate_intersect(t_ray* ray, t_sphere* sphere, double* t1, double* t2)
     return (1);
 }
 
-t_intersections* intersect(t_ray* ray, t_sphere* _sphere)
-{
-    double t1;
-    double t2;
-    t_intersection* head;
-    t_intersection* node;
-    t_shape shape;
+// t_intersection* intersect(t_ray* ray, t_sphere* _sphere)
+// {
+//     double t1;
+//     double t2;
+//     t_intersection* head;
+//     t_intersection* node;
+//     t_shape shape;
 
-    head = NULL;
-    shape.type = sphere;
-    shape.sphere = _sphere;
-    ray->direction = normalize_tuple(ray->direction); //have doubt about it!!!
-    if(!calculate_intersect(ray, sphere, &t1, &t2))
-        return (NULL);
-    if (t1 >= 0)
-    {
-        node = create_node(&shape, t1);
-        add_node(&head, node);
-    }
-    if(t2 >= 0)
-    {
-        node = create_node(&shape, t2);
-        add_node(&head, node);
-    }
-    return (head);
-}
+//     head = NULL;
+//     shape.type = sphere;
+//     shape.sphere = _sphere;
+//     ray->direction = normalize_tuple(ray->direction); //have doubt about it!!!
+//     if(!calculate_intersect(ray, sphere, &t1, &t2))
+//         return (NULL);
+//     if (t1 >= 0)
+//     {
+//         node = create_node(&shape, t1);
+//         add_node(&head, node);
+//     }
+//     if(t2 >= 0)
+//     {
+//         node = create_node(&shape, t2);
+//         add_node(&head, node);
+//     }
+//     return (head);
+// }
 
 t_intersection* hit(t_intersection* inter)
 {

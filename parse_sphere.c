@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 15:19:16 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/12 16:52:58 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/21 16:24:06 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void parse_sphere(char* line, t_environment* env)
         return (free(sphere), free_split(split));
     add_sphere_to_env(env, sphere);
     free_split(split);
-    // printf("Shpere: x: %f, y: %f, z: %f, D: %f, r: %i, g: %i, b: %i\n", 
-    //     sphere->x, sphere->y, sphere->z, sphere->diameter, 
-    //     sphere->r, sphere->g, sphere->b);
+    printf("Shpere: x: %f, y: %f, z: %f, D: %f, r: %i, g: %i, b: %i\n", 
+        sphere->x, sphere->y, sphere->z, sphere->diameter, 
+        sphere->r, sphere->g, sphere->b);
 }

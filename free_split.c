@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 14:41:19 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/19 11:42:42 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/21 12:07:03 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,14 @@ void free_split(char **split)
 
 void free_matrix(t_matrix* matrix)
 { 
-    for (int i = 0; i < matrix->size; ++i) 
+    int i;
+
+    i = 0;
+    while (i < matrix->size) 
     { 
         free(matrix->elem[i]);
+        i++;
     } 
     free(matrix->elem);
+    free(matrix);
 }

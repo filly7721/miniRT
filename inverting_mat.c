@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 10:56:18 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/19 10:03:05 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/21 16:16:50 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ double calculate_det(t_matrix* mat)
 {
     double det;
 
+    printf("Matrix size in calculate_det fun: %d\n", mat->size);  // Debugging output
+
     if (mat->size == 2)
         det = determinant_2x2(mat);
     else if (mat->size == 3)
@@ -103,9 +105,13 @@ t_matrix inverse(t_matrix* mat)
     int col;
     int row;
 
+    printf("Matrix size before calling inverse: %d\n", mat->size);
+    printf("before calling calculate\n");
     det = calculate_det(mat);
+    printf("after calling calculate\n");
     inv = allocate_submat(mat->size);
     row = 0;
+
     while (row < mat->size)
     {
         col = 0;
