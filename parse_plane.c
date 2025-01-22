@@ -6,13 +6,13 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 12:51:38 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/22 11:17:37 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/22 12:11:37 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-int	validate_plane(char** split)
+int	validate_plane(char **split)
 {
 	int	i;
 

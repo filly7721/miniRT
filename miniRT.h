@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   miniRT.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/22 12:11:01 by bmakhama          #+#    #+#             */
+/*   Updated: 2025/01/22 12:11:04 by bmakhama         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINIRT_H
 # define MINIRT_H
 
@@ -19,7 +31,7 @@ typedef struct s_matrix
 	double	**elem;
 }	t_matrix;
 
-typedef	union u_tuple
+typedef union u_tuple
 {
 	struct
 	{
@@ -91,6 +103,9 @@ typedef struct s_sphere
 	int			g;
 	int			b;
 	t_matrix	transform;
+	double		a;
+	double		b;
+	double		c;
 }	t_sphere;
 
 typedef struct s_plane
@@ -191,7 +206,7 @@ void			print_environment(t_environment *env);
 
 // free functions
 void			free_split(char **split);
-void				free_cylinder(t_cylinder *cylinder, char **split);
+int				free_cylinder(t_cylinder *cylinder, char **split);
 
 //tuples
 t_tuple			set_tuple(double x, double y, double z, double w);
@@ -227,7 +242,7 @@ t_intersection	*create_node(t_shape *shape, double t);
 //Rays
 // t_ray create_ray(t_tuple origin, t_tuple direction);
 t_tuple			position(t_ray *ray, double t);
-int				sphere_eq(t_ray *ray, t_sphere *sphere, double *a, double *b, double *c);
+int				sphere_eq(t_ray *ray, t_sphere *sphere);
 int				cal_inter(t_ray *ray, t_sphere *sphere, double *t1, double *t2);
 t_ray			transform_ray(t_ray ray, t_matrix matrix);
 void			set_transform(t_sphere *sphere, t_matrix *transform);

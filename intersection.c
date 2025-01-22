@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 15:36:53 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/22 11:43:43 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/22 12:08:39 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,19 +39,16 @@ void	add_node(t_intersection **head, t_intersection *new_node)
 
 int	cal_inter(t_ray *ray, t_sphere *sphere, double *t1, double *t2)
 {
-	double	a;
-	double	b;
-	double	c;
 	double	discrim;
 	double	sqrt_discrim;
 
-	sphere_eq(ray, sphere, &a, &b, &c);
-	discrim = (b * b) - (4 * a * c);
+	sphere_eq(ray, sphere);
+	discrim = (sphere->b * sphere->b) - (4 * sphere->a * sphere->c);
 	if (discrim < 0)
 		return (0);
 	sqrt_discrim = sqrt (discrim);
-	*t1 = (-b - sqrt_discrim) / (2 * a);
-	*t2 = (-b + sqrt_discrim) / (2 * a);
+	*t1 = (-(sphere->b) - sqrt_discrim) / (2 * sphere->a);
+	*t2 = (-(sphere->b) + sqrt_discrim) / (2 * sphere->a);
 	return (1);
 }
 

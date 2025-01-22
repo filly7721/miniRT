@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 10:56:18 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/22 11:48:34 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/22 12:11:20 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ double	calculate_det(t_matrix *mat)
 		det = determinant_4x4(mat);
 	else
 	{
-		fprintf(stderr, "Inverse only implemented for 2x2, 3x3, and 4x4 matrices.\n");
+		fprintf(stderr, "Inverse only 2x2, 3x3, and 4x4 matrices.\n");
 		exit(EXIT_FAILURE);
 	}
 	if (det == 0)
