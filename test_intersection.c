@@ -176,7 +176,7 @@ int calculate_intersect(t_ray* ray, t_sphere* sphere, double* t1, double* t2)
     double discrim;
     double sqrt_discrim;
     
-    sphere_equation(ray, sphere, &a, &b, &c);
+    sphere_eq(ray, sphere, &a, &b, &c);
         printf("Sphere Equation: a = %.6f, b = %.6f, c = %.6f\n", a, b, c);
 
     discrim = (b * b) - (4 * a * c);

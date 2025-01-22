@@ -6,53 +6,53 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 15:36:53 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/21 12:57:58 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/22 11:43:43 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-t_intersection* create_node(t_shape* shape, double t)
+t_intersection	*create_node(t_shape *shape, double t)
 {
-    t_intersection* node;
+	t_intersection	*node;
 
-    node = malloc(sizeof(t_intersection));
-    if (!node)
-    {
-        printf("Failed allocation intersection node\n");
-        return (NULL);
-    }
-    node->t = t;
-    node->shape = shape;
-    node->next = NULL;
-    return (node);
+	node = malloc(sizeof(t_intersection));
+	if (!node)
+	{
+		printf("Failed allocation intersection node\n");
+		return (NULL);
+	}
+	node->t = t;
+	node->shape = shape;
+	node->next = NULL;
+	return (node);
 }
 
-void add_node(t_intersection** head, t_intersection* new_node)
+void	add_node(t_intersection **head, t_intersection *new_node)
 {
-    if (new_node)
-    {
-        new_node->next = *head;
-        *head = new_node;
-    }
+	if (new_node)
+	{
+		new_node->next = *head;
+		*head = new_node;
+	}
 }
 
-int calculate_intersect(t_ray* ray, t_sphere* sphere, double* t1, double* t2)
+int	cal_inter(t_ray *ray, t_sphere *sphere, double *t1, double *t2)
 {
-    double a;
-    double b;
-    double c;
-    double discrim;
-    double sqrt_discrim;
-    
-    sphere_equation(ray, sphere, &a, &b, &c);
-    discrim = (b * b) - (4 * a * c);
-    if (discrim < 0)
-        return (0);
-    sqrt_discrim = sqrt (discrim);
-    *t1 = (-b - sqrt_discrim) / (2 * a);
-    *t2 = (-b + sqrt_discrim) / (2 * a);
-    return (1);
+	double	a;
+	double	b;
+	double	c;
+	double	discrim;
+	double	sqrt_discrim;
+
+	sphere_eq(ray, sphere, &a, &b, &c);
+	discrim = (b * b) - (4 * a * c);
+	if (discrim < 0)
+		return (0);
+	sqrt_discrim = sqrt (discrim);
+	*t1 = (-b - sqrt_discrim) / (2 * a);
+	*t2 = (-b + sqrt_discrim) / (2 * a);
+	return (1);
 }
 
 // t_intersection* intersect(t_ray* ray, t_sphere* _sphere)
@@ -66,7 +66,7 @@ int calculate_intersect(t_ray* ray, t_sphere* sphere, double* t1, double* t2)
 //     head = NULL;
 //     shape.type = sphere;
 //     shape.sphere = _sphere;
-//     ray->direction = normalize_tuple(ray->direction); //have doubt about it!!!
+//     ray->direction = normalize_tuple(ray->direction);
 //     if(!calculate_intersect(ray, sphere, &t1, &t2))
 //         return (NULL);
 //     if (t1 >= 0)
@@ -82,18 +82,18 @@ int calculate_intersect(t_ray* ray, t_sphere* sphere, double* t1, double* t2)
 //     return (head);
 // }
 
-t_intersection* hit(t_intersection* inter)
+t_intersection	*hit(t_intersection *inter)
 {
-    t_intersection* current;
-    t_intersection* hit;
+	t_intersection	*current;
+	t_intersection	*hit;
 
-    current = inter;
-    hit = NULL;
-    while (current != NULL)
-    {
-        if (current->t >= 0 && (hit == NULL || current->t < hit->t))
-            hit = current;
-        current = current->next;
-    }
-    return hit;
+	current = inter;
+	hit = NULL;
+	while (current != NULL)
+	{
+		if (current->t >= 0 && (hit == NULL || current->t < hit->t))
+			hit = current;
+		current = current->next;
+	}
+	return (hit);
 }

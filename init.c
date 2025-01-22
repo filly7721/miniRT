@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/22 10:21:18 by bmakhama          #+#    #+#             */
+/*   Updated: 2025/01/22 10:21:59 by bmakhama         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "miniRT.h"
 
 t_minirt	*init(int width, int height)
@@ -16,7 +28,9 @@ t_minirt	*init(int width, int height)
 	minirt->data.img = mlx_new_image(minirt->mlx, width, height);
 	if (!minirt->data.img)
 		return (deinit(minirt), NULL);
-	minirt->data.addr = mlx_get_data_addr(minirt->data.img, &minirt->data.bits_per_pixel, &minirt->data.line_length, &minirt->data.endian);
+	minirt->data.addr = mlx_get_data_addr(minirt->data.img, \
+		&minirt->data.bits_per_pixel, &minirt->data.line_length, \
+		&minirt->data.endian);
 	if (!minirt->data.addr)
 		return (deinit(minirt), NULL);
 	minirt->width = width;

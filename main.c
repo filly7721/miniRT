@@ -174,7 +174,7 @@ void print_minirt(t_minirt *minirt)
 // }
 
 void trace_rays(t_minirt *minirt) {
-    int canvas_pixels = 100;
+    int canvas_pixels = 1000;
     double wall_z = 10.0;
     double wall_size = 7.0;
     double pixel_size = wall_size / canvas_pixels;
@@ -192,11 +192,19 @@ void trace_rays(t_minirt *minirt) {
             ray.origin = ray_origin;
             ray.direction = normalize_tuple(sub_tuples(position, ray_origin));
 
-            // Debug print for the ray's origin and direction
-            printf("Ray Origin: (%.2f, %.2f, %.2f), Direction: (%.2f, %.2f, %.2f)\n",
-                   ray.origin.x, ray.origin.y, ray.origin.z,
-                   ray.direction.x, ray.direction.y, ray.direction.z);
+            // // Debug print for the ray's origin and direction
+            // printf("Ray Origin: (%.2f, %.2f, %.2f), Direction: (%.2f, %.2f, %.2f)\n",
+            //        ray.origin.x, ray.origin.y, ray.origin.z,
+            //        ray.direction.x, ray.direction.y, ray.direction.z);
 
+            int r,g,b;
+            // r = ray.direction.x * 255;
+            // g = ray.direction.y * 255;
+            // b = ray.direction.z * 255;
+            ray.direction.w = 1;
+            pixel_put(&minirt->data, x, y, rgbtoint(ray.direction));
+
+            continue;
             t_intersection *intersections = NULL;
             t_list *current = minirt->env->shapes;
 
@@ -246,7 +254,7 @@ int main(int arc, char** arv) {
     }
     t_environment env;
     parsing(&env, arv[1]);
-    t_minirt *minirt = init_minirt(1920, 1080, &env);
+    t_minirt *minirt = init_minirt(1000, 1000, &env);
     if (!minirt) {
         return (ft_putstr_fd("init error\n", 2), 1);
     }
