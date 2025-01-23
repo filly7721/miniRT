@@ -15,29 +15,6 @@ int		per_pixel(t_minirt *minirt, int x, int y)
 	return 0x00000fff;
 }
 
-// void	trace_rays(t_minirt *minirt, int width, int height)
-// {
-// 	int	x;
-// 	int	y;
-// 	int	color;
-
-// 	y = 0;
-// 	while (y < height)
-// 	{
-// 		x = 0;
-// 		while (x < width)
-// 		{
-// 			color = per_pixel(minirt, x, y);
-// 			pixel_put(&minirt->data, x, y, color);
-// 			x++;
-// 		}
-// 		y++;
-// 	}
-// }
-
-
-
-
 
 t_minirt *init_minirt(int width, int height, t_environment *env)
 {
@@ -145,107 +122,134 @@ void print_minirt(t_minirt *minirt)
     }
 }
 
+int color_to_int(t_color color)
+{
+    int r = (int)(color.r * 255);
+    int g = (int)(color.g * 255);
+    int b = (int)(color.b * 255);
+    return (r << 16) | (g << 8) | b;
+}
+t_tuple normalize(t_tuple v)
+{
+    double magnitude = sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
+    return set_tuple(v.x / magnitude, v.y / magnitude, v.z / magnitude, v.w);
+}
 
-// int main(int arc, char** arv)
-// {
-// 	if (arc != 2)
-// 	{
-// 		printf("The input must be 2!");
-// 		return (1);
-// 	}
-// 	t_environment env;
-// 	parsing(&env, arv[1]);
-// 	// print_environment(&env);
-// 	t_minirt	*minirt;
+void write_pixel(t_mlxdata *data, int x, int y, int width, int height, t_color color)
+{
+    int bytes_per_pixel = data->bits_per_pixel / 8;
 
-// 	minirt = init_minirt(1920, 1080, &env);
-// 	if (!minirt)
-// 		return (ft_putstr_fd("init error\n", 2), 1);
-// 	print_minirt(minirt); // debug print
-// 	// trace_rays(minirt, minirt->width, minirt->height);
-// 	trace_rays(minirt);
-// 	mlx_put_image_to_window(minirt->mlx, minirt->window, minirt->data.img, 0, 0);
+    if (x < 0 || y < 0 || x >= width || y >= height)
+        return; // Prevent out-of-bounds writes
 
-// 	mlx_key_hook(minirt->window, keyboard_handler, minirt);
-// 	mlx_hook(minirt->window, 17, 1L << 0, free_exit, minirt);
-// 	mlx_loop(minirt->mlx);
+    int offset = (y * data->line_length) + (x * bytes_per_pixel);
+    data->addr[offset] = (int)(color.b * 255);        // Blue channel
+    data->addr[offset + 1] = (int)(color.g * 255);    // Green channel
+    data->addr[offset + 2] = (int)(color.r * 255);    // Red channel
+}
 
-// 	deinit(minirt);
-// }
+void print_tuple(char* str, t_tuple *tuple)
+{
+    printf("%s"": (x: %f, y: %f, z: %f, w: %f)\n", str, tuple->x, tuple->y, tuple->z, tuple->w);
+}
+void print_shape_type(t_shape *shape)
+{
+    switch (shape->type)
+    {
+        case sphere:
+            printf("Shape type: Sphere\n");
+            break;
+        case plane:
+            printf("Shape type: Plane\n");
+            break;
+        case cylinder:
+            printf("Shape type: Cylinder\n");
+            break;
+        default:
+            printf("Shape type: Unknown\n");
+            break;
+    }
+}
 
-void trace_rays(t_minirt *minirt) {
-    int canvas_pixels = 1000;
-    double wall_z = 10.0;
-    double wall_size = 7.0;
-    double pixel_size = wall_size / canvas_pixels;
-    double half = wall_size / 2.0;
-    t_tuple ray_origin = set_tuple(0, 0, -5, 1);
+void trace_rays(t_minirt *minirt)
+{
+    int     x, y;
+    double  world_x, world_y;
+    t_ray   *ray;
+    t_tuple ray_origin, target, direction;
+    t_intersection *intersections, *hit_intersection;
+    t_color red = {1, 0, 0};
+    t_color black = {0, 0, 0};
+    double  wall_z = 10.0;
+    double  wall_size = 7.0;
+    double  pixel_size = wall_size / minirt->width;
+    double  half = wall_size / 2.0;
+    t_shape *shape;
 
-    for (int y = 0; y < canvas_pixels; y++) {
-        double world_y = half - pixel_size * y;
+    ray_origin = set_tuple(0, 0, -5, 1); // Camera position
+    print_tuple("ray_origin: ", &ray_origin);
+        printf("minirt->height:%d, minirt->width: %d \n", minirt->height, minirt->width);
+    // for (y = 0; y < minirt->height; y++)
+    for (y = 0; y < 10; y++)
+    {
+        world_y = half - pixel_size * y;
+        // for (x = 0; x < minirt->width; x++)
+        for (x = 0; x < 10; x++)
+        {
+            world_x = -half + pixel_size * x;
+            target = set_tuple(world_x, world_y, wall_z, 1);
+            // print_tuple("target: ", &target);
 
-        for (int x = 0; x < canvas_pixels; x++) {
-            double world_x = -half + pixel_size * x;
-
-            t_tuple position = set_tuple(world_x, world_y, wall_z, 1);
-            t_ray ray;
-            ray.origin = ray_origin;
-            ray.direction = normalize_tuple(sub_tuples(position, ray_origin));
-
-            // // Debug print for the ray's origin and direction
-            // printf("Ray Origin: (%.2f, %.2f, %.2f), Direction: (%.2f, %.2f, %.2f)\n",
-            //        ray.origin.x, ray.origin.y, ray.origin.z,
-            //        ray.direction.x, ray.direction.y, ray.direction.z);
-
-            int r,g,b;
-            // r = ray.direction.x * 255;
-            // g = ray.direction.y * 255;
-            // b = ray.direction.z * 255;
-            ray.direction.w = 1;
-            pixel_put(&minirt->data, x, y, rgbtoint(ray.direction));
-
-            continue;
-            t_intersection *intersections = NULL;
-            t_list *current = minirt->env->shapes;
-
-            // Traverse all shapes and find intersections
-            while (current != NULL) {
-                t_shape *shape = current->content;
-
-                if (shape->type == sphere) {
-                    printf("Checking intersection with sphere: center=(%.2f, %.2f, %.2f), radius=%.2f\n",
-                           shape->sphere->x, shape->sphere->y, shape->sphere->z,
-                           shape->sphere->diameter / 2.0);
-
-                    t_intersection *hit_intersection = intersect(shape->sphere);
-                    if (hit_intersection != NULL) {
-                        add_node(&intersections, hit_intersection);
-                        printf("Intersection found at t=%.2f\n", hit_intersection->t);
-                    } else {
-                        printf("No intersection found with sphere.\n");
-                    }
+            direction = normalize(sub_tuples(target, ray_origin));
+            // print_tuple("direction: ", &direction);
+            ray = create_ray(ray_origin, direction);
+    
+            shape = (t_shape *)(minirt->env->shapes->content);
+            // print_shape_type(shape);
+            if (shape->type == sphere)
+            {
+                printf("Shape is a sphere (type: %d)\n", shape->type);
+                // Create transformation matrix for the sphere if not already done
+                if (shape->sphere->transform.size == 0)
+                {
+                    printf("here\n");
+                    t_tuple translation_vector = set_tuple(0, 0, 0, 0); // No translation
+                    shape->sphere->transform = translation(&translation_vector);
                 }
 
-                current = current->next;
+                intersections = intersect(shape->sphere, ray);
+                hit_intersection = hit(intersections);
+                if (hit_intersection)
+                {
+                    printf("red\n");
+                    write_pixel(&minirt->data, x, y, minirt->width, minirt->height, (t_color){1, 0, 0}); // Drawing red pixels across the screen
+                }
+                else
+                {
+                    printf("black\n");
+                    write_pixel(&minirt->data, x, y, minirt->width, minirt->height, (t_color){0, 1, 0}); // Drawing red pixels across the screen
+                }
+            }
+            else
+            {
+                write_pixel(&minirt->data, x, y, minirt->width, minirt->height, (t_color){1, 0, 0}); // Drawing red pixels across the screen 
+                printf("out of the if cond\n");
             }
 
-            t_intersection *closest = hit(intersections);
-
-            if (closest != NULL) {
-                printf("Closest hit at t=%.2f for pixel (%d, %d)\n",
-                       closest->t, x, y);
-                pixel_put(&minirt->data, x, y, 0xFF0000);
-            } else {
-                printf("No hit at pixel (%d, %d)\n", x, y);
-                pixel_put(&minirt->data, x, y, 0x000000);
-            }
-
-            // Free the intersections list after processing
-            // free_intersections(intersections);
         }
     }
 }
 
+void trace_rays2(t_minirt *minirt)
+{
+    for (int y = 0; y < minirt->height; y++)
+    {
+        for (int x = 0; x < minirt->width; x++)
+        {
+            write_pixel(&minirt->data, x, y, minirt->width, minirt->height, (t_color){1, 0, 0}); // Drawing red pixels across the screen
+        }
+    }
+}
 
 int main(int arc, char** arv) {
     if (arc != 2) {
@@ -254,11 +258,10 @@ int main(int arc, char** arv) {
     }
     t_environment env;
     parsing(&env, arv[1]);
-    t_minirt *minirt = init_minirt(1000, 1000, &env);
+    t_minirt *minirt = init_minirt(2000, 1000, &env);
     if (!minirt) {
         return (ft_putstr_fd("init error\n", 2), 1);
     }
-    // print_minirt(minirt); // debug print
     trace_rays(minirt);
     mlx_put_image_to_window(minirt->mlx, minirt->window, minirt->data.img, 0, 0);
 

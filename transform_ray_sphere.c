@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:53:19 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/22 11:48:52 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/23 13:30:29 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,14 @@ t_intersection	*perform_intersection(t_ray ray, t_sphere *_sphere)
 		node = create_node(&shape, t2);
 		add_node(&head, node);
 	}
-	return (head);
+	return (head); 
 }
 
-t_intersection	*intersect(t_sphere *sphere)
+t_intersection *intersect(t_sphere *sphere, t_ray *ray)
 {
-	t_ray			trans_ray;
-	t_intersection	*intersect;
-
-	trans_ray = transform_ray_object(&trans_ray, &sphere->transform);
-	intersect = perform_intersection(trans_ray, sphere);
-	return (intersect);
+    t_ray trans_ray = transform_ray_object(ray, &sphere->transform);
+    t_intersection *intersect = perform_intersection(trans_ray, sphere);
+	 printf("Ray Origin: (%f, %f, %f, %f)\n", ray->origin.x, ray->origin.y, ray->origin.z, ray->origin.w);
+    printf("Ray Direction: (%f, %f, %f, %f)\n", ray->direction.x, ray->direction.y, ray->direction.z, ray->direction.w);
+    return intersect;
 }

@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 15:19:16 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/22 11:19:41 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/23 14:05:21 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	add_sphere_to_env(t_environment *env, t_sphere *_sphere)
 		return ;
 	}
 	shape->type = sphere;
+	printf("Shape type set to sphere: %d\n", shape->type); // Debug print
 	shape->sphere = _sphere;
 	ft_lstadd_back(&env->shapes, ft_lstnew(shape));
 }
@@ -93,8 +94,6 @@ void	parse_sphere(char *line, t_environment *env)
 	if (!parse_sphere_values(split, sphere))
 		return (free(sphere), free_split(split));
 	add_sphere_to_env(env, sphere);
+	// printf("Sphere added with type: %d\n", sphere->type); // Debug print
 	free_split(split);
-	printf("Shpere: x: %f, y: %f, z: %f, D: %f, r: %i, g: %i, b: %i\n",
-		sphere->x, sphere->y, sphere->z, sphere->diameter,
-		sphere->r, sphere->g, sphere->b);
 }

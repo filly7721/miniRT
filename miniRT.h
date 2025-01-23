@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:11:01 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/22 12:11:04 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/23 11:56:54 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,14 @@
 # include <stdbool.h>
 # include <math.h>
 # include <stdarg.h> //va_start
+
+typedef struct s_color
+{
+    double r; // Red component, range [0.0, 1.0]
+    double g; // Green component, range [0.0, 1.0]
+    double b; // Blue component, range [0.0, 1.0]
+}   t_color;
+
 
 typedef struct s_matrix
 {
@@ -104,7 +112,7 @@ typedef struct s_sphere
 	int			b;
 	t_matrix	transform;
 	double		a;
-	double		b;
+	double		b1;
 	double		c;
 }	t_sphere;
 
@@ -199,17 +207,20 @@ void			parse_light(char *line, t_light *light);
 int				split_xyz(char *xyz, float *x, float *y, float *z);
 void			parse_plane(char *line, t_environment *env);
 void			parse_sphere(char *line, t_environment *env);
+t_sphere		*create_sphere(void);
 void			parse_cylinder(char *line, t_environment *env);
 
 // Debug fun, delete later
 void			print_environment(t_environment *env);
+void print_mat(t_matrix *mat);
 
 // free functions
 void			free_split(char **split);
-int				free_cylinder(t_cylinder *cylinder, char **split);
+void			free_cylinder(t_cylinder *cylinder, char **split);
 
 //tuples
 t_tuple			set_tuple(double x, double y, double z, double w);
+t_tuple			set_point(double x, double y, double z);
 t_tuple			add_tuples(t_tuple t1, t_tuple t2);
 t_tuple			sub_tuples(t_tuple t1, t_tuple t2);
 t_tuple			mul_tuple(t_tuple t, double scalar);
@@ -238,9 +249,11 @@ double			determinant_2x2(t_matrix *mat);
 double			determinant_3x3(t_matrix *mat);
 double			determinant_4x4(t_matrix *mat);
 t_intersection	*create_node(t_shape *shape, double t);
+t_matrix	translation(t_tuple *tuple);
 
 //Rays
 // t_ray create_ray(t_tuple origin, t_tuple direction);
+t_ray	*create_ray(t_tuple origin, t_tuple direction);
 t_tuple			position(t_ray *ray, double t);
 int				sphere_eq(t_ray *ray, t_sphere *sphere);
 int				cal_inter(t_ray *ray, t_sphere *sphere, double *t1, double *t2);
@@ -248,7 +261,7 @@ t_ray			transform_ray(t_ray ray, t_matrix matrix);
 void			set_transform(t_sphere *sphere, t_matrix *transform);
 t_ray			transform_ray_object(t_ray *ray, t_matrix *transform);
 t_intersection	*perform_intersection(t_ray ray, t_sphere *_sphere);
-t_intersection	*intersect(t_sphere *sphere);
+t_intersection *intersect(t_sphere *sphere, t_ray *ray);
 t_intersection	*hit(t_intersection *inter);
 
 #endif

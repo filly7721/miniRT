@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 14:41:19 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/22 11:47:48 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/23 12:05:56 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,18 @@ void	free_split(char **split)
 	free(split);
 }
 
-void	free_matrix(t_matrix *matrix)
-{
-	int	i;
+void free_matrix(t_matrix *mat) {
+    if (!mat || !mat->elem) return;
 
-	i = 0;
-	while (i < matrix->size)
-	{
-		free(matrix->elem[i]);
-		i++;
-	}
-	free(matrix->elem);
-	free(matrix);
+    for (int i = 0; i < mat->size; i++) {
+        if (mat->elem[i]) {
+            free(mat->elem[i]);
+        }
+    }
+    free(mat->elem);
+    mat->elem = NULL;
 }
+
 
 void	free_cylinder(t_cylinder *cylinder, char **split)
 {

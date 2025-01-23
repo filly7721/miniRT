@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 10:56:18 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/22 12:11:20 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/23 12:04:23 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,18 @@ double	calculate_det(t_matrix *mat)
 	}
 	return (det);
 }
+void print_mat(t_matrix *mat)
+{
+    printf("Matrix size: %d\n", mat->size);
+    for (int i = 0; i < mat->size; i++)
+    {
+        for (int j = 0; j < mat->size; j++)
+        {
+            printf("%f ", mat->elem[i][j]);
+        }
+        printf("\n");
+    }
+}
 
 t_matrix	inverse(t_matrix *mat)
 {
@@ -103,11 +115,17 @@ t_matrix	inverse(t_matrix *mat)
 	int			col;
 	int			row;
 
-	printf("Matrix size before calling inverse: %d\n", mat->size);
-	printf("before calling calculate\n");
+	// Debug: Print the matrix before inversion
+    printf("Matrix before inversion:\n");
+	print_mat(mat);
+	
 	det = calculate_det(mat);
-	printf("after calling calculate\n");
+	printf("det: %f\n", det);
+	
 	inv = allocate_submat(mat->size);
+	printf("Matrix after inversion:\n");
+	print_mat(mat);
+	
 	row = 0;
 	while (row < mat->size)
 	{
@@ -119,5 +137,8 @@ t_matrix	inverse(t_matrix *mat)
 		}
 		row++;
 	}
+	// Debug: Print the inverted matrix
+    printf("Matrix after inversion:\n");
+    
 	return (inv);
 }
