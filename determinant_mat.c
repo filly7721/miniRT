@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 11:00:17 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/23 12:01:00 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/24 08:37:11 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_matrix	allocate_submat(int size)
 	int			i;
 
 	// Debug: Print the matrix before inversion
-    printf("allocate_submat starts:\n");
+    // printf("allocate_submat starts:\n");
 	submat.size = size;
 	submat.elem = (double **) malloc(sizeof(double *) * submat.size);
 	if (!submat.elem)

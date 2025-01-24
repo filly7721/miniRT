@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:11:01 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/23 11:56:54 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/24 11:52:10 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -261,7 +261,10 @@ t_ray			transform_ray(t_ray ray, t_matrix matrix);
 void			set_transform(t_sphere *sphere, t_matrix *transform);
 t_ray			transform_ray_object(t_ray *ray, t_matrix *transform);
 t_intersection	*perform_intersection(t_ray ray, t_sphere *_sphere);
-t_intersection *intersect(t_sphere *sphere, t_ray *ray);
+// t_intersection *intersect(t_sphere *sphere, t_ray *ray);
 t_intersection	*hit(t_intersection *inter);
+void add_intersection(t_intersection **head, t_shape *shape, double t);
 
+t_intersection	*intersect(t_ray *ray, t_list *shapelist);
+t_intersection	*intersect_sphere(t_ray *ray, t_sphere *sphere);
 #endif

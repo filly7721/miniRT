@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 10:56:18 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/23 12:04:23 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/24 09:18:41 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ t_matrix	inverse(t_matrix *mat)
 		row++;
 	}
 	// Debug: Print the inverted matrix
-    printf("Matrix after inversion:\n");
+    // printf("Matrix after inversion:\n");
     
 	return (inv);
 }

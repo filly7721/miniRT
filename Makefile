@@ -5,7 +5,7 @@ SRCS		=	main.c init.c hook.c \
 				parse_camera.c parse_plane.c parse_sphere.c parse_cylinder.c \
 				print_env.c utils.c tuple.c tuple_oper.c matrix_oper.c determinant_mat.c \
 				inverting_mat.c rotation_mat.c scaling_mat.c translation_mat.c \
-				ray.c intersection.c transform_ray.c transform_ray_sphere.c \
+				ray.c intersections.c intersect_sphere.c \
 				color.c
 
 OBJS		=	${SRCS:.c=.o}

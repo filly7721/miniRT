@@ -171,87 +171,102 @@ void print_shape_type(t_shape *shape)
     }
 }
 
-void trace_rays(t_minirt *minirt)
-{
-    int     x, y;
-    double  world_x, world_y;
-    t_ray   *ray;
-    t_tuple ray_origin, target, direction;
-    t_intersection *intersections, *hit_intersection;
-    t_color red = {1, 0, 0};
-    t_color black = {0, 0, 0};
-    double  wall_z = 10.0;
-    double  wall_size = 7.0;
-    double  pixel_size = wall_size / minirt->width;
-    double  half = wall_size / 2.0;
-    t_shape *shape;
+// void init_ray(t_ray *ray, int x, int y, t_minirt *minirt) {
+//     // Compute the direction of the ray for the current pixel
+//     // This involves transforming the pixel coordinates to the camera space
+//     // Example calculation:
+//     double aspect_ratio = (double)minirt->width / minirt->height;
+//     double pixel_ndc_x = (x + 0.5) / minirt->width; // Normalized device coordinate
+//     double pixel_ndc_y = (y + 0.5) / minirt->height;
+//     double pixel_screen_x = (2 * pixel_ndc_x - 1) * aspect_ratio;
+//     double pixel_screen_y = 1 - 2 * pixel_ndc_y;
 
-    ray_origin = set_tuple(0, 0, -5, 1); // Camera position
-    print_tuple("ray_origin: ", &ray_origin);
-        printf("minirt->height:%d, minirt->width: %d \n", minirt->height, minirt->width);
-    // for (y = 0; y < minirt->height; y++)
-    for (y = 0; y < 10; y++)
-    {
-        world_y = half - pixel_size * y;
-        // for (x = 0; x < minirt->width; x++)
-        for (x = 0; x < 10; x++)
-        {
-            world_x = -half + pixel_size * x;
-            target = set_tuple(world_x, world_y, wall_z, 1);
-            // print_tuple("target: ", &target);
+//     t_tuple pixel_world = set_tuple(pixel_screen_x, pixel_screen_y, -1, 1);
+//     t_tuple origin = set_tuple(minirt->env->camera.x, minirt->env->camera.y, minirt->env->camera.z, 1);
+//     t_tuple direction = normalize(sub_tuples(pixel_world, origin));
 
-            direction = normalize(sub_tuples(target, ray_origin));
-            // print_tuple("direction: ", &direction);
-            ray = create_ray(ray_origin, direction);
+//     ray->origin = origin;
+//     ray->direction = direction;
+// }
+
+// t_color get_pixel_color(t_ray *ray, t_minirt *minirt) {
+//     t_color color = {0, 0, 1}; // Default to background color (black)
     
-            shape = (t_shape *)(minirt->env->shapes->content);
-            // print_shape_type(shape);
-            if (shape->type == sphere)
-            {
-                printf("Shape is a sphere (type: %d)\n", shape->type);
-                // Create transformation matrix for the sphere if not already done
-                if (shape->sphere->transform.size == 0)
-                {
-                    printf("here\n");
-                    t_tuple translation_vector = set_tuple(0, 0, 0, 0); // No translation
-                    shape->sphere->transform = translation(&translation_vector);
-                }
+//     // Check for intersections with all shapes in the scene
+//     t_list *shapes = minirt->env->shapes;
+//     while (shapes) {
+//         t_shape *shape = (t_shape *)shapes->content;
+        
+//         if (shape->type == sphere) {
+//             t_intersection *intersections = intersect(shape->sphere, ray);
+//             if (intersections) {
+//                 // If there's an intersection, set the pixel color to the sphere's color
+//                 color = (t_color){shape->sphere->r / 255.0, shape->sphere->g / 255.0, shape->sphere->b / 255.0};
+//                 // Free intersections list after processing (if using dynamic allocation)
+//                 // free_intersections(intersections);
+//                 break;
+//             }
+//         }
+//         else
+//         {
 
-                intersections = intersect(shape->sphere, ray);
-                hit_intersection = hit(intersections);
-                if (hit_intersection)
-                {
-                    printf("red\n");
-                    write_pixel(&minirt->data, x, y, minirt->width, minirt->height, (t_color){1, 0, 0}); // Drawing red pixels across the screen
-                }
-                else
-                {
-                    printf("black\n");
-                    write_pixel(&minirt->data, x, y, minirt->width, minirt->height, (t_color){0, 1, 0}); // Drawing red pixels across the screen
-                }
-            }
-            else
-            {
-                write_pixel(&minirt->data, x, y, minirt->width, minirt->height, (t_color){1, 0, 0}); // Drawing red pixels across the screen 
-                printf("out of the if cond\n");
-            }
+//         }
+//         shapes = shapes->next;
+//     }
 
-        }
-    }
-}
-
-void trace_rays2(t_minirt *minirt)
+//     return color;
+// }
+t_ray generate_ray(t_camera *camera, int x, int y, int width, int height)
 {
-    for (int y = 0; y < minirt->height; y++)
-    {
-        for (int x = 0; x < minirt->width; x++)
-        {
-            write_pixel(&minirt->data, x, y, minirt->width, minirt->height, (t_color){1, 0, 0}); // Drawing red pixels across the screen
-        }
-    }
+    double aspect_ratio = (double)width / height;
+    double pixel_ndc_x = (x + 0.5) / width;  // Normalized device coordinates (x)
+    double pixel_ndc_y = (y + 0.5) / height; // Normalized device coordinates (y)
+    double pixel_camera_x = (2 * pixel_ndc_x - 1) * aspect_ratio * camera->fov;
+    double pixel_camera_y = (1 - 2 * pixel_ndc_y) * camera->fov;
+
+    t_tuple direction = normalize((t_tuple){pixel_camera_x, pixel_camera_y, 1.0, 0.0});
+    t_tuple origin = {camera->x, camera->y, camera->z, 1.0}; // Use camera's x, y, z as the origin
+    return (t_ray){origin, direction};
 }
 
-int main(int arc, char** arv) {
+
+void    trace_rays(t_minirt *minirt)
+{
+    int x;
+    int y;
+    t_ray ray;
+    t_intersection *intersections;
+    t_shape *current_shape;
+
+    y = 0;
+    while (y < minirt->height)
+    {
+        x = 0;
+        while (x < minirt->width)
+        {
+            ray = generate_ray(&minirt->env->camera, x, y, minirt->width, minirt->height);
+            // ray.direction = mul_tuple(ray.direction, -1);
+            dprintf(2, "(%.2f, %.2f, %.2f) ", ray.direction.x, ray.direction.y, ray.direction.z);
+            intersections = intersect(&ray, minirt->env->shapes);
+            if (intersections != NULL)
+                pixel_put(&minirt->data, x, y, 0x00ff0000);
+                // write_pixel(&minirt->data, x, y, minirt->width, minirt->height, (t_color){1, 0, 0});
+            else
+                pixel_put(&minirt->data, x, y, 0x00000000);
+                // write_pixel(&minirt->data, x, y, minirt->width, minirt->height, (t_color){0, 0, 0});
+            //! free intersections
+            x++;
+
+        }
+        dprintf(2, "\n");
+        y++;
+    }
+
+    mlx_put_image_to_window(minirt->mlx, minirt->window, minirt->data.img, 0, 0);
+}
+
+int main(int arc, char** arv)
+{
     if (arc != 2) {
         printf("The input must be 2!");
         return (1);

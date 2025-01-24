@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 14:15:29 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/22 10:34:32 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/24 10:06:42 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ t_matrix	create_mat(int size)
 		fprintf(stderr, "Memory allocation failed.\n");
 		exit(EXIT_FAILURE);
 	}
+	printf("Creating matrix of size %d\n", size);
 	i = 0;
 	while (i < size)
 	{
