@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 15:19:16 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/23 14:05:21 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/24 12:53:49 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,6 @@ void	parse_sphere(char *line, t_environment *env)
 	if (!parse_sphere_values(split, sphere))
 		return (free(sphere), free_split(split));
 	add_sphere_to_env(env, sphere);
-	// printf("Sphere added with type: %d\n", sphere->type); // Debug print
+	printf("Sphere: x:%f, y:%f, z:%f, diam:%f, \n", sphere->x, sphere->y, sphere->z, sphere->diameter); // Debug print
 	free_split(split);
 }

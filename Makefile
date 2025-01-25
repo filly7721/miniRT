@@ -6,7 +6,7 @@ SRCS		=	main.c init.c hook.c \
 				print_env.c utils.c tuple.c tuple_oper.c matrix_oper.c determinant_mat.c \
 				inverting_mat.c rotation_mat.c scaling_mat.c translation_mat.c \
 				ray.c intersections.c intersect_sphere.c \
-				color.c
+				color.c generate_ray.c
 
 OBJS		=	${SRCS:.c=.o}
 

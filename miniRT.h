@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:11:01 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/24 11:52:10 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/25 10:04:25 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,6 @@
 # include <stdbool.h>
 # include <math.h>
 # include <stdarg.h> //va_start
-
-typedef struct s_color
-{
-    double r; // Red component, range [0.0, 1.0]
-    double g; // Green component, range [0.0, 1.0]
-    double b; // Blue component, range [0.0, 1.0]
-}   t_color;
 
 
 typedef struct s_matrix
@@ -229,6 +222,7 @@ t_tuple			cross_tuple(t_tuple t1, t_tuple t2);
 t_tuple			normalize_tuple(t_tuple t);
 double			dot_tuple(t_tuple t1, t_tuple t2);
 double			mag_tuple(t_tuple t);
+t_tuple scale_tuple(t_tuple tuple, double scalar);
 
 bool			eq(double f1, double f2);
 
@@ -267,4 +261,6 @@ void add_intersection(t_intersection **head, t_shape *shape, double t);
 
 t_intersection	*intersect(t_ray *ray, t_list *shapelist);
 t_intersection	*intersect_sphere(t_ray *ray, t_sphere *sphere);
+
+t_ray generate_ray(t_camera *camera, int x, int y, int width, int height);
 #endif

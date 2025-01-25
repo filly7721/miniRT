@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 10:19:17 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/24 11:57:53 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/24 12:59:09 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ t_intersection	*intersect_sphere(t_ray *ray, t_sphere *_sphere)
     sphere_to_ray = sub_tuples(ray->origin, center);
     double a = dot_tuple(ray->direction, ray->direction);
     double b = 2 * dot_tuple(ray->direction, sphere_to_ray);
-    double c = dot_tuple(sphere_to_ray, sphere_to_ray) - _sphere->diameter / 2 * _sphere->diameter / 2;
+    double c = dot_tuple(sphere_to_ray, sphere_to_ray) - (_sphere->diameter / 2 * _sphere->diameter / 2);
 
     discriminant = b * b - 4 * a * c;
 
