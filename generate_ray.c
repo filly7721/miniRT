@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 09:28:37 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/25 12:49:43 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/26 08:49:31 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,14 @@ t_ray generate_ray(t_camera *camera, int x, int y, int width, int height)
 	aspect_ratio = (double)width / height;
 	fov_radians = camera->fov * (M_PI / 180.0);
 	
-	// viewpoint_width = 2 * tan(fov_radians / 2.0);
-	viewpoint_width = 1;
-	// viewpoint_height = viewpoint_width / aspect_ratio;
-	viewpoint_height = 1 / aspect_ratio;
+	viewpoint_width = 2 * tan(fov_radians / 2.0);
+	viewpoint_height = viewpoint_width / aspect_ratio;
 	
 	pixel_ndc_x = (x + 0.5) / width;
 	pixel_ndc_y = (y + 0.5) / height;
 	
-	// pixel_camera_x = (2 * pixel_ndc_x - 1) * viewpoint_width / 2.0;
-	pixel_camera_x = (2 * pixel_ndc_x - 1) ;
-	// pixel_camera_y = (1 - 2 * pixel_ndc_y) * viewpoint_height / 2.0;
-	pixel_camera_y = (1 - 2 * pixel_ndc_y);
+	pixel_camera_x = (2 * pixel_ndc_x - 1) * viewpoint_width / 2.0;
+	pixel_camera_y = (1 - 2 * pixel_ndc_y) * viewpoint_height / 2.0;
 	
 	forward = normalize_tuple(set_tuple(camera->dir_x, camera->dir_y, camera->dir_z, 0.0));
 	up = set_tuple(0.0, 1.0, 0.0, 0.0); // Assume world up
