@@ -6,57 +6,33 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 09:28:37 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/26 08:49:31 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/26 10:04:06 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-t_ray generate_ray(t_camera *camera, int x, int y, int width, int height)
+t_ray	generate_ray(t_minirt *minirt, int x, int y)
 {
-	double aspect_ratio;
-	double fov_radians;
-	
-	double viewpoint_width;
-	double viewpoint_height;
-	
-	double pixel_ndc_x;
-	double pixel_ndc_y;
-	
-	double pixel_camera_x;
-	double pixel_camera_y;
-	
-	t_tuple forward;
-	t_tuple right;
-	t_tuple up;
-	
-	t_tuple pixel_world;
-	t_tuple direction;
-	t_tuple origin;
+	double	viewpoint_width;
+	double	viewpoint_height;
+	double	pixel_camera_x;
+	double	pixel_camera_y;
+	t_tuple	pixel_world;
 
-	aspect_ratio = (double)width / height;
-	fov_radians = camera->fov * (M_PI / 180.0);
-	
-	viewpoint_width = 2 * tan(fov_radians / 2.0);
-	viewpoint_height = viewpoint_width / aspect_ratio;
-	
-	pixel_ndc_x = (x + 0.5) / width;
-	pixel_ndc_y = (y + 0.5) / height;
-	
-	pixel_camera_x = (2 * pixel_ndc_x - 1) * viewpoint_width / 2.0;
-	pixel_camera_y = (1 - 2 * pixel_ndc_y) * viewpoint_height / 2.0;
-	
-	forward = normalize_tuple(set_tuple(camera->dir_x, camera->dir_y, camera->dir_z, 0.0));
-	up = set_tuple(0.0, 1.0, 0.0, 0.0); // Assume world up
-	if (fabs(forward.y) == 1.0)
-		up = normalize_tuple(set_tuple(1.0, 0.0, 0.0, 0.0));
-	right = normalize_tuple(cross_tuple(up, forward));
-	up = cross_tuple(forward, right);
-
+	viewpoint_width = 2 * tan((minirt->env->camera.fov * (M_PI / 180.0)) / 2.0);
+	viewpoint_height = viewpoint_width \
+		/ ((double)minirt->width / minirt->height);
+	pixel_camera_x = (2 * ((x + 0.5) / minirt->width) - 1)
+		* viewpoint_width / 2.0;
+	pixel_camera_y = (1 - 2 * ((y + 0.5) / minirt->height))
+		* viewpoint_height / 2.0;
 	pixel_world = add_tuples(
-		add_tuples((scale_tuple(right, pixel_camera_x)), scale_tuple(up, pixel_camera_y)), forward);
-
-	direction = normalize_tuple(pixel_world);
-	origin = set_tuple(camera->x, camera->y, camera->z, 1.0);
-	return (t_ray){origin, direction};
+			add_tuples((scale_tuple(minirt->env->camera.right, pixel_camera_x)),
+				scale_tuple(minirt->env->camera.up, pixel_camera_y)),
+			minirt->env->camera.forward);
+	return ((t_ray){
+		set_tuple(minirt->env->camera.x,
+			minirt->env->camera.y, minirt->env->camera.z, 1.0),
+		normalize_tuple(pixel_world)});
 }
