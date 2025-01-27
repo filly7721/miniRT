@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:11:01 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/26 10:00:36 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/27 14:45:38 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,7 +212,20 @@ void print_mat(t_matrix *mat);
 
 // free functions
 void			free_split(char **split);
-void			free_cylinder(t_cylinder *cylinder, char **split);
+void			free_cylinder2(t_cylinder *cylinder, char **split);
+void			free_minirt(t_minirt *minirt);
+void			free_env(t_environment *env);
+void			free_intersections(t_intersection *head);
+void			free_shapes(t_list **shapes);
+void free_shape(t_shape *shapes);
+void			free_matrix(t_matrix *mat);
+void			free_camera(t_camera *camera);
+void			free_mlxdata(t_mlxdata *mlxdata);
+void			free_light(t_light *light);
+void			free_ambient(t_ambient *ambient);
+void			free_ray(t_ray *ray);
+
+
 
 //tuples
 t_tuple			set_tuple(double x, double y, double z, double w);
