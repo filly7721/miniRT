@@ -203,6 +203,7 @@ int main(int arc, char** arv)
         return (1);
     }
     t_environment env;
+    env.shapes = NULL;
     parsing(&env, arv[1]);
     t_minirt *minirt = init_minirt(2000, 1000, &env);
     if (!minirt) {

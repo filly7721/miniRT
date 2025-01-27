@@ -31,16 +31,14 @@ void add_intersection(t_intersection **head, t_shape *shape, double t)
         temp->next = node;
     }
 }
-t_intersection	*intersect_sphere(t_ray *ray, t_sphere *_sphere)
+t_intersection *intersect_sphere(t_ray *ray, t_sphere *_sphere, t_intersection *intersections)
 {
-    t_intersection *intersections;
 	t_tuple sphere_to_ray;
 	double discriminant;
     t_tuple center;
 
     center = set_point(_sphere->x, _sphere->y, _sphere->z);
 	
-	intersections = NULL;
     sphere_to_ray = sub_tuples(ray->origin, center);
     double a = dot_tuple(ray->direction, ray->direction);
     double b = 2 * dot_tuple(ray->direction, sphere_to_ray);
@@ -51,7 +49,7 @@ t_intersection	*intersect_sphere(t_ray *ray, t_sphere *_sphere)
     if (discriminant < 0)
     { 
         // printf("No intersection: discriminant < 0\n");
-        return NULL;
+        return intersections;
     }
     // printf("discriminant equals: %f\n", discriminant);
     double t1 = (-b - sqrt(discriminant)) / (2 * a);

@@ -17,12 +17,19 @@ t_intersection	*intersect(t_ray *ray, t_list *shapelist)
 	t_intersection	*intersection;
 	t_sphere	*_sphere;
 
+	t_list *temp;
+
+	temp = shapelist;
 	intersection = NULL;
-	t_shape *shape = shapelist->content;
-	if(shape->type == sphere)
+	while (temp)
 	{
-		_sphere = shape->sphere;
-		intersection = intersect_sphere(ray, _sphere);
+		t_shape *shape = temp->content;
+		if(shape->type == sphere)
+		{
+			_sphere = shape->sphere;
+			intersection = intersect_sphere(ray, _sphere, intersection);
+		}
+		temp = temp->next;
 	}
 	return (intersection);
 }

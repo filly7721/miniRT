@@ -73,6 +73,9 @@ typedef struct s_camera
 	float	dir_y;
 	float	dir_z;
 	int		fov;
+	t_tuple up;
+	t_tuple forward;
+	t_tuple right;
 }	t_camera;
 
 typedef struct s_light
@@ -260,7 +263,7 @@ t_intersection	*hit(t_intersection *inter);
 void add_intersection(t_intersection **head, t_shape *shape, double t);
 
 t_intersection	*intersect(t_ray *ray, t_list *shapelist);
-t_intersection	*intersect_sphere(t_ray *ray, t_sphere *sphere);
+t_intersection	*intersect_sphere(t_ray *ray, t_sphere *_sphere, t_intersection *intersections);
 
 t_ray generate_ray(t_camera *camera, int x, int y, int width, int height);
 #endif
