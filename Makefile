@@ -10,40 +10,50 @@ SRCS		=	main.c init.c hook.c \
 
 OBJS		=	${SRCS:.c=.o}
 
-CFLAGS		=	-Werror -Wextra -Werror -I ${MLXDIR} -I ${LIBFTDIR}
-CFLAGS		+=	-g3
-
 LIBFTDIR	=	./libft
 LIBFT		=	${LIBFTDIR}/libft.a
 LIBFTFLAGS	=	 -L ${LIBFTDIR} -lft
 
-MLXDIR		=	./mlx
-MLX			=	${MLXDIR}/libmlx.a
-MLXFLAGS	=	-L ${MLXDIR} -lmlx -framework OpenGL -framework AppKit
+OS := $(shell uname)
 
-all			: ${NAME}
+ifeq (${OS}, Darwin)
+	MLXDIR := mlx
+	MLX := ${MLXDIR}/libmlx.a
+	MLXFLAGS = -L$(MLXDIR) -lmlx -framework OpenGL -framework Appkit -L/usr/lib -lm
+else ifeq (${OS}, Linux)
+    MLXDIR := mlx_linux
+	MLX 	= ${MLXDIR}/libmlx_Linux.a
+	MLXFLAGS = -L$(MLXDIR) -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -lz
+endif
 
-%.o			:	%.c
+CFLAGS		=	-Werror -Wextra -Werror
+CFLAGS		+=	-I ${LIBFTDIR}
+CFLAGS		+=	-I ${MLXDIR}
+CFLAGS		+=	-g3
+
+all					: ${NAME}
+
+%.o					:	%.c
 			cc ${CFLAGS} $< -c -o $@
 
-${NAME}		:	${OBJS} ${MLX} ${LIBFT}
+${NAME}				:	${MLX} ${LIBFT} ${OBJS} 
 			cc ${CFLAGS} ${OBJS} ${MLXFLAGS} ${LIBFTFLAGS} -o ${NAME}
 
-${MLX}		:
+${MLX}	:
 			make -C ${MLXDIR}
 
-${LIBFT}	:
+${LIBFT}:
 			make -C ${LIBFTDIR}
 
-clean		:
+clean				:
 			rm -f ${OBJS}
 			make -C ${LIBFTDIR} clean
 
-fclean		:	clean
+fclean				:	clean
 			rm -f ${NAME}
 			rm -f ${LIBFT}
 			make -C ${MLXDIR} clean
 
-re			: fclean all
+re					: fclean all
 
-.PHONY		:	all clean fclean
+.PHONY				:	all clean fclean
