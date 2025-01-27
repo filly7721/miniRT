@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 16:24:48 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/22 11:13:36 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/27 14:11:31 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	parse_cylinder(char *line, t_environment *env)
 		return (free_split(split));
 	if (!parse_cylinder_values(split, cylinder))
 	{
-		free_cylinder(cylinder, split);
+		free_cylinder2(cylinder, split);
 		return ;
 	}
 	add_cylinder_to_env(env, cylinder);

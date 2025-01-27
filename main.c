@@ -261,7 +261,7 @@ void    trace_rays(t_minirt *minirt)
             else
                 pixel_put(&minirt->data, x, y, 0x00000000);
                 // write_pixel(&minirt->data, x, y, minirt->width, minirt->height, (t_color){0, 0, 0});
-            //! free intersections
+            // free_intersections(intersections);
             x++;
 
         }
@@ -291,6 +291,7 @@ int main(int arc, char** arv)
     mlx_key_hook(minirt->window, keyboard_handler, minirt);
     mlx_hook(minirt->window, 17, 1L << 0, free_exit, minirt);
     mlx_loop(minirt->mlx);
-
     deinit(minirt);
+    free_minirt(minirt);
+    return (0);
 }
