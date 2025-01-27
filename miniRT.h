@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:11:01 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/25 10:04:25 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/26 10:00:36 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,9 @@ typedef struct s_camera
 	float	dir_y;
 	float	dir_z;
 	int		fov;
-	t_tuple up;
-	t_tuple forward;
-	t_tuple right;
+	t_tuple	up;
+	t_tuple	forward;
+	t_tuple	right;
 }	t_camera;
 
 typedef struct s_light
@@ -265,5 +265,5 @@ void add_intersection(t_intersection **head, t_shape *shape, double t);
 t_intersection	*intersect(t_ray *ray, t_list *shapelist);
 t_intersection	*intersect_sphere(t_ray *ray, t_sphere *_sphere, t_intersection *intersections);
 
-t_ray generate_ray(t_camera *camera, int x, int y, int width, int height);
+t_ray	generate_ray(t_minirt *minirt, int x, int y);
 #endif

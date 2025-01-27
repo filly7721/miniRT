@@ -147,19 +147,15 @@ void print_shape_type(t_shape *shape)
     }
 }
 
-t_ray generate_ray2(t_camera *camera, int x, int y, int width, int height)
+void init_camera(t_camera *camera)
 {
-    double aspect_ratio = (double)width / height;
-    double pixel_ndc_x = (x + 0.5) / width;  // Normalized device coordinates (x)
-    double pixel_ndc_y = (y + 0.5) / height; // Normalized device coordinates (y)
-    double pixel_camera_x = (2 * pixel_ndc_x - 1) * aspect_ratio * camera->fov;
-    double pixel_camera_y = (1 - 2 * pixel_ndc_y) * camera->fov;
-
-    t_tuple direction = normalize_tuple((t_tuple){pixel_camera_x, pixel_camera_y, 1.0, 0.0});
-    t_tuple origin = {camera->x, camera->y, camera->z, 1.0}; // Use camera's x, y, z as the origin
-    return (t_ray){origin, direction};
+    camera->forward = normalize_tuple(set_tuple(camera->dir_x, camera->dir_y, camera->dir_z, 0.0));
+	camera->up = set_tuple(0.0, 1.0, 0.0, 0.0); // Assume world up
+	if (fabs(camera->forward.y) == 1.0)
+		camera->up = normalize_tuple(set_tuple(1.0, 0.0, 0.0, 0.0));
+	camera->right = normalize_tuple(cross_tuple(camera->up, camera->forward));
+	camera->up = cross_tuple(camera->forward, camera->right);
 }
-
 
 void    trace_rays(t_minirt *minirt)
 {
@@ -169,13 +165,14 @@ void    trace_rays(t_minirt *minirt)
     t_intersection *intersections;
     t_shape *current_shape;
 
+    init_camera(&minirt->env->camera);
     y = 0;
     while (y < minirt->height)
     {
         x = 0;
         while (x < minirt->width)
         {
-            ray = generate_ray(&minirt->env->camera, x, y, minirt->width, minirt->height);
+            ray = generate_ray(minirt, x, y);
             // ray.direction = mul_tuple(ray.direction, -1);
             // dprintf(2, "(%.2f, %.2f, %.2f) ", ray.direction.x, ray.direction.y, ray.direction.z);
             intersections = intersect(&ray, minirt->env->shapes);
