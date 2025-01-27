@@ -157,6 +157,82 @@ void init_camera(t_camera *camera)
 	camera->up = cross_tuple(camera->forward, camera->right);
 }
 
+t_intersection	*closest_hit(t_intersection	*list)
+{
+	t_intersection	*closest;
+	t_intersection	*temp;
+
+	temp = list;
+	closest = list;
+	while (temp->next)
+	{
+		temp = temp->next;
+		if (temp->t > 0 && temp->t < closest->t)
+			closest = temp;
+	}
+	return (closest);
+}
+bool	eq_tuples(t_tuple t1, t_tuple t2)
+{
+	t_tuple	res;
+	
+	res = sub_tuples(t2, t1);
+	if (res.x > 0.001 || res.y > 0.001 || res.z > 0.001)
+		return (false);
+	return (true);
+}
+
+double	get_brightness(t_minirt *minirt, t_tuple hit_point, t_tuple normal)
+{
+	t_tuple			lightsource;
+	double			brightness;
+	t_intersection	*intersections;
+	t_ray			ray;
+
+	ray.origin = set_point(minirt->env->light.x, minirt->env->light.y, minirt->env->light.z);
+	ray.direction = normalize_tuple(sub_tuples(hit_point, ray.origin));
+	intersections = intersect(&ray, minirt->env->shapes);
+	if (eq_tuples(
+		add_tuples(
+		mul_tuple(ray.direction, closest_hit(intersections)->t),
+		ray.origin),
+		hit_point)
+		 == false)
+		return minirt->env->ambient.intensity;
+	lightsource = sub_tuples(lightsource, hit_point);
+	lightsource = normalize_tuple(lightsource);
+	brightness = dot_tuple(lightsource, normal);
+	if (brightness < 0)
+		brightness = 0;
+	return (brightness * (1.0 - minirt->env->ambient.intensity) + minirt->env->ambient.intensity);
+}
+
+t_tuple	get_sphere_color(t_minirt *minirt, t_ray *ray, t_intersection *inter, t_sphere *sp)
+{
+	t_tuple	albedo;
+	t_tuple	hp;
+	t_tuple	normal;
+
+	albedo = set_tuple(sp->r / 255.0, sp->g / 255.0, sp->b / 255.0, 0);
+	hp = add_tuples(mul_tuple(ray->direction, inter->t), ray->origin);
+	normal = normalize_tuple(sub_tuples(hp, set_point(sp->x, sp->y, sp->z)));
+
+	return mul_tuple(albedo, get_brightness(minirt, hp, normal));
+}
+
+t_tuple	get_color(t_minirt *minirt, t_ray *ray, t_intersection *intersection)
+{
+	t_tuple	color;
+
+	if (intersection->shape->type == sphere)
+		color = get_sphere_color(minirt, ray, intersection, intersection->shape->sphere);
+	else if (intersection->shape->type == cylinder)
+		color = set_tuple(intersection->shape->cylinder->r / 255.0, intersection->shape->cylinder->g / 255.0, intersection->shape->cylinder->b / 255.0, 0);
+	else if (intersection->shape->type == plane)
+		color = set_tuple(intersection->shape->plane->r / 255.0, intersection->shape->plane->g / 255.0, intersection->shape->plane->b / 255.0, 0);
+	return (color);
+}
+
 void    trace_rays(t_minirt *minirt)
 {
     int x;
@@ -177,8 +253,11 @@ void    trace_rays(t_minirt *minirt)
             // dprintf(2, "(%.2f, %.2f, %.2f) ", ray.direction.x, ray.direction.y, ray.direction.z);
             intersections = intersect(&ray, minirt->env->shapes);
             if (intersections != NULL)
-                pixel_put(&minirt->data, x, y, 0x00ff0000);
+			{
+				t_tuple color = get_color(minirt, &ray, closest_hit(intersections));
+                pixel_put(&minirt->data, x, y, rgbtoint(color));
                 // write_pixel(&minirt->data, x, y, minirt->width, minirt->height, (t_color){1, 0, 0});
+			}
             else
                 pixel_put(&minirt->data, x, y, 0x00000000);
                 // write_pixel(&minirt->data, x, y, minirt->width, minirt->height, (t_color){0, 0, 0});

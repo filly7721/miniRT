@@ -217,6 +217,7 @@ void			free_cylinder(t_cylinder *cylinder, char **split);
 //tuples
 t_tuple			set_tuple(double x, double y, double z, double w);
 t_tuple			set_point(double x, double y, double z);
+t_tuple			set_vector(double x, double y, double z);
 t_tuple			add_tuples(t_tuple t1, t_tuple t2);
 t_tuple			sub_tuples(t_tuple t1, t_tuple t2);
 t_tuple			mul_tuple(t_tuple t, double scalar);
