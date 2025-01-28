@@ -12,6 +12,17 @@
 
 #include "miniRT.h"
 
+t_shape	*create_shape_ref(void	*shape, t_shapeType type)
+{
+	t_shape	*ref;
+	ref = malloc(sizeof(t_shape));
+	if (!ref)
+		return (NULL);
+	ref->shape = shape;
+	ref->type = type;
+	return (ref);
+}
+
 t_intersection	*intersect(t_ray *ray, t_list *shapelist)
 {
 	t_intersection	*intersection;
