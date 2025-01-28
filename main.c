@@ -105,7 +105,7 @@ double	get_brightness(t_minirt *minirt, t_tuple hit_point, t_tuple normal)
 	if (eq_tuples(add_tuples(mul_tuple(ray.direction, \
 		closest_hit(intersections)->t), ray.origin), hit_point) == false)
 		return (minirt->env->ambient.intensity);
-	lightsource = sub_tuples(lightsource, hit_point);
+	lightsource = sub_tuples(ray.origin, hit_point);
 	lightsource = normalize_tuple(lightsource);
 	brightness = dot_tuple(lightsource, normal);
 	if (brightness < 0)
