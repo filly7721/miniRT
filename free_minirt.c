@@ -50,7 +50,7 @@ void	free_intersections(t_intersection *head)
 	{
 		temp = head;
 		head = head->next;
-		// free_shape(temp->shape);
+		free(temp->shape);
 		free(temp);
 	}
 }
@@ -71,7 +71,7 @@ void	free_minirt(t_minirt *minirt)
 {
 	if (minirt)
 	{
-		free_mlxdata(&minirt->data);
+		// free_mlxdata(&minirt->data);
 		free_env(minirt->env);
 		free(minirt);
 	}

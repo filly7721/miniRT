@@ -51,6 +51,7 @@ void	deinit(t_minirt *minirt)
 int	free_exit(t_minirt *minirt)
 {
 	deinit(minirt);
+	free_minirt(minirt);
 	exit(0);
 	return (0);
 }

@@ -74,4 +74,5 @@ void	parse_light(char *line, t_light *light)
 		free_split(split);
 		return ;
 	}
+	free_split(split);
 }

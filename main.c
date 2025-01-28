@@ -102,8 +102,9 @@ double	get_brightness(t_minirt *minirt, t_tuple hit_point, t_tuple normal)
 			minirt->env->light.x, minirt->env->light.y, minirt->env->light.z);
 	ray.direction = normalize_tuple(sub_tuples(hit_point, ray.origin));
 	intersections = intersect(&ray, minirt->env->shapes);
-	if (eq_tuples(add_tuples(mul_tuple(ray.direction, \
-		closest_hit(intersections)->t), ray.origin), hit_point) == false)
+	t_tuple light_hit = add_tuples(mul_tuple(ray.direction, closest_hit(intersections)->t), ray.origin);
+	free_intersections(intersections);
+	if (eq_tuples(light_hit, hit_point) == false)
 		return (minirt->env->ambient.intensity);
 	lightsource = sub_tuples(ray.origin, hit_point);
 	lightsource = normalize_tuple(lightsource);
@@ -186,6 +187,7 @@ int	main(int arc, char** arv)
 		return (1);
 	}
 	env.shapes = NULL;
+	env.camera.fov = 0;
 	parsing(&env, arv[1]);
 	minirt = init_minirt(2000, 1000, &env);
 	if (!minirt)

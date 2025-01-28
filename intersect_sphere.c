@@ -54,18 +54,21 @@ t_intersection *intersect_sphere(t_ray *ray, t_sphere *_sphere, t_intersection *
     // printf("discriminant equals: %f\n", discriminant);
     double t1 = (-b - sqrt(discriminant)) / (2 * a);
     double t2 = (-b + sqrt(discriminant)) / (2 * a);
-    t_shape *shape = malloc(sizeof(t_shape));
-    shape->type = sphere;
-    shape->sphere = _sphere;
+    t_shape *shape1 = malloc(sizeof(t_shape));
+    shape1->type = sphere;
+    shape1->sphere = _sphere;
+    t_shape *shape2 = malloc(sizeof(t_shape));
+    shape2->type = sphere;
+    shape2->sphere = _sphere;
     // printf("t1: %f, t2: %f\n", t1, t2);
     if (t1 >= 0)
     {
-        add_intersection(&intersections, shape, t1);
+        add_intersection(&intersections, shape1, t1);
         // printf("Intersection at t1: %f\n", t1);
     }
     if (t2 >= 0)
     {
-        add_intersection(&intersections, shape, t2);
+        add_intersection(&intersections, shape2, t2);
         // printf("Intersection at t2: %f\n", t2);
     }
     return (intersections);
