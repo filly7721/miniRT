@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 11:36:29 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/25 10:04:11 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/28 09:39:40 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,13 @@ t_tuple	mul_tuple(t_tuple t, double scalar)
 	return (set_tuple(t.x * scalar, t.y * scalar, t.z * scalar, t.w * scalar));
 }
 
-t_tuple scale_tuple(t_tuple tuple, double scalar)
+t_tuple	scale_tuple(t_tuple tuple, double scalar)
 {
-    t_tuple scaled;
+	t_tuple	scaled;
 
-    scaled.x = tuple.x * scalar;
-    scaled.y = tuple.y * scalar;
-    scaled.z = tuple.z * scalar;
-    scaled.w = tuple.w * scalar;
-    return scaled;
+	scaled.x = tuple.x * scalar;
+	scaled.y = tuple.y * scalar;
+	scaled.z = tuple.z * scalar;
+	scaled.w = tuple.w * scalar;
+	return (scaled);
 }
-
