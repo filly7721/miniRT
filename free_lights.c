@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 14:15:48 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/27 14:34:47 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/28 09:29:34 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 
 void	free_ray(t_ray *ray)
 {
-	if(ray)
+	if (ray)
 		free(ray);
 }
+
 void	free_ambient(t_ambient *ambient)
 {
 	if (ambient)
@@ -37,6 +38,6 @@ void	free_mlxdata(t_mlxdata *mlxdata)
 
 void	free_camera(t_camera *camera)
 {
-	if(camera)
+	if (camera)
 		free(camera);
 }
