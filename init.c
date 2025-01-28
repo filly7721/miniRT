@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 10:21:18 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/28 09:18:18 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/28 10:10:05 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ void	deinit(t_minirt *minirt)
 		mlx_destroy_window(minirt->mlx, minirt->window);
 	if (minirt->mlx)
 		free(minirt->mlx);
-	free_env(minirt->env);
 }
 
 int	free_exit(t_minirt *minirt)
