@@ -276,5 +276,7 @@ t_shape			*create_shape_ref(void	*shape, t_shapeType type);
 t_intersection	*intersect(t_ray *ray, t_list *shapelist);
 t_intersection	*intersect_sphere(t_ray *ray, t_sphere *_sphere, \
 	t_intersection *intersections);
+void			add_intersection(t_intersection **head, t_shape *shape, double t);
 t_ray			generate_ray(t_minirt *minirt, int x, int y);
+t_intersection	*intersect_cylinder(t_ray *ray, t_cylinder *cy, t_intersection *intersections);
 #endif

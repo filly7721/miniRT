@@ -127,6 +127,18 @@ t_tuple	get_sphere_color(t_minirt *minirt, t_ray *ray, t_intersection *inter, t_
 	return (mul_tuple(albedo, get_brightness(minirt, hp, normal)));
 }
 
+t_tuple	get_cylinder_color(t_minirt *minirt, t_ray *ray, t_intersection *inter, t_cylinder *cy)
+{
+	t_tuple	albedo;
+	t_tuple	hp;
+	t_tuple	normal;
+
+	albedo = set_tuple(cy->r / 255.0, cy->g / 255.0, cy->b / 255.0, 0);
+	hp = add_tuples(mul_tuple(ray->direction, inter->t), ray->origin);
+	normal = normalize_tuple(set_vector(hp.x, 0, hp.z));
+	return (mul_tuple(albedo, get_brightness(minirt, hp, normal)));
+}
+
 t_tuple	get_color(t_minirt *minirt, t_ray *ray, t_intersection *intersection)
 {
 	t_tuple	color;
@@ -134,9 +146,7 @@ t_tuple	get_color(t_minirt *minirt, t_ray *ray, t_intersection *intersection)
 	if (intersection->shape->type == sphere)
 		color = get_sphere_color(minirt, ray, intersection, intersection->shape->sphere);
 	else if (intersection->shape->type == cylinder)
-		color = set_tuple(intersection->shape->cylinder->r / 255.0, \
-			intersection->shape->cylinder->g / 255.0, \
-			intersection->shape->cylinder->b / 255.0, 0);
+		color = get_cylinder_color(minirt, ray, intersection, intersection->shape->cylinder);
 	else if (intersection->shape->type == plane)
 		color = set_tuple(intersection->shape->plane->r / 255.0, \
 			intersection->shape->plane->g / 255.0, \
