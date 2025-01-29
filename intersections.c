@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 10:15:23 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/24 11:52:06 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/29 12:52:39 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_shape	*create_shape_ref(void	*shape, t_shapeType type)
 	return (ref);
 }
 
-void add_intersection(t_intersection **head, t_shape *shape, double t)
+void	add_intersection(t_intersection **head, t_shape *shape, double t)
 {
 	t_intersection	*node;
 	t_intersection	*temp;
@@ -32,7 +32,7 @@ void add_intersection(t_intersection **head, t_shape *shape, double t)
 	node->t = t;
 	node->shape = shape;
 	node->next = NULL;
-	if(*head == NULL)
+	if (*head == NULL)
 		*head = node;
 	else
 	{
@@ -46,8 +46,7 @@ void add_intersection(t_intersection **head, t_shape *shape, double t)
 t_intersection	*intersect(t_ray *ray, t_list *shapelist)
 {
 	t_intersection	*intersection;
-
-	t_list *temp;
+	t_list			*temp;
 
 	temp = shapelist;
 	intersection = NULL;
@@ -55,12 +54,12 @@ t_intersection	*intersect(t_ray *ray, t_list *shapelist)
 	{
 		t_shape *shape = temp->content;
 		if(shape->type == sphere)
-		{
 			intersection = intersect_sphere(ray, shape->sphere, intersection);
-		}
-		if(shape->type == cylinder)
-		{
+		if (shape->type == cylinder)
 			intersection = intersect_cylinder(ray, shape->cylinder, intersection);
+		if (shape->type == plane)
+		{
+			intersection = intersect_plane(ray, shape->plane, intersection);
 		}
 		temp = temp->next;
 	}

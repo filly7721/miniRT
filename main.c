@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 09:30:52 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/28 10:51:04 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/29 15:31:33 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ double	get_brightness(t_minirt *minirt, t_tuple hit_point, t_tuple normal)
 	ray.origin = add_tuples(ray.origin, mul_tuple(ray.direction, 0.001));
 	intersections = intersect(&ray, minirt->env->shapes);
 	lightsource = set_point(minirt->env->light.x, minirt->env->light.y, minirt->env->light.z);
-	if (intersections && closest_hit(intersections)->t < mag_tuple(sub_tuples(lightsource, ray.origin)))
+	if (intersections && closest_hit(intersections)->t < mag_tuple(sub_tuples(lightsource, ray.origin)) + 0.001)
 		return (minirt->env->ambient.intensity);
 	brightness = dot_tuple(ray.direction, normal);
 	if (brightness < 0)
@@ -141,6 +141,19 @@ t_tuple	get_cylinder_color(t_minirt *minirt, t_ray *ray, t_intersection *inter, 
 	return (mul_tuple(albedo, get_brightness(minirt, hp, normal)));
 }
 
+t_tuple	get_plane_color(t_minirt *minirt, t_ray *ray, t_intersection *inter, t_plane *pl)
+{
+	t_tuple	albedo;
+	t_tuple	hp;
+	t_tuple	normal;
+
+	albedo = set_tuple(pl->r / 255.0, pl->g / 255.0, pl->b / 255.0, 0);
+	normal = set_vector(0, 1, 0);
+	hp = add_tuples(mul_tuple(ray->direction, inter->t), ray->origin);
+
+	return (mul_tuple(albedo, get_brightness(minirt, hp, normal)));
+}
+
 t_tuple	get_color(t_minirt *minirt, t_ray *ray, t_intersection *intersection)
 {
 	t_tuple	color;
@@ -150,9 +163,7 @@ t_tuple	get_color(t_minirt *minirt, t_ray *ray, t_intersection *intersection)
 	else if (intersection->shape->type == cylinder)
 		color = get_cylinder_color(minirt, ray, intersection, intersection->shape->cylinder);
 	else if (intersection->shape->type == plane)
-		color = set_tuple(intersection->shape->plane->r / 255.0, \
-			intersection->shape->plane->g / 255.0, \
-			intersection->shape->plane->b / 255.0, 0);
+		color = get_plane_color(minirt, ray, intersection, intersection->shape->plane);
 	return (color);
 }
 

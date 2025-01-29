@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 11:19:48 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/29 11:26:33 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/29 15:46:35 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ void	line_parsing(char *line, t_environment *env)
 	else if (ft_strncmp(line, "cy", 2) == 0)
 		parse_cylinder(line, env);
 	else
-		printf("Error: Unknown element type in line: %s\n", line);
+	{
+		printf("Error: Unknown element type %s\n");
+		exit(1);
+	}
 }
 
 int	light_ratio(t_environment *env)
