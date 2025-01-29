@@ -12,7 +12,7 @@
 
 #include "miniRT.h"
 
-t_matrix	translation(t_tuple *tuple)
+t_matrix	create_translation(t_tuple *tuple)
 {
 	t_matrix	mat;
 

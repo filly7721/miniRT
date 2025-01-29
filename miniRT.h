@@ -126,17 +126,18 @@ typedef struct s_plane
 
 typedef struct s_cylinder
 {
-	float	x;
-	float	y;
-	float	z;
-	float	axis_x;
-	float	axis_y;
-	float	axis_z;
-	float	radius;
-	float	height;
-	int		r;
-	int		g;
-	int		b;
+	float		x;
+	float		y;
+	float		z;
+	float		axis_x;
+	float		axis_y;
+	float		axis_z;
+	float		radius;
+	float		height;
+	int			r;
+	int			g;
+	int			b;
+	t_matrix	transform;
 }	t_cylinder;
 
 typedef enum e_shapeType
@@ -258,7 +259,7 @@ double			determinant_2x2(t_matrix *mat);
 double			determinant_3x3(t_matrix *mat);
 double			determinant_4x4(t_matrix *mat);
 t_intersection	*create_node(t_shape *shape, double t);
-t_matrix		translation(t_tuple *tuple);
+t_matrix		create_translation(t_tuple *tuple);
 
 //Rays
 t_ray			*create_ray(t_tuple origin, t_tuple direction);
