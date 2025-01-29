@@ -12,10 +12,40 @@
 
 #include "miniRT.h"
 
+t_shape	*create_shape_ref(void	*shape, t_shapeType type)
+{
+	t_shape	*ref;
+	ref = malloc(sizeof(t_shape));
+	if (!ref)
+		return (NULL);
+	ref->shape = shape;
+	ref->type = type;
+	return (ref);
+}
+
+void add_intersection(t_intersection **head, t_shape *shape, double t)
+{
+	t_intersection	*node;
+	t_intersection	*temp;
+
+	node = malloc(sizeof(t_intersection));
+	node->t = t;
+	node->shape = shape;
+	node->next = NULL;
+	if(*head == NULL)
+		*head = node;
+	else
+	{
+		temp = *head;
+		while (temp->next != NULL)
+			temp = temp->next;
+		temp->next = node;
+	}
+}
+
 t_intersection	*intersect(t_ray *ray, t_list *shapelist)
 {
 	t_intersection	*intersection;
-	t_sphere	*_sphere;
 
 	t_list *temp;
 
@@ -26,8 +56,11 @@ t_intersection	*intersect(t_ray *ray, t_list *shapelist)
 		t_shape *shape = temp->content;
 		if(shape->type == sphere)
 		{
-			_sphere = shape->sphere;
-			intersection = intersect_sphere(ray, _sphere, intersection);
+			intersection = intersect_sphere(ray, shape->sphere, intersection);
+		}
+		if(shape->type == cylinder)
+		{
+			intersection = intersect_cylinder(ray, shape->cylinder, intersection);
 		}
 		temp = temp->next;
 	}

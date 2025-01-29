@@ -102,8 +102,9 @@ double	get_brightness(t_minirt *minirt, t_tuple hit_point, t_tuple normal)
 			minirt->env->light.x, minirt->env->light.y, minirt->env->light.z);
 	ray.direction = normalize_tuple(sub_tuples(hit_point, ray.origin));
 	intersections = intersect(&ray, minirt->env->shapes);
-	if (eq_tuples(add_tuples(mul_tuple(ray.direction, \
-		closest_hit(intersections)->t), ray.origin), hit_point) == false)
+	t_tuple light_hit = add_tuples(mul_tuple(ray.direction, closest_hit(intersections)->t), ray.origin);
+	free_intersections(intersections);
+	if (eq_tuples(light_hit, hit_point) == false)
 		return (minirt->env->ambient.intensity);
 	lightsource = sub_tuples(ray.origin, hit_point);
 	lightsource = normalize_tuple(lightsource);
@@ -126,6 +127,18 @@ t_tuple	get_sphere_color(t_minirt *minirt, t_ray *ray, t_intersection *inter, t_
 	return (mul_tuple(albedo, get_brightness(minirt, hp, normal)));
 }
 
+t_tuple	get_cylinder_color(t_minirt *minirt, t_ray *ray, t_intersection *inter, t_cylinder *cy)
+{
+	t_tuple	albedo;
+	t_tuple	hp;
+	t_tuple	normal;
+
+	albedo = set_tuple(cy->r / 255.0, cy->g / 255.0, cy->b / 255.0, 0);
+	hp = add_tuples(mul_tuple(ray->direction, inter->t), ray->origin);
+	normal = normalize_tuple(set_vector(hp.x, 0, hp.z));
+	return (mul_tuple(albedo, get_brightness(minirt, hp, normal)));
+}
+
 t_tuple	get_color(t_minirt *minirt, t_ray *ray, t_intersection *intersection)
 {
 	t_tuple	color;
@@ -133,9 +146,7 @@ t_tuple	get_color(t_minirt *minirt, t_ray *ray, t_intersection *intersection)
 	if (intersection->shape->type == sphere)
 		color = get_sphere_color(minirt, ray, intersection, intersection->shape->sphere);
 	else if (intersection->shape->type == cylinder)
-		color = set_tuple(intersection->shape->cylinder->r / 255.0, \
-			intersection->shape->cylinder->g / 255.0, \
-			intersection->shape->cylinder->b / 255.0, 0);
+		color = get_cylinder_color(minirt, ray, intersection, intersection->shape->cylinder);
 	else if (intersection->shape->type == plane)
 		color = set_tuple(intersection->shape->plane->r / 255.0, \
 			intersection->shape->plane->g / 255.0, \
@@ -186,6 +197,7 @@ int	main(int arc, char** arv)
 		return (1);
 	}
 	env.shapes = NULL;
+	env.camera.fov = 0;
 	parsing(&env, arv[1]);
 	minirt = init_minirt(2000, 1000, &env);
 	if (!minirt)
