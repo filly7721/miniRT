@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:11:01 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/29 11:46:39 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/29 15:12:15 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -280,4 +280,5 @@ void			add_intersection(t_intersection **head, t_shape *shape, double t);
 t_ray			generate_ray(t_minirt *minirt, int x, int y);
 t_intersection	*intersect_cylinder(t_ray *ray, t_cylinder *cy, t_intersection *intersections);
 t_intersection	*intersect_plane(t_ray *ray, t_plane *plane, t_intersection *head);
+t_ray			apply_ray_transform(t_ray *old_ray, t_tuple translation);
 #endif
