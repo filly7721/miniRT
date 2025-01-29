@@ -111,7 +111,7 @@ double	get_brightness(t_minirt *minirt, t_tuple hit_point, t_tuple normal)
 	brightness = dot_tuple(lightsource, normal);
 	if (brightness < 0)
 		brightness = 0;
-	return (brightness * (1.0 - minirt->env->ambient.intensity)
+	return (brightness * minirt->env->light.bright * (1.0 - minirt->env->ambient.intensity)
 		+ minirt->env->ambient.intensity);
 }
 
