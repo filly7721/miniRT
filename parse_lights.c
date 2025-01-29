@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 13:32:08 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/22 11:15:01 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/28 12:05:46 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	parse_ambient(char *line, t_ambient *ambient)
 	free(space_removed);
 	if (!split)
 		return ;
-	ambient->intensity = strtof(split[1], NULL); //change to ft_strtof
+	ambient->intensity = strtof(split[1], NULL);
 	if (!validate_ambient(ambient))
 	{
 		free_split(split);

@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 11:19:48 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/28 11:47:08 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/29 11:26:33 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	valid_input(t_environment *env)
 	t_list	*current;
 
 	current = env->shapes;
-	if (!env->camera.fov)
+	if (!env->camera.fov || (env->camera.fov < 0 || env->camera.fov > 180))
 		return (0);
 	else if (!light_ratio(env))
 		return (0);
