@@ -17,13 +17,13 @@ t_intersection *intersect_cylinder(t_ray *ray, t_cylinder *cy, t_intersection *i
 	t_tuple sphere_to_ray;
 	double discriminant;
 	t_tuple center;
+	t_ray newray;
 
-	// center = set_point(_sphere->x, _sphere->y, _sphere->z);
-	
-	sphere_to_ray = sub_tuples(ray->origin, center);
-	double a = ray->direction.x * ray->direction.x + ray->direction.z * ray->direction.z;
-	double b = 2 * (ray->origin.x * ray->direction.x + ray->origin.z * ray->direction.z);
-	double c = ray->origin.x * ray->origin.x + ray->origin.z * ray->origin.z - 1;
+	newray = apply_ray_transform(ray, set_vector(cy->x, cy->y, cy->z));	
+	sphere_to_ray = sub_tuples(newray.origin, center);
+	double a = newray.direction.x * newray.direction.x + newray.direction.z * newray.direction.z;
+	double b = 2 * (newray.origin.x * newray.direction.x + newray.origin.z * newray.direction.z);
+	double c = newray.origin.x * newray.origin.x + newray.origin.z * newray.origin.z - 1;
 	discriminant = b * b - 4 * a * c;
 	if (discriminant < 0)
 		return intersections;
