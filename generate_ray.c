@@ -12,6 +12,15 @@
 
 #include "miniRT.h"
 
+t_ray	apply_ray_transform(t_ray *old_ray, t_tuple translation)
+{
+	t_ray	new_ray;
+
+	new_ray.origin = add_tuples(old_ray->origin, mul_tuple(translation, -1));
+	new_ray.direction = mul_tuple(old_ray->direction, 1);
+	return (new_ray);
+}
+
 t_ray	generate_ray(t_minirt *minirt, int x, int y)
 {
 	double	viewpoint_width;
