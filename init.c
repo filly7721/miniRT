@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 10:21:18 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/28 10:10:05 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/28 11:57:26 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	deinit(t_minirt *minirt)
 int	free_exit(t_minirt *minirt)
 {
 	deinit(minirt);
+	free_minirt(minirt);
 	exit(0);
 	return (0);
 }
