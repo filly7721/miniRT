@@ -131,12 +131,13 @@ t_tuple	get_cylinder_color(t_minirt *minirt, t_ray *ray, t_intersection *inter, 
 	t_tuple	albedo;
 	t_tuple	hp;
 	t_tuple	normal;
-	// t_ray	newray;
+	t_ray	newray;
 
-	// newray = apply_ray_transform(ray, set_vector(cy->x, cy->y, cy->z));	
+	newray = apply_ray_transform(ray, set_vector(cy->x, cy->y, cy->z));
 	albedo = set_tuple(cy->r / 255.0, cy->g / 255.0, cy->b / 255.0, 0);
-	hp = add_tuples(mul_tuple(ray->direction, inter->t), ray->origin);
+	hp = add_tuples(mul_tuple(newray.direction, inter->t), newray.origin);
 	normal = normalize_tuple(set_vector(hp.x, 0, hp.z));
+	hp = add_tuples(mul_tuple(ray->direction, inter->t), ray->origin );
 	return (mul_tuple(albedo, get_brightness(minirt, hp, normal)));
 }
 
