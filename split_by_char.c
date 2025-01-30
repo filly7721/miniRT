@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 13:29:53 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/30 12:49:04 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/30 13:34:45 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,28 +96,28 @@ int	split_rgb(char *rgb, int *r, int *g, int *b)
 	return (1);
 }
 
-int is_valid_number( char *str)
+int	is_valid_number( char *str)
 {
-    int i;
-    int has_dot;
+	int	i;
+	int	has_dot;
 
 	i = 0;
-    if (!str || !str[i])
-        return (0);
-    if (str[i] == '-')
-        i++;
+	if (!str || !str[i])
+		return (0);
+	if (str[i] == '-')
+		i++;
 	has_dot = 0;
-    while (str[i])
-    {
-        if (str[i] == '.')
-        {
-            if (has_dot)
-                return (0);
-            has_dot = 1;
-        }
-        else if (!ft_isdigit(str[i]))
-            return (0);
-        i++;
-    }
-    return (1);
+	while (str[i])
+	{
+		if (str[i] == '.')
+		{
+			if (has_dot)
+				return (0);
+			has_dot = 1;
+		}
+		else if (!ft_isdigit(str[i]))
+			return (0);
+		i++;
+	}
+	return (1);
 }

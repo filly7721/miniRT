@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:11:01 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/30 11:48:56 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/30 13:35:25 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,7 +192,7 @@ int				free_exit(t_minirt *minirt);
 // Lights
 void			parsing(t_environment *env, const char *file);
 double			ft_atof(char *str);
-int is_valid_number(char *str);
+int				is_valid_number(char *str);
 void			parse_ambient(char *line, t_ambient *ambient);
 char			*remove_extra_spaces(const char *line);
 char			**split_by_char(char *space_rem, char deli, int exp_count);
@@ -277,9 +277,12 @@ t_shape			*create_shape_ref(void	*shape, t_shapeType type);
 t_intersection	*intersect(t_ray *ray, t_list *shapelist);
 t_intersection	*intersect_sphere(t_ray *ray, t_sphere *_sphere, \
 	t_intersection *intersections);
-void			add_intersection(t_intersection **head, t_shape *shape, double t);
+void			add_intersection(t_intersection **head, t_shape *shape, \
+	double t);
 t_ray			generate_ray(t_minirt *minirt, int x, int y);
-t_intersection	*intersect_cylinder(t_ray *ray, t_cylinder *cy, t_intersection *intersections);
-t_intersection	*intersect_plane(t_ray *ray, t_plane *plane, t_intersection *head);
+t_intersection	*intersect_cylinder(t_ray *ray, t_cylinder *cy, \
+	t_intersection *intersections);
+t_intersection	*intersect_plane(t_ray *ray, t_plane *plane, \
+	t_intersection *head);
 t_ray			apply_ray_transform(t_ray *old_ray, t_tuple translation);
 #endif

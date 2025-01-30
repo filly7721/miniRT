@@ -6,13 +6,14 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 10:19:17 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/24 12:59:09 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/30 13:29:53 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-t_intersection *intersect_sphere(t_ray *ray, t_sphere *_sphere, t_intersection *intersections)
+t_intersection	*intersect_sphere(t_ray *ray, t_sphere *_sphere, \
+	t_intersection *intersections)
 {
 	t_tuple sphere_to_ray;
 	double discriminant;

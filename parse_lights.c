@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 13:32:08 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/30 12:55:19 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/30 13:33:07 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ void	parse_ambient(char *line, t_ambient *ambient)
 		return ;
 	split = split_by_char(space_removed, ' ', 3);
 	free(space_removed);
-	if (!split)
-		return ;
 	if (!is_valid_number(split[1]))
 	{
 		printf("Invalid ambient intensity\n");
@@ -63,8 +61,6 @@ void	parse_light(char *line, t_light *light)
 		return ;
 	split = split_by_char(space_removed, ' ', 4);
 	free(space_removed);
-	if (!split)
-		return ;
 	if (!is_valid_number(split[2]))
 	{
 		printf("Light: Invalid brightness.\n");
