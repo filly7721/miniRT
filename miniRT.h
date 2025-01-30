@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:11:01 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/29 15:12:15 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/30 10:56:57 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,6 +193,8 @@ int				free_exit(t_minirt *minirt);
 
 // Lights
 void			parsing(t_environment *env, const char *file);
+double			ft_atof(char *str);
+int is_valid_number(char *str);
 void			parse_ambient(char *line, t_ambient *ambient);
 char			*remove_extra_spaces(const char *line);
 char			**split_by_char(char *space_rem, char deli, int exp_count);
