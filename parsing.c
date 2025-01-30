@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 11:19:48 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/29 15:46:35 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/30 09:12:42 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 
 void	line_parsing(char *line, t_environment *env)
 {
+	while (*line == ' ' || *line == '\t' || *line == '\n')
+		line++;
+	if (*line == '\0')
+		return ;
 	if (ft_strncmp(line, "A", 1) == 0)
 		parse_ambient(line, &env->ambient);
 	else if (ft_strncmp(line, "C", 1) == 0)
@@ -28,7 +32,8 @@ void	line_parsing(char *line, t_environment *env)
 		parse_cylinder(line, env);
 	else
 	{
-		printf("Error: Unknown element type %s\n");
+		printf("Error: Unknown element type \n");
+		free_env(env);
 		exit(1);
 	}
 }
