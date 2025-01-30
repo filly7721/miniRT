@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 16:24:48 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/30 11:54:57 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/30 13:23:46 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,11 @@ int	parse_cylinder_values(char **split, t_cylinder *cyl)
 	if (!split_xyz(split[2], &cyl->axis_x, &cyl->axis_y, &cyl->axis_z))
 	{
 		printf("cylinder: Invalid Axis XYZ values.\n");
+		return (0);
+	}
+	if(!is_valid_number(split[3]) || !is_valid_number(split[4]))
+	{
+		printf("Invalid cy radius or height\n");
 		return (0);
 	}
 	cyl->radius = ft_atof(split[3]);
