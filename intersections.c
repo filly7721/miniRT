@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 10:15:23 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/29 12:52:39 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/30 13:30:42 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 t_shape	*create_shape_ref(void	*shape, t_shapeType type)
 {
 	t_shape	*ref;
+
 	ref = malloc(sizeof(t_shape));
 	if (!ref)
 		return (NULL);
@@ -47,16 +48,18 @@ t_intersection	*intersect(t_ray *ray, t_list *shapelist)
 {
 	t_intersection	*intersection;
 	t_list			*temp;
+	t_shape			*shape;
 
 	temp = shapelist;
 	intersection = NULL;
 	while (temp)
 	{
-		t_shape *shape = temp->content;
-		if(shape->type == sphere)
+		shape = temp->content;
+		if (shape->type == sphere)
 			intersection = intersect_sphere(ray, shape->sphere, intersection);
 		if (shape->type == cylinder)
-			intersection = intersect_cylinder(ray, shape->cylinder, intersection);
+			intersection = intersect_cylinder(ray, shape->cylinder,
+					intersection);
 		if (shape->type == plane)
 		{
 			intersection = intersect_plane(ray, shape->plane, intersection);

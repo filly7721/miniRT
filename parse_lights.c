@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 13:32:08 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/28 12:05:46 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/30 13:33:07 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,21 @@ void	parse_ambient(char *line, t_ambient *ambient)
 		return ;
 	split = split_by_char(space_removed, ' ', 3);
 	free(space_removed);
-	if (!split)
-		return ;
-	ambient->intensity = strtof(split[1], NULL);
+	if (!is_valid_number(split[1]))
+	{
+		printf("Invalid ambient intensity\n");
+		exit(1);
+	}
+	ambient->intensity = ft_atof(split[1]);
 	if (!validate_ambient(ambient))
 	{
 		free_split(split);
-		return ;
+		exit(1);
 	}
 	if (!split_rgb(split[2], &ambient->r, &ambient->g, &ambient->b))
 	{
-		printf("Error: Invalid RGB values.\n");
 		free_split(split);
-		return ;
+		exit(1);
 	}
 	free_split(split);
 }
@@ -59,20 +61,21 @@ void	parse_light(char *line, t_light *light)
 		return ;
 	split = split_by_char(space_removed, ' ', 4);
 	free(space_removed);
-	if (!split)
-		return ;
-	light->bright = strtof(split[2], NULL);
+	if (!is_valid_number(split[2]))
+	{
+		printf("Light: Invalid brightness.\n");
+		exit(1);
+	}
+	light->bright = ft_atof(split[2]);
 	if (!split_xyz(split[1], &light->x, &light->y, &light->z))
 	{
-		printf("Light: Invalid XYZ values.\n");
 		free_split(split);
-		return ;
+		exit(1);
 	}
 	if (!split_rgb(split[3], &light->r, &light->g, &light->b))
 	{
-		printf("Light: Invalid RGB values.\n");
 		free_split(split);
-		return ;
+		exit(1);
 	}
 	free_split(split);
 }

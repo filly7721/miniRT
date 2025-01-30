@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 15:19:16 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/24 12:53:49 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/30 13:27:39 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,9 @@ int	validate_sphere(char **split)
 	i = 0;
 	while (i < 4)
 	{
-		//here can add more validation
 		if (!split[i])
 		{
-			printf("Error: Missing expected token at position %d.\n", i + 1);
+			printf("Error: sphere expected token at position %d.\n", i + 1);
 			return (0);
 		}
 		i++;
@@ -42,7 +41,12 @@ t_sphere	*create_sphere(void)
 
 int	parse_sphere_values(char **split, t_sphere *sphere)
 {
-	sphere->diameter = strtof(split[2], NULL);
+	if (!is_valid_number(split[2]))
+	{
+		printf("Invalid sph diameter"); //free here
+		return (1);
+	}
+	sphere->diameter = ft_atof(split[2]);
 	if (!split_xyz(split[1], &sphere->x, &sphere->y, &sphere->z))
 	{
 		printf("sphere: Invalid XYZ values.\n");
@@ -68,7 +72,6 @@ void	add_sphere_to_env(t_environment *env, t_sphere *_sphere)
 		return ;
 	}
 	shape->type = sphere;
-	printf("Shape type set to sphere: %d\n", shape->type); // Debug print
 	shape->sphere = _sphere;
 	ft_lstadd_back(&env->shapes, ft_lstnew(shape));
 }
@@ -92,8 +95,11 @@ void	parse_sphere(char *line, t_environment *env)
 	if (!sphere)
 		return (free_split(split));
 	if (!parse_sphere_values(split, sphere))
-		return (free(sphere), free_split(split));
+	{
+		free(sphere);
+		free_split(split);
+		exit(1);
+	}
 	add_sphere_to_env(env, sphere);
-	printf("Sphere: x:%f, y:%f, z:%f, diam:%f, \n", sphere->x, sphere->y, sphere->z, sphere->diameter); // Debug print
 	free_split(split);
 }
