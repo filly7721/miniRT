@@ -199,6 +199,28 @@ void	trace_rays(t_minirt *minirt)
 	mlx_put_image_to_window(minirt->mlx, minirt->window, minirt->data.img, 0, 0);
 }
 
+void	init_cylinder(t_cylinder *cy)
+{
+	t_tuple	translation;
+
+	translation = set_vector(cy->x, cy->y, cy->z);
+	// cy->transform = create_translation(&translation);
+	// print_mat(&cy->transform);
+}
+
+void	init_shapes(t_minirt *minirt)
+{
+	t_list *curr;
+	
+	curr = minirt->env->shapes;
+	while (curr)
+	{
+		if (((t_shape *)curr->content)->type == cylinder)
+			init_cylinder(((t_shape *)curr->content)->cylinder);
+		curr = curr->next;
+	}
+}
+
 int	main(int arc, char** arv)
 {
 	t_environment	env;
@@ -215,6 +237,7 @@ int	main(int arc, char** arv)
 	minirt = init_minirt(2000, 1000, &env);
 	if (!minirt)
 		return (ft_putstr_fd("init error\n", 2), 1);
+	init_shapes(minirt);
 	trace_rays(minirt);
 	mlx_put_image_to_window(minirt->mlx, minirt->window, \
 		minirt->data.img, 0, 0);
