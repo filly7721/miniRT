@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 16:24:48 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/27 14:11:31 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/30 11:23:04 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ int	parse_cylinder_values(char **split, t_cylinder *cyl)
 		printf("cylinder: Invalid Axis XYZ values.\n");
 		return (0);
 	}
-	cyl->radius = strtof(split[3], NULL);
-	cyl->height = strtof(split[4], NULL);
+	cyl->radius = ft_atof(split[3]);
+	cyl->height = ft_atof(split[4]);
 	if (!split_rgb(split[5], &cyl->r, &cyl->g, &cyl->b))
 	{
 		printf("cylinder: Invalid RGB values.\n");

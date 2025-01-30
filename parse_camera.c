@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 14:45:13 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/22 11:04:00 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/30 11:22:52 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,25 @@
 int	split_xyz(char *xyz, float *x, float *y, float *z)
 {
 	char	**split_xyz;
+	int		i;
 
 	split_xyz = split_by_char(xyz, ',', 3);
 	if (!split_xyz)
 		return (0);
-	*x = strtof(split_xyz[0], NULL);
-	*y = strtof(split_xyz[1], NULL);
-	*z = strtof(split_xyz[2], NULL);
+	i = 0;
+	while (i < 3)
+	{
+		if (!is_valid_number(split_xyz[i]))
+		{
+			printf("Invalid XYZ values: %s\n", split_xyz[i]);
+			free_split(split_xyz);
+			return (0);
+		}
+		i++;
+	}
+	*x = ft_atof(split_xyz[0]);
+	*y = ft_atof(split_xyz[1]);
+	*z = ft_atof(split_xyz[2]);
 	free_split(split_xyz);
 	return (1);
 }
@@ -29,13 +41,25 @@ int	split_xyz(char *xyz, float *x, float *y, float *z)
 int	split_dir_xyz(char *dir_xyz, float *dir_x, float *dir_y, float *dir_z)
 {
 	char	**split_dir_xyz;
+	int		i;
 
 	split_dir_xyz = split_by_char(dir_xyz, ',', 3);
 	if (!split_dir_xyz)
 		return (0);
-	*dir_x = strtof(split_dir_xyz[0], NULL);
-	*dir_y = strtof(split_dir_xyz[1], NULL);
-	*dir_z = strtof(split_dir_xyz[2], NULL);
+	i = 0;
+	while (i < 3)
+	{
+		if (!is_valid_number(split_dir_xyz[i]))
+		{
+			printf("Invalid DIR_XYZ values: %s\n", split_dir_xyz[i]);
+			free_split(split_dir_xyz);
+			return (0);
+		}
+		i++;
+	}
+	*dir_x = ft_atof(split_dir_xyz[0]);
+	*dir_y = ft_atof(split_dir_xyz[1]);
+	*dir_z = ft_atof(split_dir_xyz[2]);
 	free_split(split_dir_xyz);
 	return (1);
 }
