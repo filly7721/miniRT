@@ -23,6 +23,8 @@
 # include <math.h>
 # include <stdarg.h> //va_start
 
+#define EPSILON 0.00001
+
 typedef struct s_matrix
 {
 	int		size;

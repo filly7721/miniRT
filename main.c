@@ -102,7 +102,7 @@ double	get_brightness(t_minirt *minirt, t_tuple hit_point, t_tuple normal)
 	ray.direction = set_point(
 			minirt->env->light.x, minirt->env->light.y, minirt->env->light.z);
 	ray.direction = normalize_tuple(sub_tuples(ray.direction, ray.origin));
-	ray.origin = add_tuples(ray.origin, mul_tuple(ray.direction, 0.001));
+	ray.origin = add_tuples(ray.origin, mul_tuple(ray.direction, EPSILON));
 	intersections = intersect(&ray, minirt->env->shapes);
 	lightsource = set_point(minirt->env->light.x, minirt->env->light.y, minirt->env->light.z);
 	if (intersections && closest_hit(intersections)->t < mag_tuple(sub_tuples(lightsource, ray.origin)) + 0.001)
