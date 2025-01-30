@@ -133,10 +133,12 @@ t_tuple	get_cylinder_color(t_minirt *minirt, t_ray *ray, t_intersection *inter, 
 	t_tuple	normal;
 	t_ray	newray;
 
-	newray = apply_ray_transform(ray, set_vector(cy->x, cy->y, cy->z));
+	newray.direction = mult_mat_tuple(&ray->direction, &cy->transform);
+	newray.origin = mult_mat_tuple(&ray->origin, &cy->transform);
 	albedo = set_tuple(cy->r / 255.0, cy->g / 255.0, cy->b / 255.0, 0);
 	hp = add_tuples(mul_tuple(newray.direction, inter->t), newray.origin);
 	normal = normalize_tuple(set_vector(hp.x, 0, hp.z));
+	normal = mult_mat_tuple(&normal, &cy->tp_transform);
 	hp = add_tuples(mul_tuple(ray->direction, inter->t), ray->origin );
 	return (mul_tuple(albedo, get_brightness(minirt, hp, normal)));
 }
@@ -201,11 +203,31 @@ void	trace_rays(t_minirt *minirt)
 
 void	init_cylinder(t_cylinder *cy)
 {
-	t_tuple	translation;
+	t_tuple		tuple;
+	t_matrix	translation_matrix;
+	t_matrix	scaling_matrix;
+	t_matrix	rotation_matrix;
+	t_matrix	temp;
 
-	translation = set_vector(cy->x, cy->y, cy->z);
-	// cy->transform = create_translation(&translation);
-	// print_mat(&cy->transform);
+	tuple = set_vector(cy->x, cy->y, cy->z);
+	translation_matrix = create_translation(&tuple);
+	tuple = set_vector(cy->radius, cy->radius, cy->radius);
+	scaling_matrix = create_scaling(&tuple);
+	cy->transform = mult_mat(&translation_matrix, &scaling_matrix);
+	tuple = set_vector(cy->axis_x, cy->axis_y, cy->axis_z);
+	rotation_matrix = create_rotation(&tuple);
+	temp = cy->transform;
+	cy->transform = mult_mat(&cy->transform, &rotation_matrix);
+	print_mat(&cy->transform);
+	free_matrix(&temp);
+	temp = cy->transform;
+	cy->transform = inverse(&cy->transform);
+	print_mat(&cy->transform);
+	free_matrix(&temp);
+	free_matrix(&rotation_matrix);
+	free_matrix(&scaling_matrix);
+	free_matrix(&translation_matrix);
+	cy->tp_transform = transpose_mat(&cy->transform);
 }
 
 void	init_shapes(t_minirt *minirt)

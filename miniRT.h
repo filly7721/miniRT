@@ -138,6 +138,7 @@ typedef struct s_cylinder
 	int			g;
 	int			b;
 	t_matrix	transform;
+	t_matrix	tp_transform;
 }	t_cylinder;
 
 typedef enum e_shapeType
@@ -251,6 +252,7 @@ t_matrix		allocate_submat(int size);
 t_matrix		submatrix(t_matrix *mat, int row, int col);
 t_matrix		*determinant(t_matrix *mat);
 t_matrix		inverse(t_matrix *mat);
+t_matrix		transpose_mat(t_matrix *mat);
 t_tuple			mult_mat_tuple(t_tuple *tuple, t_matrix *mat);
 void			free_matrix(t_matrix *matrix);
 void			fill_subm(t_matrix *mat, t_matrix *submat, int row, int col);
@@ -260,6 +262,8 @@ double			determinant_3x3(t_matrix *mat);
 double			determinant_4x4(t_matrix *mat);
 t_intersection	*create_node(t_shape *shape, double t);
 t_matrix		create_translation(t_tuple *tuple);
+t_matrix		create_scaling(t_tuple *tuple);
+t_matrix		create_rotation(t_tuple *tuple);
 
 //Rays
 t_ray			*create_ray(t_tuple origin, t_tuple direction);

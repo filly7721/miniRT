@@ -48,13 +48,12 @@ t_matrix	submatrix(t_matrix *mat, int row, int col)
 	return (submat);
 }
 
-int	cofactor(t_matrix *mat, int row, int col)
+double	cofactor(t_matrix *mat, int row, int col)
 {
 	t_matrix	submat;
 	double		cofactor_val;
 	double		sign;
 
-	submat = submatrix(mat, row, col);
 	if ((row + col) % 2 == 0)
 		sign = 1.0;
 	else
@@ -116,15 +115,15 @@ t_matrix	inverse(t_matrix *mat)
 	int			row;
 
 	// Debug: Print the matrix before inversion
-    printf("Matrix before inversion:\n");
-	print_mat(mat);
+    // printf("Matrix before inversion:\n");
+	// print_mat(mat);
 	
 	det = calculate_det(mat);
-	printf("det: %f\n", det);
+	// printf("det: %f\n", det);
 	
 	inv = allocate_submat(mat->size);
-	printf("Matrix after inversion:\n");
-	print_mat(mat);
+	// printf("Matrix after inversion:\n");
+	// print_mat(mat);
 	
 	row = 0;
 	while (row < mat->size)

@@ -40,6 +40,7 @@ void	free_matrix(t_matrix *mat)
 	}
 	free(mat->elem);
 	mat->elem = NULL;
+	mat->size = 0;
 }
 
 void	free_cylinder2(t_cylinder *cylinder, char **split)

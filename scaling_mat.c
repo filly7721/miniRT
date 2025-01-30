@@ -12,7 +12,7 @@
 
 #include "miniRT.h"
 
-t_matrix	scaling(t_tuple *tuple)
+t_matrix	create_scaling(t_tuple *tuple)
 {
 	t_matrix	mat;
 
