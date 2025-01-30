@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 16:24:48 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/30 11:23:04 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/30 11:54:57 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,9 @@ int	validate_cylinder(char **split)
 	i = 0;
 	while (i < 6)
 	{
-		//here can add more validation
 		if (!split[i])
 		{
-			printf("Error: Missing expected token at position %d.\n", i + 1);
+			printf("Error: cylinder expected token at position %d.\n", i + 1);
 			return (0);
 		}
 		i++;
@@ -92,14 +91,17 @@ void	parse_cylinder(char *line, t_environment *env)
 	if (!split)
 		return ;
 	if (!split || !validate_cylinder(split))
-		return (free_split(split));
+	{
+		free_split(split);
+		exit(1);
+	}
 	cylinder = create_cylinder();
 	if (!cylinder)
 		return (free_split(split));
 	if (!parse_cylinder_values(split, cylinder))
 	{
 		free_cylinder2(cylinder, split);
-		return ;
+		exit(1);
 	}
 	add_cylinder_to_env(env, cylinder);
 	free_split(split);

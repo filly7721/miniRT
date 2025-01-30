@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 13:32:08 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/30 11:13:16 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/30 12:55:19 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,19 +37,18 @@ void	parse_ambient(char *line, t_ambient *ambient)
 	if (!is_valid_number(split[1]))
 	{
 		printf("Invalid ambient intensity\n");
-		return ;
+		exit(1);
 	}
 	ambient->intensity = ft_atof(split[1]);
 	if (!validate_ambient(ambient))
 	{
 		free_split(split);
-		return ;
+		exit(1);
 	}
 	if (!split_rgb(split[2], &ambient->r, &ambient->g, &ambient->b))
 	{
-		printf("Error: Invalid RGB values.\n");
 		free_split(split);
-		return ;
+		exit(1);
 	}
 	free_split(split);
 }
@@ -69,21 +68,18 @@ void	parse_light(char *line, t_light *light)
 	if (!is_valid_number(split[2]))
 	{
 		printf("Light: Invalid brightness.\n");
-		return ;
+		exit(1);
 	}
 	light->bright = ft_atof(split[2]);
 	if (!split_xyz(split[1], &light->x, &light->y, &light->z))
 	{
-		printf("Light: Invalid XYZ values.\n");
 		free_split(split);
-		return ;
+		exit(1);
 	}
 	if (!split_rgb(split[3], &light->r, &light->g, &light->b))
 	{
-		// printf("Light: Invalid RGB values.\n");
 		free_split(split);
-		return ;
+		exit(1);
 	}
-	// printf("light: bright: %f, r: %d, g: %d, b:%d\n", light->bright, light->r, light->g, light->b);
 	free_split(split);
 }

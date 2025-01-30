@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 12:51:38 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/29 15:11:01 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/30 12:57:21 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	validate_plane(char **split)
 	{
 		if (!split[i])
 		{
-			printf("Error: Missing expected token at position %d.\n", i + 1);
+			printf("Error: plane expected token at position %d.\n", i + 1);
 			return (0);
 		}
 		i++;
@@ -88,7 +88,7 @@ void	parse_plane(char *line, t_environment *env)
 	free(space_removed);
 	if (!split)
 		return ;
-	if (!split || !validate_plane(split))
+	if (!split || !validate_plane(split)) //here exit(1);
 		return (free_split(split));
 	plane = create_plane();
 	if (!plane)
@@ -97,9 +97,8 @@ void	parse_plane(char *line, t_environment *env)
 	{
 		free(plane);
 		free_split(split);
-		return ;
+		exit(1);
 	}
 	add_plane_to_env(env, plane);
-	// printf("plane: x: %f, y: %f, z: %f, norm_x: %f, norm_y: %f, norm_z: %f \n", plane->x, plane->y, plane->z, plane->norm_x, plane->norm_y, plane->norm_z);
 	free_split (split);
 }

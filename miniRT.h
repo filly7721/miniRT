@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:11:01 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/30 10:56:57 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/30 11:48:56 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@
 # include <stdio.h>
 # include <fcntl.h> 
 # include <unistd.h> 
-
-# include <ctype.h>  // !delete after adding ft_strtof
 # include <stdbool.h>
 # include <math.h>
 # include <stdarg.h> //va_start

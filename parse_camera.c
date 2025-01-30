@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 14:45:13 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/30 11:22:52 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/30 12:55:52 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,13 +81,13 @@ void	parse_camera(char *line, t_camera *cam)
 	{
 		printf("Camera: Invalid XYZ values.\n");
 		free_split(split);
-		return ;
+		exit(1);
 	}
 	if (!split_dir_xyz(split[2], &cam->dir_x, &cam->dir_y, &cam->dir_z))
 	{
 		printf("Error: Invalid DIR_XYZ values.\n");
 		free_split(split);
-		return ;
+		exit(1);
 	}
 	free_split(split);
 }

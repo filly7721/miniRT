@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 15:19:16 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/30 11:23:21 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/30 13:00:15 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	validate_sphere(char **split)
 	{
 		if (!split[i])
 		{
-			printf("Error: Missing expected token at position %d.\n", i + 1);
+			printf("Error: sphere expected token at position %d.\n", i + 1);
 			return (0);
 		}
 		i++;
@@ -90,7 +90,11 @@ void	parse_sphere(char *line, t_environment *env)
 	if (!sphere)
 		return (free_split(split));
 	if (!parse_sphere_values(split, sphere))
-		return (free(sphere), free_split(split));
+	{
+		free(sphere);
+		free_split(split);
+		exit(1);
+	}
 	add_sphere_to_env(env, sphere);
 	free_split(split);
 }

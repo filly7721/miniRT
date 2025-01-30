@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 13:29:53 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/30 11:16:36 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/30 12:49:04 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,9 @@ char	**split_by_char(char *space_rem, char deli, int exp_count)
 	{
 		if (!split[i])
 		{
-			printf("Error: Missing expected token at position %d.\n", i + 1);
+			printf("Error: Not enough tokens.\n");
 			free_split(split);
-			return (NULL);
+			exit(1);
 		}
 		i++;
 	}
@@ -115,7 +115,7 @@ int is_valid_number( char *str)
                 return (0);
             has_dot = 1;
         }
-        else if (!isdigit(str[i]))
+        else if (!ft_isdigit(str[i]))
             return (0);
         i++;
     }
