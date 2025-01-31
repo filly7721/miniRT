@@ -12,6 +12,17 @@
 
 #include "miniRT.h"
 
+void	init_camera(t_camera *camera)
+{
+	camera->forward = normalize_tuple(
+			set_tuple(camera->dir_x, camera->dir_y, camera->dir_z, 0.0));
+	camera->up = set_tuple(0.0, 1.0, 0.0, 0.0);
+	if (fabs(camera->forward.y) == 1.0)
+		camera->up = normalize_tuple(set_tuple(1.0, 0.0, 0.0, 0.0));
+	camera->right = normalize_tuple(cross_tuple(camera->up, camera->forward));
+	camera->up = cross_tuple(camera->forward, camera->right);
+}
+
 t_intersection	*intersect_plane(t_ray *ray, t_plane *pl, t_intersection *head)
 {
 	double	t;

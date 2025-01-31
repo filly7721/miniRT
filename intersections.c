@@ -68,3 +68,19 @@ t_intersection	*intersect(t_ray *ray, t_list *shapelist)
 	}
 	return (intersection);
 }
+
+t_intersection	*closest_hit(t_intersection	*list)
+{
+	t_intersection	*closest;
+	t_intersection	*temp;
+
+	temp = list;
+	closest = list;
+	while (temp->next)
+	{
+		temp = temp->next;
+		if (temp->t > 0 && temp->t < closest->t)
+			closest = temp;
+	}
+	return (closest);
+}
