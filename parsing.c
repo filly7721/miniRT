@@ -55,6 +55,13 @@ int	valid_rgb(int r, int g, int b)
 	return (1);
 }
 
+int valid_rot(double x, double y, double z)
+{
+	if (x == 0 && y == 0 && z == 0)
+		return (0);
+	return (1);
+}
+
 int	valid_input(t_environment *env)
 {
 	t_shape	*shape;
@@ -68,14 +75,16 @@ int	valid_input(t_environment *env)
 	while (current)
 	{
 		shape = (t_shape *)current->content;
-		if ((shape->type == cylinder) && !valid_rgb(shape->cylinder->r, \
-			shape->cylinder->g, shape->cylinder->b))
+		if ((shape->type == cylinder) && !(valid_rgb(shape->cylinder->r, \
+			shape->cylinder->g, shape->cylinder->b) && valid_rot(shape->cylinder->axis_x, \
+			shape->cylinder->axis_y, shape->cylinder->axis_z)))
 			return (0);
 		else if ((shape->type == sphere) && !valid_rgb(shape->sphere->r, \
 			shape->sphere->g, shape->sphere->b))
 			return (0);
-		else if ((shape->type == plane) && !valid_rgb(shape->plane->r, \
-			shape->plane->g, shape->plane->b))
+		else if ((shape->type == plane) && !(valid_rgb(shape->plane->r, \
+			shape->plane->g, shape->plane->b) && valid_rot(shape->plane->norm_x, \
+			shape->plane->norm_y, shape->plane->norm_z)))
 			return (0);
 		current = current->next;
 	}

@@ -265,10 +265,14 @@ double			determinant_4x4(t_matrix *mat);
 t_intersection	*create_node(t_shape *shape, double t);
 t_matrix		create_translation(t_tuple *tuple);
 t_matrix		create_scaling(t_tuple *tuple);
-t_matrix		create_rotation(t_tuple *tuple);
+t_matrix		create_rotation(t_tuple vec);
+t_matrix		rotation_x(double agnle);
+t_matrix		rotation_y(double agnle);
+t_matrix		rotation_z(double agnle);
 
-//Rays
-t_ray			*create_ray(t_tuple origin, t_tuple direction);
+
+	// Rays
+	t_ray *create_ray(t_tuple origin, t_tuple direction);
 t_tuple			position(t_ray *ray, double t);
 int				sphere_eq(t_ray *ray, t_sphere *sphere);
 int				cal_inter(t_ray *ray, t_sphere *sphere, double *t1, double *t2);

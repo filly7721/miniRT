@@ -59,23 +59,3 @@ t_matrix	rotation_z(double agnle)
 	mat.elem[1][1] = cos_theta;
 	return (mat);
 }
-
-t_matrix	create_rotation(t_tuple *tuple)
-{
-	t_matrix	mat;
-	t_matrix	temp;
-	t_matrix	rot_x;
-	t_matrix	rot_y;
-	t_matrix	rot_z;
-
-	rot_x = rotation_x(tuple->x / 180 * M_PI);
-	rot_y = rotation_y(tuple->y / 180 * M_PI);
-	rot_z = rotation_z(tuple->z / 180 * M_PI);
-	temp = mult_mat(&rot_x, &rot_y);
-	mat = mult_mat(&temp, &rot_z);
-	free_matrix(&temp);
-	free_matrix(&rot_x);
-	free_matrix(&rot_y);
-	free_matrix(&rot_z);
-	return (mat);
-}
