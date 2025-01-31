@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 15:19:16 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/30 13:27:39 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/31 12:37:35 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	parse_sphere_values(char **split, t_sphere *sphere)
 {
 	if (!is_valid_number(split[2]))
 	{
-		printf("Invalid sph diameter"); //free here
+		printf("Invalid sph diameter");
 		return (1);
 	}
 	sphere->diameter = ft_atof(split[2]);

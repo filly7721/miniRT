@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 12:51:38 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/30 12:57:21 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/31 12:35:57 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	parse_plane(char *line, t_environment *env)
 	free(space_removed);
 	if (!split)
 		return ;
-	if (!split || !validate_plane(split)) //here exit(1);
+	if (!split || !validate_plane(split))
 		return (free_split(split));
 	plane = create_plane();
 	if (!plane)

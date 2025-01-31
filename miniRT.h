@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:11:01 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/30 13:35:25 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/31 12:45:08 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,8 @@
 # include <unistd.h> 
 # include <stdbool.h>
 # include <math.h>
-# include <stdarg.h> //va_start
 
-#define EPSILON 0.00001
+# define EPSILON 0.00001
 
 typedef struct s_matrix
 {
@@ -211,7 +210,6 @@ t_sphere		*create_sphere(void);
 void			parse_cylinder(char *line, t_environment *env);
 
 // Debug fun, delete later
-void			print_environment(t_environment *env);
 void			print_mat(t_matrix *mat);
 
 // free functions
