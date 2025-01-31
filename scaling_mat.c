@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 12:55:32 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/22 11:26:23 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/01/31 12:44:34 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,25 +35,4 @@ t_matrix	shearing(t_tuple *shear)
 	mat.elem[2][0] = shear->a;
 	mat.elem[2][1] = shear->r;
 	return (mat);
-}
-
-t_matrix	chain_transformations(int count, ...)
-{
-	va_list		args;
-	t_matrix	result;
-	t_matrix	temp;
-	int			i;
-
-	if (count < 1)
-		return (identity_matrix(4));
-	result = identity_matrix(4);
-	va_start(args, count);
-	while (i < count)
-	{
-		temp = va_arg(args, t_matrix);
-		result = mult_mat(&temp, &result);
-		i++;
-	}
-	va_end(args);
-	return (result);
 }
