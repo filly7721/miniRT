@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 15:19:16 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/31 12:37:35 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/02/01 10:49:20 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	validate_sphere(char **split)
 	{
 		if (!split[i])
 		{
-			printf("Error: sphere expected token at position %d.\n", i + 1);
+			ft_putstr_fd("Error: sphere expected token\n", 2);
 			return (0);
 		}
 		i++;
@@ -35,7 +35,7 @@ t_sphere	*create_sphere(void)
 
 	sphere = malloc(sizeof(t_sphere));
 	if (!sphere)
-		printf("Error: Memory allocation failed for sphere.\n");
+		ft_putstr_fd("Error: Memory allocation failed for sphere.\n", 2);
 	return (sphere);
 }
 
@@ -43,18 +43,18 @@ int	parse_sphere_values(char **split, t_sphere *sphere)
 {
 	if (!is_valid_number(split[2]))
 	{
-		printf("Invalid sph diameter");
-		return (1);
+		ft_putstr_fd("Invalid sph diameter", 2);
+		return (0);
 	}
 	sphere->diameter = ft_atof(split[2]);
 	if (!split_xyz(split[1], &sphere->x, &sphere->y, &sphere->z))
 	{
-		printf("sphere: Invalid XYZ values.\n");
+		ft_putstr_fd("sphere: Invalid XYZ values.\n", 2);
 		return (0);
 	}
 	if (!split_rgb(split[3], &sphere->r, &sphere->g, &sphere->b))
 	{
-		printf("sphere: Invalid RGB values.\n");
+		ft_putstr_fd("sphere: Invalid RGB values.\n", 2);
 		return (0);
 	}
 	return (1);
@@ -67,7 +67,7 @@ void	add_sphere_to_env(t_environment *env, t_sphere *_sphere)
 	shape = malloc(sizeof(t_shape));
 	if (!shape)
 	{
-		printf("Error: Memory allocation failed for shape.\n");
+		ft_putstr_fd("Error: Memory allocation failed for shape.\n", 2);
 		free(_sphere);
 		return ;
 	}

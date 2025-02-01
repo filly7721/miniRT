@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 13:32:08 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/30 13:33:07 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/02/01 10:50:38 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	validate_ambient(t_ambient *ambient)
 {
 	if (ambient->intensity < 0.0 || ambient->intensity > 1.0)
 	{
-		printf("Error: Intensity out of range [0.0, 1.0].\n");
+		ft_putstr_fd("Error: Intensity out of range [0.0, 1.0].\n", 2);
 		return (0);
 	}
 	return (1);
@@ -34,7 +34,7 @@ void	parse_ambient(char *line, t_ambient *ambient)
 	free(space_removed);
 	if (!is_valid_number(split[1]))
 	{
-		printf("Invalid ambient intensity\n");
+		ft_putstr_fd("Invalid ambient intensity\n", 2);
 		exit(1);
 	}
 	ambient->intensity = ft_atof(split[1]);
@@ -63,7 +63,7 @@ void	parse_light(char *line, t_light *light)
 	free(space_removed);
 	if (!is_valid_number(split[2]))
 	{
-		printf("Light: Invalid brightness.\n");
+		ft_putstr_fd("Light: Invalid brightness.\n", 2);
 		exit(1);
 	}
 	light->bright = ft_atof(split[2]);

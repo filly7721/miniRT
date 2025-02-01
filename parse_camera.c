@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 14:45:13 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/30 12:55:52 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/02/01 10:50:45 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	split_xyz(char *xyz, float *x, float *y, float *z)
 	{
 		if (!is_valid_number(split_xyz[i]))
 		{
-			printf("Invalid XYZ values: %s\n", split_xyz[i]);
+			ft_putstr_fd("Invalid XYZ values\n", 2);
 			free_split(split_xyz);
 			return (0);
 		}
@@ -51,7 +51,7 @@ int	split_dir_xyz(char *dir_xyz, float *dir_x, float *dir_y, float *dir_z)
 	{
 		if (!is_valid_number(split_dir_xyz[i]))
 		{
-			printf("Invalid DIR_XYZ values: %s\n", split_dir_xyz[i]);
+			ft_putstr_fd("Invalid DIR_XYZ values\n", 2);
 			free_split(split_dir_xyz);
 			return (0);
 		}
@@ -79,13 +79,13 @@ void	parse_camera(char *line, t_camera *cam)
 	cam->fov = ft_atoi(split[3]);
 	if (!split_xyz(split[1], &cam->x, &cam->y, &cam->z))
 	{
-		printf("Camera: Invalid XYZ values.\n");
+		ft_putstr_fd("Camera: Invalid XYZ values.\n", 2);
 		free_split(split);
 		exit(1);
 	}
 	if (!split_dir_xyz(split[2], &cam->dir_x, &cam->dir_y, &cam->dir_z))
 	{
-		printf("Error: Invalid DIR_XYZ values.\n");
+		ft_putstr_fd("Error: Invalid DIR_XYZ values.\n", 2);
 		free_split(split);
 		exit(1);
 	}

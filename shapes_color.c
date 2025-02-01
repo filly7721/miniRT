@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/01 10:04:51 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/02/01 10:05:00 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/02/01 10:53:12 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ double	get_brightness(t_minirt *minirt, t_tuple hit_point, t_tuple normal)
 	ray.direction = normalize_tuple(sub_tuples(hit_point, ray.origin));
 	ray.origin = add_tuples(ray.origin, mul_tuple(ray.direction, EPSILON));
 	intersects = intersect(&ray, minirt->env->shapes);
-	if (intersects && closest_hit(intersects)->t 
+	if (intersects && closest_hit(intersects)->t
 		< mag_tuple(sub_tuples(hit_point, ray.origin)))
 		return (free_intersections(intersects), minirt->env->ambient.intensity);
 	free_intersections(intersects);

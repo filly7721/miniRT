@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 10:56:18 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/24 09:18:41 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/02/01 10:34:24 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,27 +84,15 @@ double	calculate_det(t_matrix *mat)
 		det = determinant_4x4(mat);
 	else
 	{
-		fprintf(stderr, "Inverse only 2x2, 3x3, and 4x4 matrices.\n");
+		ft_putstr_fd("Inverse only 2x2, 3x3, and 4x4 matrices.\n", 2);
 		exit(EXIT_FAILURE);
 	}
 	if (det == 0)
 	{
-		fprintf(stderr, "Matrix is not invertible (determinant is 0).\n");
+		ft_putstr_fd("Matrix is not invertible (determinant is 0).\n", 2);
 		exit(EXIT_FAILURE);
 	}
 	return (det);
-}
-void print_mat(t_matrix *mat)
-{
-    printf("Matrix size: %d\n", mat->size);
-    for (int i = 0; i < mat->size; i++)
-    {
-        for (int j = 0; j < mat->size; j++)
-        {
-            printf("%f ", mat->elem[i][j]);
-        }
-        printf("\n");
-    }
 }
 
 t_matrix	inverse(t_matrix *mat)
@@ -114,17 +102,8 @@ t_matrix	inverse(t_matrix *mat)
 	int			col;
 	int			row;
 
-	// Debug: Print the matrix before inversion
-    // printf("Matrix before inversion:\n");
-	// print_mat(mat);
-	
 	det = calculate_det(mat);
-	// printf("det: %f\n", det);
-	
 	inv = allocate_submat(mat->size);
-	// printf("Matrix after inversion:\n");
-	// print_mat(mat);
-	
 	row = 0;
 	while (row < mat->size)
 	{
@@ -136,8 +115,5 @@ t_matrix	inverse(t_matrix *mat)
 		}
 		row++;
 	}
-	// Debug: Print the inverted matrix
-    // printf("Matrix after inversion:\n");
-    
 	return (inv);
 }

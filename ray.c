@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 11:27:20 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/22 12:09:08 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/02/01 10:50:23 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_ray	*create_ray(t_tuple origin, t_tuple direction)
 	ray = malloc(sizeof(t_ray));
 	if (!ray)
 	{
-		printf("Failed ray allocation\n");
+		ft_putstr_fd("Failed ray allocation\n", 2);
 		return (NULL);
 	}
 	ray->origin = origin;

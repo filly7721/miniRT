@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 09:30:52 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/02/01 10:05:33 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/02/01 10:40:21 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	main(int arc, char **arv)
 
 	if (arc != 2)
 	{
-		printf("The input must be 2!");
+		ft_putstr_fd("The input must be 2!", 2);
 		return (1);
 	}
 	env.shapes = NULL;

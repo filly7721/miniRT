@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 11:00:17 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/30 13:28:33 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/02/01 10:33:52 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_matrix	allocate_submat(int size)
 	submat.elem = (double **) malloc(sizeof(double *) * submat.size);
 	if (!submat.elem)
 	{
-		fprintf(stderr, "Memory allocation failed.\n");
+		ft_putstr_fd("Memory allocation failed.\n", 2);
 		exit(EXIT_FAILURE);
 	}
 	i = 0;
@@ -30,7 +30,7 @@ t_matrix	allocate_submat(int size)
 		submat.elem[i] = (double *) malloc(sizeof(double) * submat.size);
 		if (!submat.elem[i])
 		{
-			fprintf(stderr, "Memory allocation failed.\n");
+			ft_putstr_fd("Memory allocation failed.\n", 2);
 			exit(EXIT_FAILURE);
 		}
 		i++;

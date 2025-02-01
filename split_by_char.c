@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 13:29:53 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/30 13:34:45 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/02/01 10:51:09 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,14 @@ char	**split_by_char(char *space_rem, char deli, int exp_count)
 	split = ft_split(space_rem, deli);
 	if (!split)
 	{
-		printf("Error: ft_split returned NULL.\n");
+		ft_putstr_fd("Error: ft_split returned NULL.\n", 2);
 		return (NULL);
 	}
 	while (i < exp_count)
 	{
 		if (!split[i])
 		{
-			printf("Error: Not enough tokens.\n");
+			ft_putstr_fd("Error: Not enough tokens.\n", 2);
 			free_split(split);
 			exit(1);
 		}
@@ -83,7 +83,7 @@ int	split_rgb(char *rgb, int *r, int *g, int *b)
 	{
 		if (!is_valid_number(split_rgb[i]))
 		{
-			printf("Invalid RGB values. %s\n", split_rgb[i]);
+			ft_putstr_fd("Invalid RGB values.\n", 2);
 			free_split(split_rgb);
 			return (0);
 		}

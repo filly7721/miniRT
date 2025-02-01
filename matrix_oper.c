@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 14:15:29 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/24 10:06:42 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/02/01 10:34:49 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,9 @@ t_matrix	create_mat(int size)
 	mat.elem = malloc(size * sizeof(double *));
 	if (!mat.elem)
 	{
-		fprintf(stderr, "Memory allocation failed.\n");
+		ft_putstr_fd("Memory allocation failed.\n", 2);
 		exit(EXIT_FAILURE);
 	}
-	printf("Creating matrix of size %d\n", size);
 	i = 0;
 	while (i < size)
 	{

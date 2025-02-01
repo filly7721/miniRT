@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 11:19:48 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/30 09:30:44 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/02/01 10:50:30 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	line_parsing(char *line, t_environment *env)
 		parse_cylinder(line, env);
 	else
 	{
-		printf("Error: Unknown element type \n");
+		ft_putstr_fd("Error: Unknown element type \n", 2);
 		free_env(env);
 		exit(1);
 	}
@@ -55,7 +55,7 @@ int	valid_rgb(int r, int g, int b)
 	return (1);
 }
 
-int valid_rot(double x, double y, double z)
+int	valid_rot(double x, double y, double z)
 {
 	if (x == 0 && y == 0 && z == 0)
 		return (0);
@@ -99,7 +99,7 @@ void	parsing(t_environment *env, const char *file)
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 	{
-		printf("Error opening file");
+		ft_putstr_fd("Error opening file", 2);
 		exit(1);
 	}
 	line = get_next_line(fd);
@@ -111,7 +111,7 @@ void	parsing(t_environment *env, const char *file)
 	}
 	if (!valid_input(env))
 	{
-		printf ("Invalid input\n");
+		ft_putstr_fd("Invalid input\n", 2);
 		free_env(env);
 		exit (1);
 	}

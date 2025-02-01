@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 11:41:25 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/30 13:29:40 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/02/01 10:30:42 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,10 @@ t_intersection	*intersect_plane(t_ray *ray, t_plane *pl, t_intersection *head)
 
 void	init_plane(t_plane *pl)
 {
-	t_tuple tuple;
-	t_matrix translation_matrix;
-	t_matrix rotation_matrix;
-	t_matrix temp;
+	t_tuple		tuple;
+	t_matrix	translation_matrix;
+	t_matrix	rotation_matrix;
+	t_matrix	temp;
 
 	tuple = set_vector(pl->x, pl->y, pl->z);
 	translation_matrix = create_translation(&tuple);

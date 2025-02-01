@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 16:24:48 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/30 13:31:46 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/02/01 10:48:04 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	validate_cylinder(char **split)
 	{
 		if (!split[i])
 		{
-			printf("Error: cylinder expected token at position %d.\n", i + 1);
+			ft_putstr_fd("Error: cylinder expected token.\n", 2);
 			return (0);
 		}
 		i++;
@@ -35,7 +35,7 @@ t_cylinder	*create_cylinder(void)
 
 	cylinder = malloc(sizeof(t_cylinder));
 	if (!cylinder)
-		printf("Error: Memory allocation failed for plane.\n");
+		ft_putstr_fd("Error: Memory allocation failed for plane.\n", 2);
 	return (cylinder);
 }
 
@@ -43,24 +43,24 @@ int	parse_cylinder_values(char **split, t_cylinder *cyl)
 {
 	if (!split_xyz(split[1], &cyl->x, &cyl->y, &cyl->z))
 	{
-		printf("cylinder: Invalid XYZ values.\n");
+		ft_putstr_fd("cylinder: Invalid XYZ values.\n", 2);
 		return (0);
 	}
 	if (!split_xyz(split[2], &cyl->axis_x, &cyl->axis_y, &cyl->axis_z))
 	{
-		printf("cylinder: Invalid Axis XYZ values.\n");
+		ft_putstr_fd("cylinder: Invalid Axis XYZ values.\n", 2);
 		return (0);
 	}
 	if (!is_valid_number(split[3]) || !is_valid_number(split[4]))
 	{
-		printf("Invalid cy radius or height\n");
+		ft_putstr_fd("Invalid cy radius or height\n", 2);
 		return (0);
 	}
 	cyl->radius = ft_atof(split[3]);
 	cyl->height = ft_atof(split[4]);
 	if (!split_rgb(split[5], &cyl->r, &cyl->g, &cyl->b))
 	{
-		printf("cylinder: Invalid RGB values.\n");
+		ft_putstr_fd("cylinder: Invalid RGB values.\n", 2);
 		return (0);
 	}
 	return (1);
@@ -73,7 +73,7 @@ void	add_cylinder_to_env(t_environment*env, t_cylinder *_cylinder)
 	shape = malloc(sizeof(t_shape));
 	if (!shape)
 	{
-		printf("Error: Memory allocation failed for shape.\n");
+		ft_putstr_fd("Error: Memory allocation failed for shape.\n", 2);
 		free(_cylinder);
 		return ;
 	}
