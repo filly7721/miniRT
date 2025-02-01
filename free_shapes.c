@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 13:54:45 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/28 09:30:41 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/02/01 12:22:44 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,4 @@ void	free_matrix(t_matrix *mat)
 	free(mat->elem);
 	mat->elem = NULL;
 	mat->size = 0;
-}
-
-void	free_cylinder2(t_cylinder *cylinder, char **split)
-{
-	free(cylinder);
-	free_split(split);
 }

@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 14:45:13 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/02/01 10:50:45 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/02/01 12:09:51 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ int	split_dir_xyz(char *dir_xyz, float *dir_x, float *dir_y, float *dir_z)
 	{
 		if (!is_valid_number(split_dir_xyz[i]))
 		{
-			ft_putstr_fd("Invalid DIR_XYZ values\n", 2);
 			free_split(split_dir_xyz);
 			return (0);
 		}
@@ -64,30 +63,31 @@ int	split_dir_xyz(char *dir_xyz, float *dir_x, float *dir_y, float *dir_z)
 	return (1);
 }
 
-void	parse_camera(char *line, t_camera *cam)
+bool	parse_camera(char *line, t_camera *cam)
 {
 	char	**split;
 	char	*space_removed;
 
 	space_removed = remove_extra_spaces(line);
 	if (!space_removed)
-		return ;
+		return (false);
 	split = split_by_char(space_removed, ' ', 4);
 	free(space_removed);
 	if (!split)
-		return ;
+		return (ft_putstr_fd("Error\n", 2), false);
 	cam->fov = ft_atoi(split[3]);
 	if (!split_xyz(split[1], &cam->x, &cam->y, &cam->z))
 	{
 		ft_putstr_fd("Camera: Invalid XYZ values.\n", 2);
 		free_split(split);
-		exit(1);
+		return (false);
 	}
 	if (!split_dir_xyz(split[2], &cam->dir_x, &cam->dir_y, &cam->dir_z))
 	{
 		ft_putstr_fd("Error: Invalid DIR_XYZ values.\n", 2);
 		free_split(split);
-		exit(1);
+		return (false);
 	}
 	free_split(split);
+	return (true);
 }

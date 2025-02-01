@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 15:19:16 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/02/01 10:49:20 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/02/01 12:23:54 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	parse_sphere_values(char **split, t_sphere *sphere)
 {
 	if (!is_valid_number(split[2]))
 	{
-		ft_putstr_fd("Invalid sph diameter", 2);
+		ft_putstr_fd("Invalid sphere diameter", 2);
 		return (0);
 	}
 	sphere->diameter = ft_atof(split[2]);
@@ -76,7 +76,7 @@ void	add_sphere_to_env(t_environment *env, t_sphere *_sphere)
 	ft_lstadd_back(&env->shapes, ft_lstnew(shape));
 }
 
-void	parse_sphere(char *line, t_environment *env)
+bool	parse_sphere(char *line, t_environment *env)
 {
 	char		**split;
 	char		*space_removed;
@@ -84,22 +84,19 @@ void	parse_sphere(char *line, t_environment *env)
 
 	space_removed = remove_extra_spaces(line);
 	if (!space_removed)
-		return ;
+		return (ft_putstr_fd("Error\n", 2), false);
 	split = split_by_char(space_removed, ' ', 4);
 	free(space_removed);
 	if (!split)
-		return ;
+		return (ft_putstr_fd("Error\n", 2), false);
 	if (!split || !validate_sphere(split))
-		return (free_split(split));
+		return (ft_putstr_fd("Error\n", 2), free_split(split), false);
 	sphere = create_sphere();
 	if (!sphere)
-		return (free_split(split));
+		return (ft_putstr_fd("Error\n", 2), free_split(split), false);
 	if (!parse_sphere_values(split, sphere))
-	{
-		free(sphere);
-		free_split(split);
-		exit(1);
-	}
+		return (free(sphere), free_split(split), false);
 	add_sphere_to_env(env, sphere);
 	free_split(split);
+	return (true);
 }

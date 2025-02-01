@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 12:51:38 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/02/01 10:48:18 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/02/01 12:25:49 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	add_plane_to_env(t_environment *env, t_plane *_plane)
 	ft_lstadd_back(&env->shapes, ft_lstnew(shapes));
 }
 
-void	parse_plane(char *line, t_environment *env)
+bool	parse_plane(char *line, t_environment *env)
 {
 	char	**split;
 	char	*space_removed;
@@ -83,22 +83,19 @@ void	parse_plane(char *line, t_environment *env)
 
 	space_removed = remove_extra_spaces(line);
 	if (!space_removed)
-		return ;
+		return (ft_putstr_fd("Error\n", 2), false);
 	split = split_by_char(space_removed, ' ', 4);
 	free(space_removed);
 	if (!split)
-		return ;
+		return (ft_putstr_fd("Error\n", 2), false);
 	if (!split || !validate_plane(split))
-		return (free_split(split));
+		return (ft_putstr_fd("Error\n", 2), free_split(split), false);
 	plane = create_plane();
 	if (!plane)
-		return (free_split(split));
+		return (ft_putstr_fd("Error\n", 2), free_split(split), false);
 	if (!parse_plane_values(split, plane))
-	{
-		free(plane);
-		free_split(split);
-		exit(1);
-	}
+		return (free(plane), free_split(split), false);
 	add_plane_to_env(env, plane);
-	free_split (split);
+	free_split(split);
+	return (true);
 }

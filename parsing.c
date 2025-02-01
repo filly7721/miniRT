@@ -6,45 +6,35 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 11:19:48 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/02/01 10:50:30 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/02/01 12:26:39 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-void	line_parsing(char *line, t_environment *env)
+bool	line_parsing(char *line, t_environment *env)
 {
 	while (*line == ' ' || *line == '\t' || *line == '\n')
 		line++;
 	if (*line == '\0' || *line == '#')
-		return ;
+		return (true);
 	if (ft_strncmp(line, "A", 1) == 0)
-		parse_ambient(line, &env->ambient);
+		return (parse_ambient(line, &env->ambient));
 	else if (ft_strncmp(line, "C", 1) == 0)
-		parse_camera(line, &env->camera);
+		return (parse_camera(line, &env->camera));
 	else if (ft_strncmp(line, "L", 1) == 0)
-		parse_light(line, &env->light);
+		return (parse_light(line, &env->light));
 	else if (ft_strncmp(line, "pl", 2) == 0)
-		parse_plane(line, env);
+		return (parse_plane(line, env));
 	else if (ft_strncmp(line, "sp", 2) == 0)
-		parse_sphere(line, env);
+		return (parse_sphere(line, env));
 	else if (ft_strncmp(line, "cy", 2) == 0)
-		parse_cylinder(line, env);
+		return (parse_cylinder(line, env));
 	else
 	{
 		ft_putstr_fd("Error: Unknown element type \n", 2);
-		free_env(env);
-		exit(1);
+		return (false);
 	}
-}
-
-int	light_ratio(t_environment *env)
-{
-	if (env->ambient.intensity < 0.0 || env->ambient.intensity > 1.0)
-		return (0);
-	else if (env->light.bright < 0.0 || env->light.bright > 1.0)
-		return (0);
-	return (1);
 }
 
 int	valid_rgb(int r, int g, int b)
@@ -64,7 +54,7 @@ int	valid_rot(double x, double y, double z)
 
 int	valid_input(t_environment *env)
 {
-	t_shape	*shape;
+	t_shape	*sh;
 	t_list	*current;
 
 	current = env->shapes;
@@ -74,17 +64,17 @@ int	valid_input(t_environment *env)
 		return (0);
 	while (current)
 	{
-		shape = (t_shape *)current->content;
-		if ((shape->type == cylinder) && !(valid_rgb(shape->cylinder->r, \
-			shape->cylinder->g, shape->cylinder->b) && valid_rot(shape->cylinder->axis_x, \
-			shape->cylinder->axis_y, shape->cylinder->axis_z)))
+		sh = (t_shape *)current->content;
+		if ((sh->type == cylinder) && !(valid_rgb(sh->cylinder->r, \
+		sh->cylinder->g, sh->cylinder->b) && valid_rot(sh->cylinder->axis_x, \
+		sh->cylinder->axis_y, sh->cylinder->axis_z)))
 			return (0);
-		else if ((shape->type == sphere) && !valid_rgb(shape->sphere->r, \
-			shape->sphere->g, shape->sphere->b))
+		else if ((sh->type == sphere) && !valid_rgb(sh->sphere->r, \
+			sh->sphere->g, sh->sphere->b))
 			return (0);
-		else if ((shape->type == plane) && !(valid_rgb(shape->plane->r, \
-			shape->plane->g, shape->plane->b) && valid_rot(shape->plane->norm_x, \
-			shape->plane->norm_y, shape->plane->norm_z)))
+		else if ((sh->type == plane) && !(valid_rgb(sh->plane->r, \
+			sh->plane->g, sh->plane->b) && valid_rot(sh->plane->norm_x, \
+			sh->plane->norm_y, sh->plane->norm_z)))
 			return (0);
 		current = current->next;
 	}
@@ -98,14 +88,12 @@ void	parsing(t_environment *env, const char *file)
 
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
-	{
-		ft_putstr_fd("Error opening file", 2);
-		exit(1);
-	}
+		(ft_putstr_fd("Error opening file", 2), exit(1));
 	line = get_next_line(fd);
 	while (line)
 	{
-		line_parsing(line, env);
+		if (line_parsing(line, env) == false)
+			(free(line), free_env(env), exit(1));
 		free(line);
 		line = get_next_line(fd);
 	}

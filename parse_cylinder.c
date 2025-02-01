@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/12 16:24:48 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/02/01 10:48:04 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/02/01 12:23:14 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	add_cylinder_to_env(t_environment*env, t_cylinder *_cylinder)
 	ft_lstadd_back(&env->shapes, ft_lstnew(shape));
 }
 
-void	parse_cylinder(char *line, t_environment *env)
+bool	parse_cylinder(char *line, t_environment *env)
 {
 	char		**split;
 	char		*space_removed;
@@ -90,22 +90,21 @@ void	parse_cylinder(char *line, t_environment *env)
 
 	space_removed = remove_extra_spaces(line);
 	if (!space_removed)
-		return ;
+		return (ft_putstr_fd("Error\n", 2), false);
 	split = split_by_char(space_removed, ' ', 6);
 	free(space_removed);
 	if (!split)
-		return ;
+		return (ft_putstr_fd("Error\n", 2), false);
 	if (!split || !validate_cylinder(split))
-	{
-		free_split(split);
-		exit(1);
-	}
+		return (ft_putstr_fd("Error\n", 2), free_split(split), false);
 	cylinder = create_cylinder();
 	if (!parse_cylinder_values(split, cylinder))
 	{
-		free_cylinder2(cylinder, split);
-		exit(1);
+		free(cylinder);
+		free_split(split);
+		return (false);
 	}
 	add_cylinder_to_env(env, cylinder);
 	free_split(split);
+	return (true);
 }

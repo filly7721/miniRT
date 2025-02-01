@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:11:01 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/31 12:45:08 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/02/01 12:25:41 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,20 +194,21 @@ int				free_exit(t_minirt *minirt);
 // Lights
 void			parsing(t_environment *env, const char *file);
 double			ft_atof(char *str);
-int				is_valid_number(char *str);
-void			parse_ambient(char *line, t_ambient *ambient);
+bool			is_valid_number(char *str);
+bool			parse_ambient(char *line, t_ambient *ambient);
 char			*remove_extra_spaces(const char *line);
 char			**split_by_char(char *space_rem, char deli, int exp_count);
-int				split_rgb(char *rgb, int *r, int *g, int *b);
+bool			split_rgb(char *rgb, int *r, int *g, int *b);
 int				rgbtoint(t_tuple color);
 
-void			parse_camera(char *line, t_camera *camera);
-void			parse_light(char *line, t_light *light);
+bool			parse_camera(char *line, t_camera *camera);
+bool			parse_light(char *line, t_light *light);
+int				light_ratio(t_environment *env);
 int				split_xyz(char *xyz, float *x, float *y, float *z);
-void			parse_plane(char *line, t_environment *env);
-void			parse_sphere(char *line, t_environment *env);
+bool			parse_plane(char *line, t_environment *env);
+bool			parse_sphere(char *line, t_environment *env);
 t_sphere		*create_sphere(void);
-void			parse_cylinder(char *line, t_environment *env);
+bool			parse_cylinder(char *line, t_environment *env);
 
 // Debug fun, delete later
 void			print_mat(t_matrix *mat);
@@ -266,9 +267,8 @@ t_matrix		rotation_x(double agnle);
 t_matrix		rotation_y(double agnle);
 t_matrix		rotation_z(double agnle);
 
-
 	// Rays
-	t_ray *create_ray(t_tuple origin, t_tuple direction);
+t_ray			*create_ray(t_tuple origin, t_tuple direction);
 t_tuple			position(t_ray *ray, double t);
 t_ray			transform_ray(t_ray ray, t_matrix matrix);
 void			add_intersection(t_intersection **head, t_shape *shape, \

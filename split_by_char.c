@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 13:29:53 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/02/01 10:51:09 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/02/01 12:04:49 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,14 +70,14 @@ char	**split_by_char(char *space_rem, char deli, int exp_count)
 	return (split);
 }
 
-int	split_rgb(char *rgb, int *r, int *g, int *b)
+bool	split_rgb(char *rgb, int *r, int *g, int *b)
 {
 	char	**split_rgb;
 	int		i;
 
 	split_rgb = split_by_char(rgb, ',', 3);
 	if (!split_rgb)
-		return (0);
+		return (false);
 	i = 0;
 	while (i < 3)
 	{
@@ -85,7 +85,7 @@ int	split_rgb(char *rgb, int *r, int *g, int *b)
 		{
 			ft_putstr_fd("Invalid RGB values.\n", 2);
 			free_split(split_rgb);
-			return (0);
+			return (false);
 		}
 		i++;
 	}
@@ -93,31 +93,31 @@ int	split_rgb(char *rgb, int *r, int *g, int *b)
 	*g = ft_atoi(split_rgb[1]);
 	*b = ft_atoi(split_rgb[2]);
 	free_split(split_rgb);
-	return (1);
+	return (true);
 }
 
-int	is_valid_number( char *str)
+bool	is_valid_number( char *str)
 {
-	int	i;
-	int	has_dot;
+	int		i;
+	bool	has_dot;
 
 	i = 0;
 	if (!str || !str[i])
-		return (0);
+		return (false);
 	if (str[i] == '-')
 		i++;
-	has_dot = 0;
+	has_dot = false;
 	while (str[i])
 	{
 		if (str[i] == '.')
 		{
 			if (has_dot)
-				return (0);
-			has_dot = 1;
+				return (false);
+			has_dot = true;
 		}
 		else if (!ft_isdigit(str[i]))
-			return (0);
+			return (false);
 		i++;
 	}
-	return (1);
+	return (true);
 }
