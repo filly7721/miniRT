@@ -42,9 +42,7 @@ void	trace_rays(t_minirt *minirt)
 	int				y;
 	t_ray			ray;
 	t_intersection	*intersections;
-	t_shape			*current_shape;
 
-	init_camera(&minirt->env->camera);
 	y = 0;
 	while (y < minirt->height)
 	{
@@ -54,10 +52,8 @@ void	trace_rays(t_minirt *minirt)
 			ray = generate_ray(minirt, x, y);
 			intersections = intersect(&ray, minirt->env->shapes);
 			if (intersections != NULL)
-			{
-				t_tuple color = get_color(minirt, &ray, closest_hit(intersections));
-				pixel_put(&minirt->data, x, y, rgbtoint(color));
-			}
+				pixel_put(&minirt->data, x, y, rgbtoint(
+						get_color(minirt, &ray, closest_hit(intersections))));
 			else
 				pixel_put(&minirt->data, x, y, 0x00000000);
 			free_intersections(intersections);
@@ -65,13 +61,15 @@ void	trace_rays(t_minirt *minirt)
 		}
 		y++;
 	}
-	mlx_put_image_to_window(minirt->mlx, minirt->window, minirt->data.img, 0, 0);
+	mlx_put_image_to_window(minirt->mlx,
+		minirt->window, minirt->data.img, 0, 0);
 }
 
-void	init_shapes(t_minirt *minirt)
+void	precalc_shapes(t_minirt *minirt)
 {
 	t_list	*curr;
 
+	init_camera(&minirt->env->camera);
 	curr = minirt->env->shapes;
 	while (curr)
 	{
@@ -93,18 +91,12 @@ int	main(int arc, char **arv)
 		ft_putstr_fd("The input must be 2!", 2);
 		return (1);
 	}
-	env.shapes = NULL;
-	env.camera.fov = 0;
-	env.ambient.intensity = 0;
-	env.light.bright = 0;
-	env.light.x = 0;
-	env.light.y = 0;
-	env.light.z = 0;
+	ft_memset(&env, 0, sizeof(t_environment));
 	parsing(&env, arv[1]);
 	minirt = init_minirt(2000, 1000, &env);
 	if (!minirt)
 		return (ft_putstr_fd("init error\n", 2), 1);
-	init_shapes(minirt);
+	precalc_shapes(minirt);
 	trace_rays(minirt);
 	mlx_put_image_to_window(minirt->mlx, minirt->window, \
 		minirt->data.img, 0, 0);
