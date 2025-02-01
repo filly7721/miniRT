@@ -19,9 +19,11 @@ void	free_shape(t_shape *shapes)
 		if (shapes->type == sphere && shapes->sphere)
 			free(shapes->sphere);
 		else if (shapes->type == plane && shapes->plane)
-			free(shapes->plane);
+			(free_matrix(&shapes->plane->transform),
+				free_matrix(&shapes->plane->tp_transform), free(shapes->plane));
 		else if (shapes->type == cylinder && shapes->cylinder)
-			free(shapes->cylinder);
+			(free_matrix(&shapes->cylinder->transform),
+				free_matrix(&shapes->cylinder->tp_transform), free(shapes->cylinder));
 		free(shapes);
 	}
 }
