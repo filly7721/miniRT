@@ -202,6 +202,7 @@ bool			split_rgb(char *rgb, int *r, int *g, int *b);
 int				rgbtoint(t_tuple color);
 
 bool			parse_camera(char *line, t_camera *camera);
+bool			validate_camera(t_environment *env);
 bool			parse_light(char *line, t_light *light);
 int				light_ratio(t_environment *env);
 int				split_xyz(char *xyz, float *x, float *y, float *z);

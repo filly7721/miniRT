@@ -50,11 +50,11 @@ t_matrix	create_rotation(t_tuple vec)
 	t_tuple	quat;
 	double	theta;
 
+	vec = normalize_tuple(vec);
 	if (vec.x == 0 && fabs(vec.y - 1) < EPSILON && vec.z == 0)
 		return (identity_matrix(4));
 	if (vec.x == 0 && fabs(vec.y + 1) < EPSILON && vec.z == 0)
 		return (rotation_x(M_PI));
-	vec = normalize_tuple(vec);
 	rot_axis = cross_tuple(set_vector(0, 1, 0), vec);
 	if (mag_tuple(rot_axis) < EPSILON)
 		return (identity_matrix(4));

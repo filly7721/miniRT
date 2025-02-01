@@ -91,3 +91,23 @@ bool	parse_camera(char *line, t_camera *cam)
 	free_split(split);
 	return (true);
 }
+
+bool validate_camera(t_environment *env)
+{
+	t_tuple	camera_dir;
+
+	if (!env->camera.fov || (env->camera.fov < 0 || env->camera.fov > 180))
+		return (false);
+	if (env->camera.dir_x == 0
+		&& env->camera.dir_y == 0 && env->camera.dir_z == 0)
+		return (false);
+	camera_dir = set_vector(env->camera.dir_x,
+		env->camera.dir_y, env->camera.dir_z);
+	if (mag_tuple(camera_dir) != 1)
+		ft_putstr_fd("camera direction not normalized, normalizing...\n", 2);
+	camera_dir = normalize_tuple(camera_dir);
+	env->camera.dir_x = camera_dir.x;
+	env->camera.dir_y = camera_dir.y;
+	env->camera.dir_z = camera_dir.z;
+	return (true);
+}

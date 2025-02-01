@@ -47,8 +47,12 @@ int	valid_rgb(int r, int g, int b)
 
 int	valid_rot(double x, double y, double z)
 {
+	t_tuple	rot;
 	if (x == 0 && y == 0 && z == 0)
 		return (0);
+	rot = set_vector(x, y, z);
+	if (mag_tuple(rot) != 1)
+		ft_putstr_fd("orientation not normalized, normalizing...\n", 2);
 	return (1);
 }
 
@@ -58,7 +62,7 @@ int	valid_input(t_environment *env)
 	t_list	*current;
 
 	current = env->shapes;
-	if (!env->camera.fov || (env->camera.fov < 0 || env->camera.fov > 180))
+	if (!validate_camera(env))
 		return (0);
 	else if (!light_ratio(env))
 		return (0);
