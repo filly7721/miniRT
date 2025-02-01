@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   shapes_color.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/01 10:04:51 by bmakhama          #+#    #+#             */
+/*   Updated: 2025/02/01 10:05:00 by bmakhama         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "miniRT.h"
 
@@ -5,17 +16,18 @@ double	get_brightness(t_minirt *minirt, t_tuple hit_point, t_tuple normal)
 {
 	t_tuple			lightsource;
 	double			brightness;
-	t_intersection	*intersections;
+	t_intersection	*intersects;
 	t_ray			ray;
 
 	ray.origin = set_point(
 			minirt->env->light.x, minirt->env->light.y, minirt->env->light.z);
 	ray.direction = normalize_tuple(sub_tuples(hit_point, ray.origin));
 	ray.origin = add_tuples(ray.origin, mul_tuple(ray.direction, EPSILON));
-	intersections = intersect(&ray, minirt->env->shapes);
-	if (intersections && closest_hit(intersections)->t < mag_tuple(sub_tuples(hit_point, ray.origin)))
-		return (free_intersections(intersections), minirt->env->ambient.intensity);
-	free_intersections(intersections);
+	intersects = intersect(&ray, minirt->env->shapes);
+	if (intersects && closest_hit(intersects)->t 
+		< mag_tuple(sub_tuples(hit_point, ray.origin)))
+		return (free_intersections(intersects), minirt->env->ambient.intensity);
+	free_intersections(intersects);
 	brightness = dot_tuple(mul_tuple(ray.direction, -1), normal);
 	if (brightness < 0)
 		brightness = 0;
@@ -63,6 +75,7 @@ t_tuple	get_plane_color(t_minirt *minirt, t_ray *ray, t_intersection *inter, \
 	t_tuple	albedo;
 	t_tuple	hp;
 	t_tuple	normal;
+
 	albedo = set_tuple(pl->r / 255.0, pl->g / 255.0, pl->b / 255.0, 0);
 	normal = normalize_tuple(set_vector(pl->norm_x, pl->norm_y, pl->norm_z));
 	hp = add_tuples(mul_tuple(ray->direction, inter->t), ray->origin);

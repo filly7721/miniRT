@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 13:50:29 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/30 13:11:35 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/02/01 10:06:08 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ void	free_shape(t_shape *shapes)
 				free_matrix(&shapes->plane->tp_transform), free(shapes->plane));
 		else if (shapes->type == cylinder && shapes->cylinder)
 			(free_matrix(&shapes->cylinder->transform),
-				free_matrix(&shapes->cylinder->tp_transform), free(shapes->cylinder));
+				free_matrix(&shapes->cylinder->tp_transform), \
+				free(shapes->cylinder));
 		free(shapes);
 	}
 }

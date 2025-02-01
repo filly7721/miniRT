@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 09:30:52 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/01/31 12:41:37 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/02/01 10:05:33 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	init_shapes(t_minirt *minirt)
 	}
 }
 
-int	main(int arc, char** arv)
+int	main(int arc, char **arv)
 {
 	t_environment	env;
 	t_minirt		*minirt;
