@@ -33,7 +33,7 @@ t_cylinder	*create_cylinder(void)
 {
 	t_cylinder	*cylinder;
 
-	cylinder = malloc(sizeof(t_cylinder));
+	cylinder = ft_calloc(sizeof(t_cylinder), 1);
 	if (!cylinder)
 		printf("Error: Memory allocation failed for plane.\n");
 	return (cylinder);
