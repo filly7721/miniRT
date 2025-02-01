@@ -28,11 +28,32 @@ t_intersection	*intersect_plane(t_ray *ray, t_plane *pl, t_intersection *head)
 	double	t;
 	t_ray	newray;
 
-	newray = apply_ray_transform(ray, set_vector(pl->x, pl->y, pl->z));
+	newray.direction = mult_mat_tuple(&ray->direction, &pl->transform);
+	newray.origin = mult_mat_tuple(&ray->origin, &pl->transform);
 	if (newray.direction.y < 0.001 && newray.direction.y > -0.001)
 		return (head);
 	t = -newray.origin.y / newray.direction.y;
 	if (t > 0.0001)
 		add_intersection(&head, create_shape_ref(pl, plane), t);
 	return (head);
+}
+
+void	init_plane(t_plane *pl)
+{
+	t_tuple tuple;
+	t_matrix translation_matrix;
+	t_matrix rotation_matrix;
+	t_matrix temp;
+
+	tuple = set_vector(pl->x, pl->y, pl->z);
+	translation_matrix = create_translation(&tuple);
+	tuple = set_vector(pl->norm_x, pl->norm_y, pl->norm_z);
+	rotation_matrix = create_rotation(tuple);
+	pl->transform = mult_mat(&translation_matrix, &rotation_matrix);
+	temp = pl->transform;
+	pl->transform = inverse(&pl->transform);
+	free_matrix(&temp);
+	free_matrix(&rotation_matrix);
+	free_matrix(&translation_matrix);
+	pl->tp_transform = transpose_mat(&pl->transform);
 }

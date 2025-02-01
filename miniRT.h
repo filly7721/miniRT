@@ -112,15 +112,17 @@ typedef struct s_sphere
 
 typedef struct s_plane
 {
-	float	x;
-	float	y;
-	float	z;
-	float	norm_x;
-	float	norm_y;
-	float	norm_z;
-	int		r;
-	int		g;
-	int		b;
+	float		x;
+	float		y;
+	float		z;
+	float		norm_x;
+	float		norm_y;
+	float		norm_z;
+	int			r;
+	int			g;
+	int			b;
+	t_matrix	transform;
+	t_matrix	tp_transform;
 }	t_plane;
 
 typedef struct s_cylinder
@@ -289,6 +291,7 @@ t_intersection	*intersect_plane(t_ray *ray, t_plane *plane, \
 	t_intersection *head);
 void			init_cylinder(t_cylinder *cy);
 void			init_camera(t_camera *camera);
+void			init_plane(t_plane *pl);
 t_ray			apply_ray_transform(t_ray *old_ray, t_tuple translation);
 double			get_brightness(t_minirt *minirt, t_tuple hit_point, t_tuple normal);
 t_tuple			get_sphere_color(t_minirt *minirt, t_ray *ray, t_intersection *inter, \

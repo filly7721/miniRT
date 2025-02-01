@@ -65,9 +65,8 @@ t_tuple	get_plane_color(t_minirt *minirt, t_ray *ray, t_intersection *inter, \
 	t_tuple	albedo;
 	t_tuple	hp;
 	t_tuple	normal;
-
 	albedo = set_tuple(pl->r / 255.0, pl->g / 255.0, pl->b / 255.0, 0);
-	normal = set_vector(0, 1, 0);
+	normal = normalize_tuple(set_vector(pl->norm_x, pl->norm_y, pl->norm_z));
 	hp = add_tuples(mul_tuple(ray->direction, inter->t), ray->origin);
 	hp = add_tuples(hp, mul_tuple(ray->direction, -EPSILON));
 	return (mul_tuple(albedo, get_brightness(minirt, hp, normal)));

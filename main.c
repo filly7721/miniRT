@@ -79,6 +79,8 @@ void	init_shapes(t_minirt *minirt)
 	{
 		if (((t_shape *)curr->content)->type == cylinder)
 			init_cylinder(((t_shape *)curr->content)->cylinder);
+		else if (((t_shape *)curr->content)->type == plane)
+			init_plane(((t_shape *)curr->content)->plane);
 		curr = curr->next;
 	}
 }

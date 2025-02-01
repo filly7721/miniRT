@@ -53,11 +53,9 @@ void	init_cylinder(t_cylinder *cy)
 	rotation_matrix = create_rotation(tuple);
 	temp = cy->transform;
 	cy->transform = mult_mat(&cy->transform, &rotation_matrix);
-	print_mat(&cy->transform);
 	free_matrix(&temp);
 	temp = cy->transform;
 	cy->transform = inverse(&cy->transform);
-	print_mat(&cy->transform);
 	free_matrix(&temp);
 	free_matrix(&rotation_matrix);
 	free_matrix(&scaling_matrix);
