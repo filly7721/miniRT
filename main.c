@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 09:30:52 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/02/01 10:40:21 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/02/01 12:33:44 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ t_minirt	*init_minirt(int width, int height, t_environment *env)
 	if (!minirt->mlx)
 		return (free(minirt), NULL);
 	minirt->window = mlx_new_window(minirt->mlx, width, height, "MiniRT");
-	// if (!minirt->window)
-	//     return (mlx_destroy_display(minirt->mlx), free(minirt), NULL);
 	minirt->data.img = mlx_new_image(minirt->mlx, width, height);
 	if (!minirt->data.img)
 		return (mlx_destroy_window(minirt->mlx, minirt->window), \

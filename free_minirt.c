@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 13:50:29 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/02/01 10:06:08 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/02/01 12:33:22 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,6 @@ void	free_env(t_environment *env)
 	if (env)
 	{
 		free_shapes(&env->shapes);
-		// free_light(&env->light);
-		// free_camera(&env->camera);
-		// free_ambient(&env->ambient);
-		// free(env);
 	}
 }
 
@@ -74,7 +70,6 @@ void	free_minirt(t_minirt *minirt)
 {
 	if (minirt)
 	{
-		// free_mlxdata(&minirt->data);
 		free_env(minirt->env);
 		free(minirt);
 	}

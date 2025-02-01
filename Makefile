@@ -7,7 +7,8 @@ SRCS		=	main.c init.c hook.c \
 				inverting_mat.c rotation_mat.c scaling_mat.c translation_mat.c \
 				ray.c intersections.c intersect_sphere.c intersect_cylinder.c \
 				color.c generate_ray.c free_minirt.c free_shapes.c \
-				free_lights.c intersect_plane.c shapes_color.c pixel.c
+				free_lights.c intersect_plane.c shapes_color.c pixel.c \
+				rotation_utils.c
 				
 
 OBJS		=	${SRCS:.c=.o}

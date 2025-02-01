@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pixel.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/01 12:34:26 by bmakhama          #+#    #+#             */
+/*   Updated: 2025/02/01 12:34:29 by bmakhama         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "miniRT.h"
 
@@ -16,6 +27,7 @@ int	per_pixel(t_minirt *minirt, int x, int y)
 		return (0x0ffff000);
 	return (0x00000fff);
 }
+
 bool	eq_tuples(t_tuple t1, t_tuple t2)
 {
 	t_tuple	res;
