@@ -29,9 +29,9 @@ t_intersection	*intersect_cylinder(t_ray *ray, t_cylinder *cy, \
 		return intersections;
 	double t1 = (-b - sqrt(discriminant)) / (2 * a);
 	double t2 = (-b + sqrt(discriminant)) / (2 * a);
-	 if (t1 >= 0)
+	if (t1 >= 0 && fabs(add_tuples(mul_tuple(newray.direction, t1), newray.origin).y) < cy->height / 2)
 		add_intersection(&intersections, create_shape_ref(cy, cylinder), t1);
-	if (t2 >= 0)
+	if (t2 >= 0  && fabs(add_tuples(mul_tuple(newray.direction, t2), newray.origin).y) < cy->height / 2)
 		add_intersection(&intersections, create_shape_ref(cy, cylinder), t2);
 	return (intersections);
 }
