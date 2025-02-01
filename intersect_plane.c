@@ -30,7 +30,9 @@ t_intersection	*intersect_plane(t_ray *ray, t_plane *pl, t_intersection *head)
 
 	newray.direction = mult_mat_tuple(&ray->direction, &pl->transform);
 	newray.origin = mult_mat_tuple(&ray->origin, &pl->transform);
-	if (newray.direction.y < 0.001 && newray.direction.y > -0.001)
+	if (newray.direction.y < EPSILON && newray.direction.y > -EPSILON)
+		return (head);
+	if (newray.direction.y > EPSILON)
 		return (head);
 	t = -newray.origin.y / newray.direction.y;
 	if (t > 0.0001)
