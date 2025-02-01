@@ -186,6 +186,8 @@ typedef struct s_minirt
 
 t_minirt		*init(int width, int height);
 void			deinit(t_minirt *minirt);
+int				per_pixel(t_minirt *minirt, int x, int y);
+void			pixel_put(t_mlxdata *data, int x, int y, int color);
 int				keyboard_handler(int keycode, t_minirt *miniRT);
 int				free_exit(t_minirt *minirt);
 
@@ -240,7 +242,7 @@ t_tuple			normalize_tuple(t_tuple t);
 double			dot_tuple(t_tuple t1, t_tuple t2);
 double			mag_tuple(t_tuple t);
 t_tuple			scale_tuple(t_tuple tuple, double scalar);
-
+bool			eq_tuples(t_tuple t1, t_tuple t2);
 bool			eq(double f1, double f2);
 
 //matrix
@@ -256,11 +258,9 @@ t_matrix		transpose_mat(t_matrix *mat);
 t_tuple			mult_mat_tuple(t_tuple *tuple, t_matrix *mat);
 void			free_matrix(t_matrix *matrix);
 void			fill_subm(t_matrix *mat, t_matrix *submat, int row, int col);
-void			add_node(t_intersection **head, t_intersection *new_node);
 double			determinant_2x2(t_matrix *mat);
 double			determinant_3x3(t_matrix *mat);
 double			determinant_4x4(t_matrix *mat);
-t_intersection	*create_node(t_shape *shape, double t);
 t_matrix		create_translation(t_tuple *tuple);
 t_matrix		create_scaling(t_tuple *tuple);
 t_matrix		create_rotation(t_tuple vec);
@@ -273,24 +273,30 @@ t_matrix		rotation_z(double agnle);
 	t_ray *create_ray(t_tuple origin, t_tuple direction);
 t_tuple			position(t_ray *ray, double t);
 int				sphere_eq(t_ray *ray, t_sphere *sphere);
-int				cal_inter(t_ray *ray, t_sphere *sphere, double *t1, double *t2);
 t_ray			transform_ray(t_ray ray, t_matrix matrix);
 void			set_transform(t_sphere *sphere, t_matrix *transform);
-t_ray			transform_ray_object(t_ray *ray, t_matrix *transform);
-t_intersection	*perform_intersection(t_ray ray, t_sphere *_sphere);
-t_intersection	*hit(t_intersection *inter);
 void			add_intersection(t_intersection **head, t_shape *shape, \
 	double t);
 t_shape			*create_shape_ref(void	*shape, t_shapeType type);
 t_intersection	*intersect(t_ray *ray, t_list *shapelist);
 t_intersection	*intersect_sphere(t_ray *ray, t_sphere *_sphere, \
 	t_intersection *intersections);
-void			add_intersection(t_intersection **head, t_shape *shape, \
-	double t);
+t_intersection	*closest_hit(t_intersection	*list);
 t_ray			generate_ray(t_minirt *minirt, int x, int y);
 t_intersection	*intersect_cylinder(t_ray *ray, t_cylinder *cy, \
 	t_intersection *intersections);
 t_intersection	*intersect_plane(t_ray *ray, t_plane *plane, \
 	t_intersection *head);
+void			init_cylinder(t_cylinder *cy);
+void			init_camera(t_camera *camera);
 t_ray			apply_ray_transform(t_ray *old_ray, t_tuple translation);
+double			get_brightness(t_minirt *minirt, t_tuple hit_point, t_tuple normal);
+t_tuple			get_sphere_color(t_minirt *minirt, t_ray *ray, t_intersection *inter, \
+	t_sphere *sp);
+t_tuple			get_cylinder_color(t_minirt *minirt, t_ray *ray, t_intersection *inter, \
+	t_cylinder *cy);
+t_tuple			get_plane_color(t_minirt *minirt, t_ray *ray, t_intersection *inter, \
+	t_plane *pl);
+t_tuple			get_color(t_minirt *minirt, t_ray *ray, t_intersection *intersection);
+
 #endif

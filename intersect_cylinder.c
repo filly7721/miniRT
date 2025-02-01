@@ -35,3 +35,32 @@ t_intersection	*intersect_cylinder(t_ray *ray, t_cylinder *cy, \
 		add_intersection(&intersections, create_shape_ref(cy, cylinder), t2);
 	return (intersections);
 }
+
+void	init_cylinder(t_cylinder *cy)
+{
+	t_tuple		tuple;
+	t_matrix	translation_matrix;
+	t_matrix	scaling_matrix;
+	t_matrix	rotation_matrix;
+	t_matrix	temp;
+
+	tuple = set_vector(cy->x, cy->y, cy->z);
+	translation_matrix = create_translation(&tuple);
+	tuple = set_vector(cy->radius, cy->radius, cy->radius);
+	scaling_matrix = create_scaling(&tuple);
+	cy->transform = mult_mat(&translation_matrix, &scaling_matrix);
+	tuple = set_vector(cy->axis_x, cy->axis_y, cy->axis_z);
+	rotation_matrix = create_rotation(&tuple);
+	temp = cy->transform;
+	cy->transform = mult_mat(&cy->transform, &rotation_matrix);
+	print_mat(&cy->transform);
+	free_matrix(&temp);
+	temp = cy->transform;
+	cy->transform = inverse(&cy->transform);
+	print_mat(&cy->transform);
+	free_matrix(&temp);
+	free_matrix(&rotation_matrix);
+	free_matrix(&scaling_matrix);
+	free_matrix(&translation_matrix);
+	cy->tp_transform = transpose_mat(&cy->transform);
+}
