@@ -70,35 +70,6 @@ void	trace_rays(t_minirt *minirt)
 	mlx_put_image_to_window(minirt->mlx, minirt->window, minirt->data.img, 0, 0);
 }
 
-void	init_cylinder(t_cylinder *cy)
-{
-	t_tuple		tuple;
-	t_matrix	translation_matrix;
-	t_matrix	scaling_matrix;
-	t_matrix	rotation_matrix;
-	t_matrix	temp;
-
-	tuple = set_vector(cy->x, cy->y, cy->z);
-	translation_matrix = create_translation(&tuple);
-	tuple = set_vector(cy->radius, 1, cy->radius);
-	scaling_matrix = create_scaling(&tuple);
-	cy->transform = mult_mat(&translation_matrix, &scaling_matrix);
-	tuple = set_vector(cy->axis_x, cy->axis_y, cy->axis_z);
-	rotation_matrix = create_rotation(&tuple);
-	temp = cy->transform;
-	cy->transform = mult_mat(&cy->transform, &rotation_matrix);
-	print_mat(&cy->transform);
-	free_matrix(&temp);
-	temp = cy->transform;
-	cy->transform = inverse(&cy->transform);
-	print_mat(&cy->transform);
-	free_matrix(&temp);
-	free_matrix(&rotation_matrix);
-	free_matrix(&scaling_matrix);
-	free_matrix(&translation_matrix);
-	cy->tp_transform = transpose_mat(&cy->transform);
-}
-
 void	init_shapes(t_minirt *minirt)
 {
 	t_list	*curr;

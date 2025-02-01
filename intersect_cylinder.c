@@ -50,7 +50,7 @@ void	init_cylinder(t_cylinder *cy)
 	scaling_matrix = create_scaling(&tuple);
 	cy->transform = mult_mat(&translation_matrix, &scaling_matrix);
 	tuple = set_vector(cy->axis_x, cy->axis_y, cy->axis_z);
-	rotation_matrix = create_rotation(&tuple);
+	rotation_matrix = create_rotation(tuple);
 	temp = cy->transform;
 	cy->transform = mult_mat(&cy->transform, &rotation_matrix);
 	print_mat(&cy->transform);
