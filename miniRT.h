@@ -41,10 +41,10 @@ typedef union u_tuple
 	};
 	struct
 	{
-		double	a;
 		double	r;
 		double	g;
 		double	b;
+		double	a;
 	};
 }	t_tuple;
 

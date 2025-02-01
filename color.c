@@ -14,13 +14,12 @@
 
 int	rgbtoint(t_tuple color)
 {
-	int		col;
-	char	*i;
+	int	r;
+	int	g;
+	int	b;
 
-	i = (char *)&col;
-	i[0] = (int)(color.a * 255);
-	i[1] = (int)(color.r * 255);
-	i[2] = (int)(color.g * 255);
-	i[3] = (int)(color.b * 255);
-	return (col);
+	r = (int)(color.r * 255);
+	g = (int)(color.g * 255);
+	b = (int)(color.b * 255);
+	return (r << 16 | g << 8 | b);
 }
