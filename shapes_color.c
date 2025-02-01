@@ -12,7 +12,6 @@ double	get_brightness(t_minirt *minirt, t_tuple hit_point, t_tuple normal)
 	ray.direction = set_point(
 			minirt->env->light.x, minirt->env->light.y, minirt->env->light.z);
 	ray.direction = normalize_tuple(sub_tuples(ray.direction, ray.origin));
-	ray.origin = add_tuples(ray.origin, mul_tuple(ray.direction, EPSILON));
 	intersections = intersect(&ray, minirt->env->shapes);
 	lightsource = set_point(minirt->env->light.x, minirt->env->light.y, \
 		minirt->env->light.z);
@@ -37,6 +36,7 @@ t_tuple	get_sphere_color(t_minirt *minirt, t_ray *ray, t_intersection *inter, \
 	albedo = set_tuple(sp->r / 255.0, sp->g / 255.0, sp->b / 255.0, 0);
 	hp = add_tuples(mul_tuple(ray->direction, inter->t), ray->origin);
 	normal = normalize_tuple(sub_tuples(hp, set_point(sp->x, sp->y, sp->z)));
+	hp = add_tuples(hp, mul_tuple(ray->direction, -EPSILON));
 	return (mul_tuple(albedo, get_brightness(minirt, hp, normal)));
 }
 
@@ -55,6 +55,7 @@ t_tuple	get_cylinder_color(t_minirt *minirt, t_ray *ray, t_intersection *inter, 
 	normal = normalize_tuple(set_vector(hp.x, 0, hp.z));
 	normal = mult_mat_tuple(&normal, &cy->tp_transform);
 	hp = add_tuples(mul_tuple(ray->direction, inter->t), ray->origin);
+	hp = add_tuples(hp, mul_tuple(ray->direction, -EPSILON));
 	return (mul_tuple(albedo, get_brightness(minirt, hp, normal)));
 }
 
@@ -68,6 +69,7 @@ t_tuple	get_plane_color(t_minirt *minirt, t_ray *ray, t_intersection *inter, \
 	albedo = set_tuple(pl->r / 255.0, pl->g / 255.0, pl->b / 255.0, 0);
 	normal = set_vector(0, 1, 0);
 	hp = add_tuples(mul_tuple(ray->direction, inter->t), ray->origin);
+	hp = add_tuples(hp, mul_tuple(ray->direction, -EPSILON));
 	return (mul_tuple(albedo, get_brightness(minirt, hp, normal)));
 }
 
