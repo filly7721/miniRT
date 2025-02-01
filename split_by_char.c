@@ -63,7 +63,7 @@ char	**split_by_char(char *space_rem, char deli, int exp_count)
 		{
 			ft_putstr_fd("Error: Not enough tokens.\n", 2);
 			free_split(split);
-			exit(1);
+			return (NULL);
 		}
 		i++;
 	}

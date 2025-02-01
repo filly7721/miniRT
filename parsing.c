@@ -93,7 +93,7 @@ void	parsing(t_environment *env, const char *file)
 	while (line)
 	{
 		if (line_parsing(line, env) == false)
-			(free(line), free_env(env), exit(1));
+			(free(line), free_env(env), close(fd), exit(1));
 		free(line);
 		line = get_next_line(fd);
 	}
@@ -101,6 +101,7 @@ void	parsing(t_environment *env, const char *file)
 	{
 		ft_putstr_fd("Invalid input\n", 2);
 		free_env(env);
+		close(fd);
 		exit (1);
 	}
 	close(fd);

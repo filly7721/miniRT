@@ -97,6 +97,11 @@ int	main(int arc, char **arv)
 	}
 	env.shapes = NULL;
 	env.camera.fov = 0;
+	env.ambient.intensity = 0;
+	env.light.bright = 0;
+	env.light.x = 0;
+	env.light.y = 0;
+	env.light.z = 0;
 	parsing(&env, arv[1]);
 	minirt = init_minirt(2000, 1000, &env);
 	if (!minirt)
