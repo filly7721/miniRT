@@ -86,6 +86,8 @@ void	parsing(t_environment *env, const char *file)
 	int		fd;
 	char	*line;
 
+	if (ft_strncmp(file + ft_strlen(file) - 3, ".rt", 3) != 0)
+		(ft_putstr_fd("Error: map file must end with .rt\n", 2), exit(1));
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 		(ft_putstr_fd("Error opening file", 2), exit(1));
@@ -98,11 +100,7 @@ void	parsing(t_environment *env, const char *file)
 		line = get_next_line(fd);
 	}
 	if (!valid_input(env))
-	{
-		ft_putstr_fd("Invalid input\n", 2);
-		free_env(env);
-		close(fd);
-		exit (1);
-	}
+		(ft_putstr_fd("Invalid input\n", 2), free_env(env), close(fd),
+			exit (1));
 	close(fd);
 }
