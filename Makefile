@@ -28,7 +28,7 @@ else ifeq (${OS}, Linux)
 	MLXFLAGS = -L$(MLXDIR) -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -lz
 endif
 
-# CFLAGS		=	-Werror -Wextra -Werror
+CFLAGS		=	-Werror -Wextra -Werror
 CFLAGS		+=	-I ${LIBFTDIR}
 CFLAGS		+=	-I ${MLXDIR}
 CFLAGS		+=	-g3

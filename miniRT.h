@@ -104,10 +104,6 @@ typedef struct s_sphere
 	int			r;
 	int			g;
 	int			b;
-	t_matrix	transform;
-	double		a;
-	double		b1;
-	double		c;
 }	t_sphere;
 
 typedef struct s_plane
@@ -274,9 +270,7 @@ t_matrix		rotation_z(double agnle);
 	// Rays
 	t_ray *create_ray(t_tuple origin, t_tuple direction);
 t_tuple			position(t_ray *ray, double t);
-int				sphere_eq(t_ray *ray, t_sphere *sphere);
 t_ray			transform_ray(t_ray ray, t_matrix matrix);
-void			set_transform(t_sphere *sphere, t_matrix *transform);
 void			add_intersection(t_intersection **head, t_shape *shape, \
 	double t);
 t_shape			*create_shape_ref(void	*shape, t_shapeType type);

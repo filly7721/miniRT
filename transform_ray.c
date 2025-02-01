@@ -72,12 +72,3 @@ int	is_identity_matrix(t_matrix *matrix)
 	}
 	return (1);
 }
-
-void	set_transform(t_sphere *sphere, t_matrix *transform)
-{
-	if (!sphere || !transform)
-		return ;
-	if (is_identity_matrix(&sphere->transform))
-		free_matrix(&sphere->transform);
-	sphere->transform = *copy_matrix(transform);
-}
