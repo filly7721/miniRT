@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 12:11:01 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/02/01 12:25:41 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/02/01 12:40:37 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,13 +287,16 @@ void			init_cylinder(t_cylinder *cy);
 void			init_camera(t_camera *camera);
 void			init_plane(t_plane *pl);
 t_ray			apply_ray_transform(t_ray *old_ray, t_tuple translation);
-double			get_brightness(t_minirt *minirt, t_tuple hit_point, t_tuple normal);
-t_tuple			get_sphere_color(t_minirt *minirt, t_ray *ray, t_intersection *inter, \
-	t_sphere *sp);
-t_tuple			get_cylinder_color(t_minirt *minirt, t_ray *ray, t_intersection *inter, \
-	t_cylinder *cy);
-t_tuple			get_plane_color(t_minirt *minirt, t_ray *ray, t_intersection *inter, \
-	t_plane *pl);
-t_tuple			get_color(t_minirt *minirt, t_ray *ray, t_intersection *intersection);
+double			get_brightness(t_minirt *minirt, t_tuple hit_point, \
+	t_tuple normal);
+t_tuple			get_sphere_color(t_minirt *minirt, t_ray *ray, \
+	t_intersection *inter, t_sphere *sp);
+t_tuple			get_cylinder_color(t_minirt *minirt, t_ray *ray, \
+	t_intersection *inter, t_cylinder *cy);
+t_tuple			get_plane_color(t_minirt *minirt, t_ray *ray, \
+	t_intersection *inter, t_plane *pl);
+t_tuple			get_color(t_minirt *minirt, t_ray *ray, \
+	t_intersection *intersection);
+t_tuple			quat_from_axis_angle(t_tuple axis, double theta);
 
 #endif
