@@ -33,7 +33,7 @@ t_plane	*create_plane(void)
 {
 	t_plane	*plane;
 
-	plane = malloc(sizeof(t_plane));
+	plane = ft_calloc(sizeof(t_plane), 1);
 	if (!plane)
 		ft_putstr_fd("Error: Memory allocation failed for plane.\n", 2);
 	return (plane);
