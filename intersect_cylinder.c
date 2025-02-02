@@ -62,9 +62,10 @@ void	init_cylinder(t_cylinder *cy)
 	t_matrix	rotation_matrix;
 	t_matrix	temp;
 
+	cy->radius /= 2;
 	tuple = set_vector(cy->x, cy->y, cy->z);
 	translation_matrix = create_translation(&tuple);
-	tuple = set_vector(cy->radius, cy->radius, cy->radius);
+	tuple = set_vector(cy->radius, 1, cy->radius);
 	scaling_matrix = create_scaling(&tuple);
 	cy->transform = mult_mat(&translation_matrix, &scaling_matrix);
 	tuple = set_vector(cy->axis_x, cy->axis_y, cy->axis_z);

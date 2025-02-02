@@ -80,6 +80,7 @@ t_tuple	get_cylinder_color(t_minirt *minirt, t_ray *ray, t_intersection *inter, 
 	hp = add_tuples(mul_tuple(newray.direction, inter->t), newray.origin);
 	normal = normalize_tuple(set_vector(hp.x, 0, hp.z));
 	normal = mult_mat_tuple(&normal, &cy->tp_transform);
+	normal = normalize_tuple(normal);
 	hp = add_tuples(mul_tuple(ray->direction, inter->t), ray->origin);
 	hp = add_tuples(hp, mul_tuple(ray->direction, -EPSILON));
 	return (add_tuples(
