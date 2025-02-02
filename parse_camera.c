@@ -6,7 +6,7 @@
 /*   By: bmakhama <bmakhama@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 14:45:13 by bmakhama          #+#    #+#             */
-/*   Updated: 2025/02/01 12:09:51 by bmakhama         ###   ########.fr       */
+/*   Updated: 2025/02/02 09:48:31 by bmakhama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ bool	validate_camera(t_environment *env)
 		return (ft_putstr_fd("invalid camera values\n", 2), false);
 	camera_dir = normalize_tuple(camera_dir);
 	camera_dir = set_vector(env->camera.dir_x,
-		env->camera.dir_y, env->camera.dir_z);
+			env->camera.dir_y, env->camera.dir_z);
 	env->camera.dir_x = camera_dir.x;
 	env->camera.dir_y = camera_dir.y;
 	env->camera.dir_z = camera_dir.z;
