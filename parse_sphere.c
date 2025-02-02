@@ -41,7 +41,7 @@ t_sphere	*create_sphere(void)
 
 int	parse_sphere_values(char **split, t_sphere *sphere)
 {
-	if (!is_valid_number(split[2]))
+	if (!is_valid_float(split[2]))
 	{
 		ft_putstr_fd("Invalid sphere diameter", 2);
 		return (0);

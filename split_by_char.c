@@ -81,7 +81,7 @@ bool	split_rgb(char *rgb, int *r, int *g, int *b)
 	i = 0;
 	while (i < 3)
 	{
-		if (!is_valid_number(split_rgb[i]))
+		if (!is_valid_int(split_rgb[i]))
 		{
 			ft_putstr_fd("Invalid RGB values.\n", 2);
 			free_split(split_rgb);
@@ -96,7 +96,7 @@ bool	split_rgb(char *rgb, int *r, int *g, int *b)
 	return (true);
 }
 
-bool	is_valid_number( char *str)
+bool	is_valid_float( char *str)
 {
 	int		i;
 	bool	has_dot;
@@ -104,7 +104,7 @@ bool	is_valid_number( char *str)
 	i = 0;
 	if (!str || !str[i])
 		return (false);
-	if (str[i] == '-')
+	if (str[i] == '-' || str[i] == '+')
 		i++;
 	has_dot = false;
 	while (str[i])

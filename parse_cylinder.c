@@ -51,7 +51,7 @@ int	parse_cylinder_values(char **split, t_cylinder *cyl)
 		ft_putstr_fd("cylinder: Invalid Axis XYZ values.\n", 2);
 		return (0);
 	}
-	if (!is_valid_number(split[3]) || !is_valid_number(split[4]))
+	if (!is_valid_float(split[3]) || !is_valid_float(split[4]))
 	{
 		ft_putstr_fd("Invalid cy radius or height\n", 2);
 		return (0);

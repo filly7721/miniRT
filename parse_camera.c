@@ -23,7 +23,7 @@ int	split_xyz(char *xyz, float *x, float *y, float *z)
 	i = 0;
 	while (i < 3)
 	{
-		if (!is_valid_number(split_xyz[i]))
+		if (!is_valid_float(split_xyz[i]))
 		{
 			ft_putstr_fd("Invalid XYZ values\n", 2);
 			free_split(split_xyz);
@@ -49,7 +49,7 @@ int	split_dir_xyz(char *dir_xyz, float *dir_x, float *dir_y, float *dir_z)
 	i = 0;
 	while (i < 3)
 	{
-		if (!is_valid_number(split_dir_xyz[i]))
+		if (!is_valid_float(split_dir_xyz[i]))
 		{
 			free_split(split_dir_xyz);
 			return (0);
@@ -75,19 +75,15 @@ bool	parse_camera(char *line, t_camera *cam)
 	free(space_removed);
 	if (!split)
 		return (ft_putstr_fd("Error\n", 2), false);
-	cam->fov = ft_atoi(split[3]);
+	if (!is_valid_float(split[3]))
+		return (ft_putstr_fd("Camera: Invalid FOV\n", 2), false);
+	cam->fov = ft_atof(split[3]);
 	if (!split_xyz(split[1], &cam->x, &cam->y, &cam->z))
-	{
-		ft_putstr_fd("Camera: Invalid XYZ values.\n", 2);
-		free_split(split);
-		return (false);
-	}
+		return (ft_putstr_fd("Camera: Invalid XYZ values.\n", 2),
+			free_split(split), false);
 	if (!split_dir_xyz(split[2], &cam->dir_x, &cam->dir_y, &cam->dir_z))
-	{
-		ft_putstr_fd("Error: Invalid DIR_XYZ values.\n", 2);
-		free_split(split);
-		return (false);
-	}
+		return (ft_putstr_fd("Error: Invalid DIR_XYZ values.\n", 2),
+			free_split(split), false);
 	free_split(split);
 	return (true);
 }
@@ -97,6 +93,8 @@ bool	validate_camera(t_environment *env)
 	t_tuple	camera_dir;
 
 	if (!is_valid_rot(env->camera.dir_x, env->camera.dir_y, env->camera.dir_z))
+		return (ft_putstr_fd("invalid camera values\n", 2), false);
+	if (env->camera.fov > 180 || env->camera.fov <= 0)
 		return (ft_putstr_fd("invalid camera values\n", 2), false);
 	camera_dir = normalize_tuple(camera_dir);
 	camera_dir = set_vector(env->camera.dir_x,

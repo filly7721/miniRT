@@ -12,6 +12,24 @@
 
 #include "miniRT.h"
 
+bool	is_valid_int(char *str)
+{
+	int		i;
+
+	i = 0;
+	if (!str || !str[i])
+		return (false);
+	if (str[i] == '-' || str[i] == '+')
+		i++;
+	while (str[i])
+	{
+		if (!ft_isdigit(str[i]))
+			return (false);
+		i++;
+	}
+	return (true);
+}
+
 bool	validate_ambient(t_ambient *ambient)
 {
 	if (ambient->intensity < 0.0 || ambient->intensity > 1.0)
@@ -34,7 +52,7 @@ bool	parse_ambient(char *line, t_ambient *ambient)
 	free(space_removed);
 	if (!split)
 		return (ft_putstr_fd("Error\n", 2), false);
-	if (!is_valid_number(split[1]))
+	if (!is_valid_float(split[1]))
 		return (ft_putstr_fd("Invalid ambient intensity\n", 2),
 			free_split(split), false);
 	ambient->intensity = ft_atof(split[1]);
@@ -58,7 +76,7 @@ bool	parse_light(char *line, t_light *light)
 	free(space_removed);
 	if (!split)
 		return (ft_putstr_fd("Error\n", 2), false);
-	if (!is_valid_number(split[2]))
+	if (!is_valid_float(split[2]))
 		return (free_split(split),
 			ft_putstr_fd("Light: Invalid brightness.\n", 2), false);
 	light->bright = ft_atof(split[2]);
