@@ -195,6 +195,7 @@ int				free_exit(t_minirt *minirt);
 void			parsing(t_environment *env, const char *file);
 double			ft_atof(char *str);
 bool			is_valid_number(char *str);
+int				is_valid_rot(double x, double y, double z);
 bool			parse_ambient(char *line, t_ambient *ambient);
 char			*remove_extra_spaces(const char *line);
 char			**split_by_char(char *space_rem, char deli, int exp_count);

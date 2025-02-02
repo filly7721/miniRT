@@ -45,15 +45,17 @@ int	valid_rgb(int r, int g, int b)
 	return (1);
 }
 
-int	valid_rot(double x, double y, double z)
+int	is_valid_rot(double x, double y, double z)
 {
 	t_tuple	rot;
 
+	if (x < -1 || x > 1 || y < -1 || y > 1 || z < -1 || z > 1)
+		return (0);
 	if (x == 0 && y == 0 && z == 0)
 		return (0);
 	rot = set_vector(x, y, z);
-	if (mag_tuple(rot) != 1)
-		ft_putstr_fd("orientation not normalized, normalizing...\n", 2);
+	if (mag_tuple(rot) < 1 - EPSILON || mag_tuple(rot) > 1 + EPSILON)
+		ft_putstr_fd("vector not normalized, normalizing...\n", 2);
 	return (1);
 }
 
@@ -71,14 +73,14 @@ int	valid_input(t_environment *env)
 	{
 		sh = (t_shape *)current->content;
 		if ((sh->type == cylinder) && !(valid_rgb(sh->cylinder->r, \
-		sh->cylinder->g, sh->cylinder->b) && valid_rot(sh->cylinder->axis_x, \
+		sh->cylinder->g, sh->cylinder->b) && is_valid_rot(sh->cylinder->axis_x, \
 		sh->cylinder->axis_y, sh->cylinder->axis_z)))
 			return (0);
 		else if ((sh->type == sphere) && !valid_rgb(sh->sphere->r, \
 			sh->sphere->g, sh->sphere->b))
 			return (0);
 		else if ((sh->type == plane) && !(valid_rgb(sh->plane->r, \
-			sh->plane->g, sh->plane->b) && valid_rot(sh->plane->norm_x, \
+			sh->plane->g, sh->plane->b) && is_valid_rot(sh->plane->norm_x, \
 			sh->plane->norm_y, sh->plane->norm_z)))
 			return (0);
 		current = current->next;
