@@ -48,6 +48,7 @@ int	valid_rgb(int r, int g, int b)
 int	valid_rot(double x, double y, double z)
 {
 	t_tuple	rot;
+
 	if (x == 0 && y == 0 && z == 0)
 		return (0);
 	rot = set_vector(x, y, z);

@@ -92,7 +92,7 @@ bool	parse_camera(char *line, t_camera *cam)
 	return (true);
 }
 
-bool validate_camera(t_environment *env)
+bool	validate_camera(t_environment *env)
 {
 	t_tuple	camera_dir;
 
@@ -102,7 +102,7 @@ bool validate_camera(t_environment *env)
 		&& env->camera.dir_y == 0 && env->camera.dir_z == 0)
 		return (false);
 	camera_dir = set_vector(env->camera.dir_x,
-		env->camera.dir_y, env->camera.dir_z);
+			env->camera.dir_y, env->camera.dir_z);
 	if (mag_tuple(camera_dir) != 1)
 		ft_putstr_fd("camera direction not normalized, normalizing...\n", 2);
 	camera_dir = normalize_tuple(camera_dir);
